@@ -99,9 +99,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Geolocation-Portal_Test\Geolocation-Portal_Test.csproj">
+    <ProjectReference Include="..\Geolocation-Portal_Test\Geolocation-Portal.csproj">
       <Project>{66BCE315-201B-46AD-B474-C03C31100282}</Project>
-      <Name>Geolocation-Portal_Test</Name>
+      <Name>Geolocation-Portal</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
