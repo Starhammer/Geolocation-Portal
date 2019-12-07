@@ -18,6 +18,24 @@ namespace Geolocation_Portal_Test
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "OpenData",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "OpenData", action = "Index", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "GeoData",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "GeoData", action = "Index", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "FAQ",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "FAQ", action = "Index", id = UrlParameter.Optional }
+            );
         }
     }
 }

@@ -13,14 +13,35 @@ namespace Geolocation_Portal_Test.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult Datenschutz()
         {
             ViewBag.Message = "Your application description page.";
 
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult Impressum()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
+
+        public ActionResult Kontakt()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
+
+        public ActionResult Nutzungsbedingungen()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
+
+        public ActionResult WeitereGemeindeseiten()
         {
             ViewBag.Message = "Your contact page.";
 
