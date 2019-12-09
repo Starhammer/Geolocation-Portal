@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geolocation-Portal", "Geolocation-Portal\Geolocation-Portal.csproj", "{A46D7C3E-CC68-497F-83E8-1B9B75467C6E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geolocation-Portal", "Geolocation-Portal_Test\Geolocation-Portal.csproj", "{66BCE315-201B-46AD-B474-C03C31100282}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geolocation-Portal.Tests", "Geolocation-Portal_Test.Tests\Geolocation-Portal.Tests.csproj", "{28CB9758-B7BB-4D6C-9704-5DCD60375934}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A46D7C3E-CC68-497F-83E8-1B9B75467C6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A46D7C3E-CC68-497F-83E8-1B9B75467C6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A46D7C3E-CC68-497F-83E8-1B9B75467C6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A46D7C3E-CC68-497F-83E8-1B9B75467C6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66BCE315-201B-46AD-B474-C03C31100282}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66BCE315-201B-46AD-B474-C03C31100282}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66BCE315-201B-46AD-B474-C03C31100282}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66BCE315-201B-46AD-B474-C03C31100282}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28CB9758-B7BB-4D6C-9704-5DCD60375934}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28CB9758-B7BB-4D6C-9704-5DCD60375934}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28CB9758-B7BB-4D6C-9704-5DCD60375934}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28CB9758-B7BB-4D6C-9704-5DCD60375934}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
