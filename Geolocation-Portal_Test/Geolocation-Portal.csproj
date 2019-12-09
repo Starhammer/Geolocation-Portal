@@ -322,7 +322,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Benutzer\Abmelden.cshtml" />
-    <Content Include="Views\Benutzer\Anmelden.cshtml" />
     <Content Include="Views\Benutzer\Profil.cshtml" />
     <Content Include="Views\Benutzer\Registrieren.cshtml" />
     <Content Include="Views\Benutzer\Verwalten.cshtml" />

@@ -1,6 +1,42 @@
 ﻿<!DOCTYPE html>
+
+<script runat="server">
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        StringBuilder sb = new StringBuilder();
+        // Get cookie from the current request.
+        HttpCookie cookie = Request.Cookies.Get("DateCookieExample");
+
+        // Check if cookie exists in the current request.
+        if (cookie == null)
+        {
+            sb.Append("Cookie was not received from the client. ");
+            sb.Append("Creating cookie to add to the response. <br/>");
+            // Create cookie.
+            cookie = new HttpCookie("font_is_large");
+            // Set value of cookie to current date time.
+            cookie.Value = false;
+            // Set cookie to expire in 10 minutes.
+            // cookie.Expires = DateTime.Now.AddMinutes(10d);
+            // Insert the cookie in the current HttpResponse.
+            Response.Cookies.Add(cookie);
+        }
+        else
+        {
+            sb.Append("Cookie retrieved from client. <br/>");
+            sb.Append("Cookie Name: " + cookie.Name + "<br/>");
+            sb.Append("Cookie Value: " + cookie.Value + "<br/>");
+            sb.Append("Cookie Expiration Date: " +
+                cookie.Expires.ToString() + "<br/>");
+        }
+        Label1.Text = sb.ToString();
+    }
+
+</script>
+
 <html>
-<head>
+<head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +45,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
+<body runat="server" id="MyBody" onload="pageLoad();">
     <header>
         <div class="container two-column-wrapper">
             <a href="@Url.Action("Index", "Home")" title="Weiter zur Startseite">
@@ -25,7 +61,7 @@
                     <i class="fa fa-user"></i>
                 </a>
 
-                <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                <a href="javascript:void(0);" class="icon" onclick="openMainNavigation()">
                     <i class="fa fa-bars"></i>
                 </a>
             </div>
@@ -33,7 +69,7 @@
     </header>
 
     <nav id="mainNavigationLinks">
-        @Html.ActionLink("Home", "Index", "Home", new { @class = "active" }))
+        @Html.ActionLink("Home", "Index", "Home")
         @Html.ActionLink("Open Data", "Index", "OpenData")
         @Html.ActionLink("Geo Data", "Index", "GeoData")
         @Html.ActionLink("FAQ", "Index", "FAQ", new { @title = "Frequently Asked Questions" })
@@ -48,20 +84,22 @@
     <main>
         <div class="container">
             @RenderBody()
+
+            <asp:Label id="Label1" runat="server"></asp:Label>
         </div>
     </main>
 
     <footer>
-        <div class="page-settings">
+        <div runat="server" id="page-settings">
             <h2>Barrierefreiheit</h2>
 
             <div class="n-column-wrapper">
-                <a class="btn" href="#">
+                <a class="icon" href="javascript:void(0);" onclick="changeFontSize()">
                     <i class="fa fa-text-height"></i>
                     <p>Textgröße</p>
                 </a>
 
-                <a class="btn" href="#">
+                <a class="icon" href="javascript:void(0);" onclick="changeColorTheme()">
                     <i class="fa fa-adjust"></i>
                     <p>Kontrast</p>
                 </a>
@@ -84,15 +122,15 @@
             @Html.ActionLink("Datenschutz", "Datenschutz", "Home")
             @Html.ActionLink("Nutzungsbedingungen", "Nutzungsbedingungen", "Home")
             @Html.ActionLink("Weitere Gemeindeseiten", "WeitereGemeindeseiten", "Home")
-        </div>
 
-        <div class="text-center">
-            <p>&copy; @DateTime.Now.Year - Große Kreisstadt Mosbach</p>
+            <div class="text-center whiteColor">
+                <p>&copy; @DateTime.Now.Year - Große Kreisstadt Mosbach</p>
+            </div>
         </div>
     </footer>
 
     <script>
-        function myFunction() {
+        function openMainNavigation() {
             var x = document.getElementById("mainNavigationLinks");
 
             if (x.style.display === "block") {
@@ -100,6 +138,23 @@
             } else {
                 x.style.display = "block";
             }
+        }
+
+        var font_is_large = false;
+        function changeFontSize() {
+            var currentFontSize = document.getElementById("MyBody");
+
+            if (!font_is_large) {
+                document.getElementById("MyBody").style.fontSize = "1.8em";
+                font_is_large = true;
+            } else {
+                document.getElementById("MyBody").style.fontSize = "1.1em";
+                font_is_large = false;
+            }
+        }
+
+        function changeColorTheme() {
+            Console.log("changeColorTheme Button clicked");
         }
     </script>
 

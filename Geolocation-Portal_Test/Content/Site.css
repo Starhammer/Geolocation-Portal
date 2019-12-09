@@ -46,14 +46,13 @@ header {
 #mainNavigationLinks {
     position: relative;
     display: none;
-    background-color: black;
+    background-color: #262626;
 }
 
 #mainNavigationLinks a {
     color: white;
     padding: 14px 16px;
     text-decoration: none;
-    font-size: 17px;
     display: block;
 }
 
@@ -73,6 +72,11 @@ header {
 .active {
     background-color: #75B0CA;
     color: white;
+}
+
+main {
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 article {
@@ -132,11 +136,15 @@ article {
     text-align: right;
 }
 
+.whiteColor {
+    color: white;
+}
+
 .record-container section {
     background-color: #ededed;
     padding: 5px;
     margin-bottom: 8px;
-    box-shadow: 2;
+    box-shadow: 2px;
     box-shadow: 3px 3px 1px #aaaaaa;
 }
 
@@ -163,17 +171,18 @@ footer {
     text-align: center;
 }
 
-.page-settings {
-    background-color: black;
-    color: white;
+#page-settings {
+    background-color: #a6a6a6;
+    color: black;
 }
 
-.page-settings a {
-    color: white;
+#page-settings a {
+    margin: 15px;
+    color: black;
 }
 
 .socialmedia {
-    background-color: gray;
+    background-color: #595959;
     padding-bottom: 10px;
 }
 
@@ -182,9 +191,8 @@ footer {
 }
 
 .footer-nav {
-    background-color: darkgray;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
+    background-color: #0095e3;
+    color: white;
 }
 
 .footer-nav ul {
@@ -195,7 +203,7 @@ footer {
 
 .footer-nav a {
     text-decoration: none;
-    color: black;
+    color: white;
     width: 100%;
     display: inline-block;
 }
