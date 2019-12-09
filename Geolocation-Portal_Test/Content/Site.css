@@ -1,12 +1,207 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿* {
+    box-sizing: border-box;
 }
 
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+html, body {
+    height: 100%;
+}
+
+body {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Calibri;
+    font-size: 1.1em;
+}
+
+header {
+    background-color: #d7efff;
+    width: 100%;
+    padding: 5px;
+}
+
+.nav-bar-wrapper {
+    text-align: right;
+    font-size: 1.8em;
+    padding-top: 20px;
+    padding-right: 5px;
+}
+
+.nav-bar-wrapper a {
+    text-decoration: none;
+    color: black;
+    padding: 10px;
+}
+
+.logo {
+    background-image: url("../Content/Images/logo-mosbach.png");
+    background-repeat: no-repeat;
+    /*background-position: center;*/
+    background-size: contain;
+    height: 100%;
+}
+
+#mainNavigationLinks {
+    position: relative;
+    display: none;
+    background-color: black;
+}
+
+#mainNavigationLinks a {
+    color: white;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    display: block;
+}
+
+#mainNavigationLinks a.icon {
+    background: black;
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+#mainNavigationLinks a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.active {
+    background-color: #75B0CA;
+    color: white;
+}
+
+article {
+    padding-top: 10px;
+    margin: 5px;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+}
+
+.image {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    width: 40%;
+    opacity: 0.8;
+    transition: .5s ease;
+    background-color: #008CBA;
+}
+
+.thought_bubble {
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.ranking {
+    color: #ecca4b;
+}
+
+.bigText {
+    font-size: 1.2em;
+}
+
+.nolink a {
+    text-decoration: none;
+    color: black;
+}
+
+.rightAlign {
+    text-align: right;
+}
+
+.record-container section {
+    background-color: #ededed;
+    padding: 5px;
+    margin-bottom: 8px;
+    box-shadow: 2;
+    box-shadow: 3px 3px 1px #aaaaaa;
+}
+
+.map-wrapper {
+    position: relative;
+    width: 100%;
+    height: 500px;
+}
+
+.two-column-wrapper {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.n-column-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+
+footer {
+    display: contents;
+    text-align: center;
+}
+
+.page-settings {
+    background-color: black;
+    color: white;
+}
+
+.page-settings a {
+    color: white;
+}
+
+.socialmedia {
+    background-color: gray;
+    padding-bottom: 10px;
+}
+
+.socialmedia img {
+    max-height: 40px;
+}
+
+.footer-nav {
+    background-color: darkgray;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.footer-nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.footer-nav a {
+    text-decoration: none;
+    color: black;
+    width: 100%;
+    display: inline-block;
+}
+
+.footer-nav a:hover {
+    text-decoration: underline;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 

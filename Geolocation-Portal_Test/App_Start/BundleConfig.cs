@@ -24,7 +24,8 @@ namespace Geolocation_Portal_Test
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Contenct/font-awesome.min.css"));
         }
     }
 }

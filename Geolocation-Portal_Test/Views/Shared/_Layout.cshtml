@@ -1,79 +1,111 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Geo-Portal Mosbach</title>
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a href="@Url.Action("Index", "Home")">
-                    <img src="~/Content/Images/logo-mosbach.png" class="img-center" height="50" />
+    <header>
+        <div class="container two-column-wrapper">
+            <a href="@Url.Action("Index", "Home")" title="Weiter zur Startseite">
+                <div class="logo"></div>
+            </a>
+
+            <div class="nav-bar-wrapper">
+                <a href="#" title="Suche starten">
+                    <i class="fa fa-search"></i>
+                </a>
+
+                <a href="@Url.Action("Index", "Benutzer")" title="Weiter zur Loginmaske">
+                    <i class="fa fa-user"></i>
+                </a>
+
+                <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                    <i class="fa fa-bars"></i>
                 </a>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Startseite", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Open Data", "Index", "OpenData")</li>
-                    <li>@Html.ActionLink("Geo Data", "Index", "GeoData")</li>
-                    <li>@Html.ActionLink("FAQ", "Index", "FAQ")</li>
-                    <li>@Html.ActionLink("Imresspum", "Impressum", "Home")</li>
-                </ul>
+        </div>
+    </header>
+
+    <nav id="mainNavigationLinks">
+        @Html.ActionLink("Home", "Index", "Home", new { @class = "active" }))
+        @Html.ActionLink("Open Data", "Index", "OpenData")
+        @Html.ActionLink("Geo Data", "Index", "GeoData")
+        @Html.ActionLink("FAQ", "Index", "FAQ", new { @title = "Frequently Asked Questions" })
+
+        @Html.ActionLink("Kontakt", "Kontakt", "Home")
+        @Html.ActionLink("Impressum", "Impressum", "Home")
+        @Html.ActionLink("Datenschutz", "Datenschutz", "Home")
+        @Html.ActionLink("Nutzungsbedingungen", "Nutzungsbedingungen", "Home")
+        @Html.ActionLink("Weitere Gemeindeseiten", "WeitereGemeindeseiten", "Home")
+    </nav>
+
+    <main>
+        <div class="container">
+            @RenderBody()
+        </div>
+    </main>
+
+    <footer>
+        <div class="page-settings">
+            <h2>Barrierefreiheit</h2>
+
+            <div class="n-column-wrapper">
+                <a class="btn" href="#">
+                    <i class="fa fa-text-height"></i>
+                    <p>Textgröße</p>
+                </a>
+
+                <a class="btn" href="#">
+                    <i class="fa fa-adjust"></i>
+                    <p>Kontrast</p>
+                </a>
             </div>
         </div>
-    </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <div class="container">
-                <span><i class="fas fa-text-height"></i>Textgröße</span>
-                <span><i class="fas fa-adjust"></i>Kontrast</span>
-                <span><i class="fa fa-camera-retro"></i></span>
-            </div>
 
-            <div class="container">
-                <span>
-                    <a href="http://www.instagram.de">
-                        <img src="~/Content/Images/SocialMedia/instagram.png" class="img-center" height="50" width="50" />
-                    </a>
-                </span>
-                <span>
-                    <a href="http://www.facebook.de">
-                        <img src="~/Content/Images/SocialMedia/facebook.png" class="img-center" height="50" width="50" />
-                    </a>
-                </span>
-                <span>
-                    <a href="http://www.twitter.de">
-                        <img src="~/Content/Images/SocialMedia/twitter.png" class="img-center" height="50" width="50" />
-                    </a>
-                </span>
-            </div>
+        <div class="socialmedia">
+            <h2>Social Media</h2>
 
-            <div class="container">
-                <a>@Html.ActionLink("Kontakt", "Kontakt", "Home")</a> |
-                <a>@Html.ActionLink("Impressum", "Impressum", "Home")</a> |
-                <a>@Html.ActionLink("Datenschutz", "Datenschutz", "Home")</a> |
-                <a>@Html.ActionLink("Nutzungsbedingungen", "Nutzungsbedingungen", "Home")</a> |
-                <a>@Html.ActionLink("Weitere Gemeindeseiten", "WeitereGemeindeseiten", "Home")</a>
+            <div class="n-column-wrapper">
+                <a class="btn" href="http://www.instagram.de" title=""><img src="~/Content/Images/SocialMedia/instagram.png" alt="" title=""></a>
+                <a class="btn" href="http://www.facebook.de" title=""><img src="~/Content/Images/SocialMedia/facebook.png" alt="" title=""></a>
+                <a class="btn" href="http://www.twitter.de" title=""><img src="~/Content/Images/SocialMedia/twitter.png" alt="" title=""></a>
             </div>
+        </div>
 
+        <div class="footer-nav">
+            @Html.ActionLink("Kontakt", "Kontakt", "Home")
+            @Html.ActionLink("Impressum", "Impressum", "Home")
+            @Html.ActionLink("Datenschutz", "Datenschutz", "Home")
+            @Html.ActionLink("Nutzungsbedingungen", "Nutzungsbedingungen", "Home")
+            @Html.ActionLink("Weitere Gemeindeseiten", "WeitereGemeindeseiten", "Home")
+        </div>
+
+        <div class="text-center">
             <p>&copy; @DateTime.Now.Year - Große Kreisstadt Mosbach</p>
-        </footer>
-    </div>
+        </div>
+    </footer>
+
+    <script>
+        function myFunction() {
+            var x = document.getElementById("mainNavigationLinks");
+
+            if (x.style.display === "block") {
+                x.style.display = "none";
+            } else {
+                x.style.display = "block";
+            }
+        }
+    </script>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
 </body>
 </html>
