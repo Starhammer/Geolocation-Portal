@@ -1,166 +1,174 @@
 ﻿<!DOCTYPE html>
-
-<script runat="server">
-
-    protected void Page_Load(object sender, EventArgs e)
-    {
-        StringBuilder sb = new StringBuilder();
-        // Get cookie from the current request.
-        HttpCookie cookie = Request.Cookies.Get("DateCookieExample");
-
-        // Check if cookie exists in the current request.
-        if (cookie == null)
-        {
-            sb.Append("Cookie was not received from the client. ");
-            sb.Append("Creating cookie to add to the response. <br/>");
-            // Create cookie.
-            cookie = new HttpCookie("font_is_large");
-            // Set value of cookie to current date time.
-            cookie.Value = false;
-            // Set cookie to expire in 10 minutes.
-            // cookie.Expires = DateTime.Now.AddMinutes(10d);
-            // Insert the cookie in the current HttpResponse.
-            Response.Cookies.Add(cookie);
-        }
-        else
-        {
-            sb.Append("Cookie retrieved from client. <br/>");
-            sb.Append("Cookie Name: " + cookie.Name + "<br/>");
-            sb.Append("Cookie Value: " + cookie.Value + "<br/>");
-            sb.Append("Cookie Expiration Date: " +
-                cookie.Expires.ToString() + "<br/>");
-        }
-        Label1.Text = sb.ToString();
-    }
-
-</script>
-
 <html>
-<head runat="server">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Geo-Portal Mosbach</title>
-    <link href="~/Content/font-awesome.css" rel="stylesheet" />
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-</head>
-<body runat="server" id="MyBody" onload="pageLoad();">
-    <header>
-        <div class="container two-column-wrapper">
-            <a href="@Url.Action("Index", "Home")" title="Weiter zur Startseite">
-                <div class="logo"></div>
-            </a>
-
-            <div class="nav-bar-wrapper">
-                <a href="#" title="Suche starten">
-                    <i class="fa fa-search"></i>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Geo-Portal Mosbach</title>
+        <link href="~/Content/font-awesome.css" rel="stylesheet" />
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+    </head>
+    <body id="MyBody" onload="checkPageSettings()">
+        <header id="MyHeader">
+            <div class="container two-column-wrapper">
+                <a href="@Url.Action("Index", "Home")" title="Weiter zur Startseite">
+                    <div class="logo"></div>
                 </a>
 
-                <a href="@Url.Action("Index", "Benutzer")" title="Weiter zur Loginmaske">
-                    <i class="fa fa-user"></i>
-                </a>
+                <div class="nav-bar-wrapper">
+                    <a href="#" title="Suche starten">
+                        <i class="fa fa-search"></i>
+                    </a>
 
-                <a href="javascript:void(0);" class="icon" onclick="openMainNavigation()">
-                    <i class="fa fa-bars"></i>
-                </a>
+                    <a href="@Url.Action("Index", "Benutzer")" title="Weiter zur Loginmaske">
+                        <i class="fa fa-user"></i>
+                    </a>
+
+                    <a href="javascript:void(0);" class="icon" onclick="openMainNavigation()">
+                        <i class="fa fa-bars"></i>
+                    </a>
+                </div>
             </div>
-        </div>
-    </header>
+        </header>
 
-    <nav id="mainNavigationLinks">
-        @Html.ActionLink("Home", "Index", "Home")
-        @Html.ActionLink("Open Data", "Index", "OpenData")
-        @Html.ActionLink("Geo Data", "Index", "GeoData")
-        @Html.ActionLink("FAQ", "Index", "FAQ", new { @title = "Frequently Asked Questions" })
+        <nav id="mainNavigationLinks">
+            @Html.ActionLink("Home", "Index", "Home")
+            @Html.ActionLink("Open Data", "Index", "OpenData")
+            @Html.ActionLink("Geo Data", "Index", "GeoData")
+            @Html.ActionLink("FAQ", "Index", "FAQ", new { @title = "Frequently Asked Questions" })
 
-        @Html.ActionLink("Kontakt", "Kontakt", "Home")
-        @Html.ActionLink("Impressum", "Impressum", "Home")
-        @Html.ActionLink("Datenschutz", "Datenschutz", "Home")
-        @Html.ActionLink("Nutzungsbedingungen", "Nutzungsbedingungen", "Home")
-        @Html.ActionLink("Weitere Gemeindeseiten", "WeitereGemeindeseiten", "Home")
-    </nav>
-
-    <main>
-        <div class="container">
-            @RenderBody()
-
-            <asp:Label id="Label1" runat="server"></asp:Label>
-        </div>
-    </main>
-
-    <footer>
-        <div runat="server" id="page-settings">
-            <h2>Barrierefreiheit</h2>
-
-            <div class="n-column-wrapper">
-                <a class="icon" href="javascript:void(0);" onclick="changeFontSize()">
-                    <i class="fa fa-text-height"></i>
-                    <p>Textgröße</p>
-                </a>
-
-                <a class="icon" href="javascript:void(0);" onclick="changeColorTheme()">
-                    <i class="fa fa-adjust"></i>
-                    <p>Kontrast</p>
-                </a>
-            </div>
-        </div>
-
-        <div class="socialmedia">
-            <h2>Social Media</h2>
-
-            <div class="n-column-wrapper">
-                <a class="btn" href="http://www.instagram.de" title=""><img src="~/Content/Images/SocialMedia/instagram.png" alt="" title=""></a>
-                <a class="btn" href="http://www.facebook.de" title=""><img src="~/Content/Images/SocialMedia/facebook.png" alt="" title=""></a>
-                <a class="btn" href="http://www.twitter.de" title=""><img src="~/Content/Images/SocialMedia/twitter.png" alt="" title=""></a>
-            </div>
-        </div>
-
-        <div class="footer-nav">
             @Html.ActionLink("Kontakt", "Kontakt", "Home")
             @Html.ActionLink("Impressum", "Impressum", "Home")
             @Html.ActionLink("Datenschutz", "Datenschutz", "Home")
             @Html.ActionLink("Nutzungsbedingungen", "Nutzungsbedingungen", "Home")
             @Html.ActionLink("Weitere Gemeindeseiten", "WeitereGemeindeseiten", "Home")
+        </nav>
 
-            <div class="text-center whiteColor">
-                <p>&copy; @DateTime.Now.Year - Große Kreisstadt Mosbach</p>
+        <main>
+            <div class="container">
+                @RenderBody()
+
+                <asp:Label id="Label1" runat="server"></asp:Label>
             </div>
-        </div>
-    </footer>
+        </main>
 
-    <script>
-        function openMainNavigation() {
-            var x = document.getElementById("mainNavigationLinks");
+        <footer id="myFooter">
+            <div id="page-settings">
+                <h2>Barrierefreiheit</h2>
 
-            if (x.style.display === "block") {
-                x.style.display = "none";
-            } else {
-                x.style.display = "block";
+                <div class="n-column-wrapper">
+                    <a class="icon" href="javascript:void(0);" onclick="changeFontSize(true)">
+                        <i class="fa fa-text-height"></i>
+                        <p>Textgröße</p>
+                    </a>
+
+                    <a class="icon" href="javascript:void(0);" onclick="changeColorTheme(true)">
+                        <i class="fa fa-adjust"></i>
+                        <p>Kontrast</p>
+                    </a>
+                </div>
+            </div>
+
+            <div class="socialmedia">
+                <h2>Social Media</h2>
+
+                <div class="n-column-wrapper">
+                    <a class="btn" href="http://www.instagram.de" title=""><img src="~/Content/Images/SocialMedia/instagram.png" alt="" title=""></a>
+                    <a class="btn" href="http://www.facebook.de" title=""><img src="~/Content/Images/SocialMedia/facebook.png" alt="" title=""></a>
+                    <a class="btn" href="http://www.twitter.de" title=""><img src="~/Content/Images/SocialMedia/twitter.png" alt="" title=""></a>
+                </div>
+            </div>
+
+            <div class="footer-nav">
+                @Html.ActionLink("Kontakt", "Kontakt", "Home")
+                @Html.ActionLink("Impressum", "Impressum", "Home")
+                @Html.ActionLink("Datenschutz", "Datenschutz", "Home")
+                @Html.ActionLink("Nutzungsbedingungen", "Nutzungsbedingungen", "Home")
+                @Html.ActionLink("Weitere Gemeindeseiten", "WeitereGemeindeseiten", "Home")
+
+                <div class="text-center whiteColor">
+                    <p>&copy; @DateTime.Now.Year - Große Kreisstadt Mosbach</p>
+                </div>
+            </div>
+        </footer>
+
+        <script type="text/javascript">
+            function openMainNavigation() {
+                var x = document.getElementById("mainNavigationLinks");
+
+                if (x.style.display === "block") {
+                    x.style.display = "none";
+                } else {
+                    x.style.display = "block";
+                }
             }
-        }
 
-        var font_is_large = false;
-        function changeFontSize() {
-            var currentFontSize = document.getElementById("MyBody");
-
-            if (!font_is_large) {
-                document.getElementById("MyBody").style.fontSize = "1.8em";
-                font_is_large = true;
-            } else {
-                document.getElementById("MyBody").style.fontSize = "1.1em";
-                font_is_large = false;
+            function checkPageSettings() {
+                changeFontSize(false);
+                changeColorTheme(false);
             }
-        }
 
-        function changeColorTheme() {
-            Console.log("changeColorTheme Button clicked");
-        }
-    </script>
+            function changeFontSize(btnClicked) {
+                if (localStorage["is_font_large"] == null) {
+                    localStorage["is_font_large"] = true;
+                }
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+                console.log("changeFontSize Method called")
+                if (btnClicked) {
+                    console.log("btnClicked is true")
+                    console.log("change is_font_large session variable");
+                    if (localStorage["is_font_large"] == "true") {
+                        localStorage["is_font_large"] = false;
+                        console.log("to false");
+                    } else {
+                        localStorage["is_font_large"] = true;
+                        console.log("to true");
+                    }
+                }
 
-</body>
+                if (localStorage["is_font_large"] == "true") {
+                    document.getElementById("MyBody").style.fontSize = "1.6em";
+                    console.log("set fontSize to 1.6");
+                } else {
+                    document.getElementById("MyBody").style.fontSize = "1.1em";
+                    console.log("set fontSize to 1.1");
+                }
+            }
+
+            function changeColorTheme(btnClicked) {
+                if (localStorage["is_colorTheme_changed"] == null) {
+                    localStorage["is_colorTheme_changed"] = true;
+                }
+
+                console.log("changeColorTheme Method called")
+                if (btnClicked) {
+                    console.log("btnClicked is true")
+                    console.log("change is_colorTheme_changed session variable");
+                    if (localStorage["is_colorTheme_changed"] == "true") {
+                        localStorage["is_colorTheme_changed"] = false;
+                        console.log("to false");
+                    } else {
+                        localStorage["is_colorTheme_changed"] = true;
+                        console.log("to true");
+                    }
+                }
+
+                if (localStorage["is_colorTheme_changed"] == "true") {
+                    document.getElementById("MyHeader").style.backgroundColor = "#f1f1f1";
+                    document.getElementById("page-settings").style.backgroundColor = "#f1f1f1";
+                    console.log("set backgroundColor to #f1f1f1");
+                } else {
+                    document.getElementById("MyHeader").style.backgroundColor = "#d7efff";
+                    document.getElementById("page-settings").style.backgroundColor = "#a6a6a6";
+                    console.log("set backgroundColor to #d7efff");
+                }
+            }
+        </script>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+
+    </body>
 </html>
