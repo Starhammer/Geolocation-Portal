@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="e5797ad2-1a7e-4a0f-b830-0fa321f1d447" ChangeDateTime="12/12/2019 20:11:28">
+    <Property Name="ElementName" Value="[dbo].[record].[dataset_upload_date]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[record]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="dataset_upload" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="024d44c6-cba7-4c1f-b55b-59af9883f0e6" ChangeDateTime="12/12/2019 20:23:42">
+    <Property Name="ElementName" Value="[dbo].[file_search_tag].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[file_search_tag]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="file_id" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="731873d0-f8af-454f-acb0-5ffa4e849957" ChangeDateTime="12/12/2019 20:36:40">
+    <Property Name="ElementName" Value="[dbo].[record_comment].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[record_comment]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="dataset_id" />
+  </Operation>
+</Operations>
