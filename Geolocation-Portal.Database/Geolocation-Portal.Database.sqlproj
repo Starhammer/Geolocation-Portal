@@ -76,10 +76,9 @@
     <Build Include="dbo\Tables\user.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Geolocation-Portal.Database.publish.xml" />
-    <None Include="Geolocation-Portal_1.Database.publish.xml" />
+    <RefactorLog Include="Geolocation-Portal.Database.refactorlog" />
   </ItemGroup>
   <ItemGroup>
-    <RefactorLog Include="Geolocation-Portal.Database.refactorlog" />
+    <None Include="Geolocation-Portal.Database.publish.xml" />
   </ItemGroup>
 </Project>
