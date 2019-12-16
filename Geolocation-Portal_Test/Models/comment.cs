@@ -12,19 +12,12 @@ namespace Geolocation_Portal_Test.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class user
+    public partial class comment
     {
         public int Id { get; set; }
-        public int role_id { get; set; }
-        public int department_id { get; set; }
-        public string first_name { get; set; }
-        public string last_name { get; set; }
-        public string username { get; set; }
-        public string password { get; set; }
-        public Nullable<System.DateTime> last_password_change { get; set; }
-        public System.DateTime create_date { get; set; }
-        public bool account_active { get; set; }
-        public Nullable<int> login_attempts { get; set; }
-        public Nullable<System.DateTime> last_login { get; set; }
+        public string title { get; set; }
+        public string text { get; set; }
+        public string person_name { get; set; }
+        public int bewertung { get; set; }
     }
 }

@@ -12,10 +12,9 @@ namespace Geolocation_Portal_Test.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class role
+    public partial class file_search_tag
     {
-        public int Id { get; set; }
-        public string name { get; set; }
-        public string description { get; set; }
+        public int file_id { get; set; }
+        public int search_tag_id { get; set; }
     }
 }

@@ -12,10 +12,9 @@ namespace Geolocation_Portal_Test.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class role
+    public partial class record_comment
     {
-        public int Id { get; set; }
-        public string name { get; set; }
-        public string description { get; set; }
+        public int dataset_id { get; set; }
+        public int comment_id { get; set; }
     }
 }
