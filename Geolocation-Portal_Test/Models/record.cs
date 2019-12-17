@@ -14,6 +14,12 @@ namespace Geolocation_Portal_Test.Models
     
     public partial class record
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public record()
+        {
+            this.file = new HashSet<file>();
+        }
+    
         public int Id { get; set; }
         public System.DateTime dataset_upload { get; set; }
         public System.DateTime dataset_modified_date { get; set; }
@@ -25,5 +31,12 @@ namespace Geolocation_Portal_Test.Models
         public Nullable<int> rating { get; set; }
         public Nullable<int> role_id { get; set; }
         public bool record_active { get; set; }
+    
+        public virtual category category { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<file> file { get; set; }
+        public virtual publisher publisher { get; set; }
+        public virtual comment comment { get; set; }
+        public virtual licence licence { get; set; }
     }
 }

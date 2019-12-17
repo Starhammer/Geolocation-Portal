@@ -14,10 +14,19 @@ namespace Geolocation_Portal_Test.Models
     
     public partial class category
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public category()
+        {
+            this.record = new HashSet<record>();
+        }
+    
         public int Id { get; set; }
         public int parent_id { get; set; }
         public string name { get; set; }
         public string description { get; set; }
         public string icon { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<record> record { get; set; }
     }
 }

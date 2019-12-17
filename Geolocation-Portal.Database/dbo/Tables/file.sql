@@ -7,5 +7,6 @@
 	[file_icon] NVARCHAR(50) NULL,
 	[diagram_data] INT NULL ,
 	[map_data] INT NULL,
-	[file_size] FLOAT NULL 
+	[file_size] FLOAT NULL, 
+    CONSTRAINT [FK_file_record] FOREIGN KEY (record_id) REFERENCES record(id) 
 )

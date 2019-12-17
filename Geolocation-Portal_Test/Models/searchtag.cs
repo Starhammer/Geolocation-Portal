@@ -12,9 +12,18 @@ namespace Geolocation_Portal_Test.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class file_search_tag
+    public partial class searchtag
     {
-        public int file_id { get; set; }
-        public int search_tag_id { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public searchtag()
+        {
+            this.file = new HashSet<file>();
+        }
+    
+        public int Id { get; set; }
+        public string name { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<file> file { get; set; }
     }
 }

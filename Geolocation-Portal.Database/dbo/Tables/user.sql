@@ -11,6 +11,7 @@
 	[create_date] DATETIME2 NOT NULL,
 	[account_active] BIT NOT NULL DEFAULT 0,
 	[login_attempts] INT NULL,
-	[last_login] DATETIME2 NULL
+	[last_login] DATETIME2 NULL, 
+    CONSTRAINT [FK_user_role] FOREIGN KEY (role_id) REFERENCES [role](id)
 )
 

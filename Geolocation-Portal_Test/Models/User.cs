@@ -26,5 +26,7 @@ namespace Geolocation_Portal_Test.Models
         public bool account_active { get; set; }
         public Nullable<int> login_attempts { get; set; }
         public Nullable<System.DateTime> last_login { get; set; }
+    
+        public virtual role role { get; set; }
     }
 }
