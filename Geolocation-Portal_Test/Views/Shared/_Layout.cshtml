@@ -5,45 +5,69 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Geo-Portal Mosbach</title>
-        <link href="~/Content/font-awesome.css" rel="stylesheet" />
+        <link href="~/Content/font-awesome.min.css" rel="stylesheet" type="text/css" />
         @Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")
     </head>
     <body id="MyBody" onload="checkPageSettings()">
         <header id="MyHeader">
-            <div class="container two-column-wrapper">
-                <a href="@Url.Action("Index", "Home")" title="Weiter zur Startseite">
-                    <div class="logo"></div>
+            <nav class="navbar navbar-expand-md">
+                <a class="navbar-brand" href="@Url.Action("Index", "Home")">
+                    <img src="~/Content/Images/logo-mosbach.png" height="60" alt="">
                 </a>
 
-                <div class="nav-bar-wrapper">
-                    <a href="#" title="Suche starten">
-                        <i class="fa fa-search"></i>
-                    </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"><i class="fa fa-bars"></i></span>
+                </button>
 
-                    <a href="@Url.Action("Index", "Benutzer")" title="Weiter zur Loginmaske">
-                        <i class="fa fa-user"></i>
-                    </a>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="p-2 text-dark" href="@Url.Action("Index", "Home")">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="p-2 text-dark" href="@Url.Action("Index", "OpenData")">Open Data</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="p-2 text-dark" href="@Url.Action("Index", "GeoData")">Geo Data</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="p-2 text-dark" href="@Url.Action("Index", "FAQ")">FAQ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="p-2 text-dark noTabletDisplay" href="@Url.Action("Kontakt", "Home")">Kontakt</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="p-2 text-dark noTabletDisplay" href="@Url.Action("Impressum", "Home")">Impressum</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="p-2 text-dark noTabletDisplay" href="@Url.Action("Datenschutz", "Home")">Datenschutz</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="p-2 text-dark noTabletDisplay" href="@Url.Action("Nutzungsbedingungen", "Home")">Nutzungsbedingungen</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="p-2 text-dark noTabletDisplay" href="@Url.Action("WeitereGemeindeseiten", "Home")">Weitere Gemeindeseiten</a>
+                        </li>
+                    </ul>
 
-                    <a href="javascript:void(0);" class="icon" onclick="openMainNavigation()">
-                        <i class="fa fa-bars"></i>
-                    </a>
+                    <div class="noDesktopDisplay nav-tool-bar form-inline mt-2 mt-md-0">
+                        <a href="#" title="Suche starten">
+                            <i class="fa fa-search"></i>
+                        </a>
+
+                        <a href="@Url.Action("Index", "Benutzer")" title="Weiter zur Loginmaske">
+                            <i class="fa fa-user"></i>
+                        </a>
+                    </div>
+
+                    <form class="showOnDesktop form-inline mt-2 mt-md-0">
+                        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
                 </div>
-            </div>
+            </nav>
         </header>
-
-        <nav id="mainNavigationLinks">
-            @Html.ActionLink("Home", "Index", "Home")
-            @Html.ActionLink("Open Data", "Index", "OpenData")
-            @Html.ActionLink("Geo Data", "Index", "GeoData")
-            @Html.ActionLink("FAQ", "Index", "FAQ", new { @title = "Frequently Asked Questions" })
-
-            @Html.ActionLink("Kontakt", "Kontakt", "Home")
-            @Html.ActionLink("Impressum", "Impressum", "Home")
-            @Html.ActionLink("Datenschutz", "Datenschutz", "Home")
-            @Html.ActionLink("Nutzungsbedingungen", "Nutzungsbedingungen", "Home")
-            @Html.ActionLink("Weitere Gemeindeseiten", "WeitereGemeindeseiten", "Home")
-        </nav>
 
         <main>
             <div class="container">
@@ -53,7 +77,7 @@
             </div>
         </main>
 
-        <footer id="myFooter">
+        <footer>
             <div id="page-settings">
                 <h2>Barrierefreiheit</h2>
 
@@ -70,7 +94,12 @@
                 </div>
             </div>
 
-            <div class="socialmedia">
+            <div id="backtotop">
+                <a href="#top"><i class="fa fa-arrow-circle-up"></i></a>
+                <p>Nach oben</p>
+            </div>
+
+            <div id="socialmedia">
                 <h2>Social Media</h2>
 
                 <div class="n-column-wrapper">
@@ -80,30 +109,20 @@
                 </div>
             </div>
 
-            <div class="footer-nav">
+            <div id="footer-nav">
                 @Html.ActionLink("Kontakt", "Kontakt", "Home")
                 @Html.ActionLink("Impressum", "Impressum", "Home")
                 @Html.ActionLink("Datenschutz", "Datenschutz", "Home")
                 @Html.ActionLink("Nutzungsbedingungen", "Nutzungsbedingungen", "Home")
                 @Html.ActionLink("Weitere Gemeindeseiten", "WeitereGemeindeseiten", "Home")
 
-                <div class="text-center whiteColor">
+                <div class="text-center">
                     <p>&copy; @DateTime.Now.Year - Große Kreisstadt Mosbach</p>
                 </div>
             </div>
         </footer>
 
         <script type="text/javascript">
-            function openMainNavigation() {
-                var x = document.getElementById("mainNavigationLinks");
-
-                if (x.style.display === "block") {
-                    x.style.display = "none";
-                } else {
-                    x.style.display = "block";
-                }
-            }
-
             function checkPageSettings() {
                 changeFontSize(false);
                 changeColorTheme(false);
@@ -128,11 +147,13 @@
                 }
 
                 if (localStorage["is_font_large"] == "true") {
-                    document.getElementById("MyBody").style.fontSize = "1.6em";
-                    console.log("set fontSize to 1.6");
+                    document.documentElement.style.fontSize = "1.6rem";
+                    //document.getElementById("MyBody").style.fontSize = "1.6em";
+                    console.log("set fontSize to 1.6rem");
                 } else {
-                    document.getElementById("MyBody").style.fontSize = "1.1em";
-                    console.log("set fontSize to 1.1");
+                    document.documentElement.style.fontSize = "1rem";
+                    //document.getElementById("MyBody").style.fontSize = "1em";
+                    console.log("set fontSize to 1rem");
                 }
             }
 
@@ -157,10 +178,14 @@
                 if (localStorage["is_colorTheme_changed"] == "true") {
                     document.getElementById("MyHeader").style.backgroundColor = "#f1f1f1";
                     document.getElementById("page-settings").style.backgroundColor = "#f1f1f1";
+                    document.getElementById("socialmedia").style.backgroundColor = "#f1f1f1";
+                    document.getElementById("footer-nav").style.backgroundColor = "#f1f1f1";
                     console.log("set backgroundColor to #f1f1f1");
                 } else {
                     document.getElementById("MyHeader").style.backgroundColor = "#d7efff";
                     document.getElementById("page-settings").style.backgroundColor = "#a6a6a6";
+                    document.getElementById("socialmedia").style.backgroundColor = "#d7efff";
+                    document.getElementById("footer-nav").style.backgroundColor = "#d7efff";
                     console.log("set backgroundColor to #d7efff");
                 }
             }
