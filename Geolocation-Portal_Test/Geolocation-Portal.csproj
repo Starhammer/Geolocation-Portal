@@ -225,9 +225,6 @@
     <Compile Include="Models\file.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\file_search_tag.cs">
-      <DependentUpon>DatabaseModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\licence.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
@@ -238,16 +235,13 @@
     <Compile Include="Models\record.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\record_comment.cs">
+    <Compile Include="Models\role.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Role.cs">
+    <Compile Include="Models\searchtag.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\search_tag.cs">
-      <DependentUpon>DatabaseModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\User.cs">
+    <Compile Include="Models\user.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -273,6 +267,13 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="icons\Calendar-Icon.png" />
+    <Content Include="icons\Category\test.png" />
+    <Content Include="icons\Excel-Icon.png" />
+    <Content Include="icons\Map-Icon.png" />
+    <Content Include="icons\Star-Black-Icon.png" />
+    <Content Include="icons\Star-Icon.png" />
+    <Content Include="icons\Word-Icon.png" />
     <Content Include="Models\DatabaseModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>DatabaseModel.Context.cs</LastGenOutput>
@@ -444,6 +445,8 @@
     <Content Include="Views\user\Details.cshtml" />
     <Content Include="Views\user\Edit.cshtml" />
     <Content Include="Views\user\Index.cshtml" />
+    <Content Include="Views\OpenData\_files.cshtml" />
+    <Content Include="Views\OpenData\_rating.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,7 +1,39 @@
-﻿
+﻿@model IEnumerable<Geolocation_Portal_Test.Models.record>
+
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Index</h2>
+<div class="card-deck">
+    @foreach (var item in Model)
+    {
+    <div class="card bg-light mb-3" style="max-width: 30rem;">
+        <div class="card-header">
+            <h4>
+                <img class="icon" width="20" height="20" src="~/icons/Category/@Html.DisplayFor(modelItem => item.category.icon)" />
+                @Html.DisplayFor(modelItem => item.title)
+            </h4>
+        </div>
+        <div class="card-body">
+            <p class="card-subtitle">
+                <div>
+                    <span>
+                        <img class="icon" width="20" height="20" src="~/icons/Calendar-Icon.png" />
+                        @Html.DisplayFor(modelItem => item.dataset_modified_date)
+                    </span>
+                    @Html.Partial("_rating", item.rating)
+                </div>
+            </p>
+            <p class="card-text">
+                @Html.DisplayFor(modelItem => item.description)
+            </p>
 
+        </div>
+        <div class="card-footer" style="min-height:50px;">
+            @Html.Action("Files", "OpenData", new { id = item.Id })
+        </div>
+        <a href="#" class="stretched-link"></a>
+    </div>
+    }
+</div>
