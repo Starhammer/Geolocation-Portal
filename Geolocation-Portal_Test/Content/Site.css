@@ -1,9 +1,11 @@
 ﻿* {
     box-sizing: border-box;
+    scroll-behavior: smooth;
 }
 
 html, body {
     height: 100%;
+    font-size: 16px;
 }
 
 body {
@@ -13,23 +15,20 @@ body {
     margin: 0;
     padding: 0;
     font-family: Calibri;
-    font-size: 1em;
+    font-size: 1rem;
 }
 
 header {
     background-color: #d7efff;
-    width: 100%;
-    padding: 5px;
+    font-size: 24px;
+    font-weight: bold;
 }
 
-.nav-bar-wrapper {
-    text-align: right;
-    font-size: 1.8em;
-    padding-top: 20px;
-    padding-right: 5px;
+a {
+    color: black;
 }
 
-.nav-bar-wrapper a {
+.nav-tool-bar a {
     text-decoration: none;
     color: black;
     padding: 10px;
@@ -41,32 +40,6 @@ header {
     /*background-position: center;*/
     background-size: contain;
     height: 100%;
-}
-
-#mainNavigationLinks {
-    position: relative;
-    display: none;
-    background-color: #262626;
-}
-
-#mainNavigationLinks a {
-    color: white;
-    padding: 14px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-#mainNavigationLinks a.icon {
-    background: black;
-    display: block;
-    position: absolute;
-    right: 0;
-    top: 0;
-}
-
-#mainNavigationLinks a:hover {
-    background-color: #ddd;
-    color: black;
 }
 
 .active {
@@ -84,9 +57,43 @@ article {
     margin: 5px;
 }
 
+main > article {
+    padding-top: 10px;
+    margin: auto;
+    max-width: 1024px;
+    margin-bottom: 8px;
+}
+
+.toolBar {
+    text-align: right;
+    background-color: gray;
+    padding: 10px;
+    font-size: 1.8em;
+}
+
+.record-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.record-container section {
+    background-color: #ededed;
+    padding: 5px;
+    margin: 5px;
+    box-shadow: 2px;
+    box-shadow: 3px 3px 1px #aaaaaa;
+    max-width: 500px;
+}
+
 .container {
     position: relative;
     width: 100%;
+    padding-right: 5px;
+    padding-left: 5px;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .image {
@@ -127,9 +134,23 @@ article {
     font-size: 1.2em;
 }
 
+.fa-bars {
+    font-size: 1.8em;
+}
+
+.noMobilDisplay,
+.showOnDesktop {
+    display: none;
+}
+
+.nolink,
 .nolink a {
     text-decoration: none;
     color: black;
+}
+
+.nolink:hover {
+    text-decoration: underline;
 }
 
 .rightAlign {
@@ -138,14 +159,6 @@ article {
 
 .whiteColor {
     color: white;
-}
-
-.record-container section {
-    background-color: #ededed;
-    padding: 5px;
-    margin-bottom: 8px;
-    box-shadow: 2px;
-    box-shadow: 3px 3px 1px #aaaaaa;
 }
 
 .map-wrapper {
@@ -166,13 +179,17 @@ article {
     justify-content: center;
 }
 
+.flexspacebetween {
+    justify-content: space-between;
+}
+
 footer {
     display: contents;
     text-align: center;
 }
 
 #page-settings {
-    background-color: #a6a6a6;
+    background-color: #e8e8e8;
     color: black;
 }
 
@@ -181,34 +198,53 @@ footer {
     color: black;
 }
 
-.socialmedia {
-    background-color: #595959;
+#socialmedia, #backtotop {
+    background-color: #d7efff;
     padding-bottom: 10px;
 }
 
-.socialmedia img {
+#backtotop {
+    color: black;
+}
+
+#backtotop a {
+    font-size: 2.5em;
+}
+
+#socialmedia img {
     max-height: 40px;
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    filter: url(desaturate.svg#greyscale);
+    filter: gray;
+    -webkit-filter: grayscale(1);
 }
 
-.footer-nav {
-    background-color: #0095e3;
-    color: white;
+#socialmedia img:hover {
+    filter: none;
 }
 
-.footer-nav ul {
+#footer-nav {
+    background-color: #d7efff;
+}
+
+#footer-nav ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
 
-.footer-nav a {
+#footer-nav a {
     text-decoration: none;
-    color: white;
+    color: black;
     width: 100%;
     display: inline-block;
 }
 
-.footer-nav a:hover {
+#footer-nav a:hover {
     text-decoration: underline;
 }
 
@@ -224,4 +260,38 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+/* Extra small devices (portrait phones, less than 576px)
+No media query for `xs` since this is the default in Bootstrap */
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .noMobilDisplay {
+        display: block;
+    }
+
+    .noTabletDisplay {
+        display: none;
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .noDesktopDisplay {
+        display: none;
+    }
+
+    .showOnDesktop {
+        display: block;
+    }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    ...
 }
