@@ -12,12 +12,12 @@ namespace Geolocation_Portal_Test.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class role
+    public partial class publisher
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public role()
+        public publisher()
         {
-            this.user = new HashSet<user>();
+            this.record = new HashSet<record>();
         }
     
         public int Id { get; set; }
@@ -25,6 +25,6 @@ namespace Geolocation_Portal_Test.Models
         public string description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<user> user { get; set; }
+        public virtual ICollection<record> record { get; set; }
     }
 }

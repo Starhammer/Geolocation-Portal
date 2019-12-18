@@ -12,19 +12,18 @@ namespace Geolocation_Portal_Test.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class role
+    public partial class file
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public role()
-        {
-            this.user = new HashSet<user>();
-        }
-    
         public int Id { get; set; }
-        public string name { get; set; }
-        public string description { get; set; }
+        public int record_id { get; set; }
+        public System.DateTime file_upload_date { get; set; }
+        public Nullable<int> download_count { get; set; }
+        public string file_icon { get; set; }
+        public Nullable<int> diagram_data { get; set; }
+        public Nullable<int> map_data { get; set; }
+        public Nullable<double> file_size { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<user> user { get; set; }
+        public virtual record record { get; set; }
+        public virtual searchtag searchtag { get; set; }
     }
 }

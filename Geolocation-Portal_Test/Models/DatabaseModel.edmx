@@ -1,0 +1,635 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="parent_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="ntext" />
+          <Property Name="icon" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="comment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="50" />
+          <Property Name="text" Type="ntext" />
+          <Property Name="person_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="bewertung" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="file">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="record_id" Type="int" Nullable="false" />
+          <Property Name="file_upload_date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="download_count" Type="int" />
+          <Property Name="file_icon" Type="nvarchar" MaxLength="50" />
+          <Property Name="diagram_data" Type="int" />
+          <Property Name="map_data" Type="int" />
+          <Property Name="file_size" Type="float" />
+        </EntityType>
+        <EntityType Name="fileSearchtag">
+          <Key>
+            <PropertyRef Name="file_id" />
+          </Key>
+          <Property Name="file_id" Type="int" Nullable="false" />
+          <Property Name="search_tag_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="licence">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="ntext" />
+        </EntityType>
+        <EntityType Name="publisher">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="ntext" />
+        </EntityType>
+        <EntityType Name="record">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="dataset_upload" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="dataset_modified_date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="ntext" />
+          <Property Name="category_id" Type="int" />
+          <Property Name="licence_id" Type="int" />
+          <Property Name="publisher_id" Type="int" />
+          <Property Name="rating" Type="int" />
+          <Property Name="role_id" Type="int" />
+          <Property Name="record_active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="recordComment">
+          <Key>
+            <PropertyRef Name="dataset_id" />
+          </Key>
+          <Property Name="dataset_id" Type="int" Nullable="false" />
+          <Property Name="comment_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="ntext" />
+        </EntityType>
+        <EntityType Name="searchtag">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="name" Type="ntext" Nullable="false" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="role_id" Type="int" Nullable="false" />
+          <Property Name="department_id" Type="int" Nullable="false" />
+          <Property Name="first_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="last_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="last_password_change" Type="datetime2" Precision="7" />
+          <Property Name="create_date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="account_active" Type="bit" Nullable="false" />
+          <Property Name="login_attempts" Type="int" />
+          <Property Name="last_login" Type="datetime2" Precision="7" />
+        </EntityType>
+        <Association Name="FK_file_record">
+          <End Role="record" Type="Self.record" Multiplicity="1" />
+          <End Role="file" Type="Self.file" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="record">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="file">
+              <PropertyRef Name="record_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_fileSearchtag_file">
+          <End Role="file" Type="Self.file" Multiplicity="1" />
+          <End Role="fileSearchtag" Type="Self.fileSearchtag" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="file">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="fileSearchtag">
+              <PropertyRef Name="file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_fileSearchtag_searchStag">
+          <End Role="searchtag" Type="Self.searchtag" Multiplicity="1" />
+          <End Role="fileSearchtag" Type="Self.fileSearchtag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="searchtag">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="fileSearchtag">
+              <PropertyRef Name="search_tag_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_record_category">
+          <End Role="category" Type="Self.category" Multiplicity="0..1" />
+          <End Role="record" Type="Self.record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="record">
+              <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_record_publisher">
+          <End Role="publisher" Type="Self.publisher" Multiplicity="0..1" />
+          <End Role="record" Type="Self.record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="publisher">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="record">
+              <PropertyRef Name="publisher_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_recordComment_comment">
+          <End Role="comment" Type="Self.comment" Multiplicity="1" />
+          <End Role="recordComment" Type="Self.recordComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="comment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="recordComment">
+              <PropertyRef Name="comment_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_recordComment_record">
+          <End Role="record" Type="Self.record" Multiplicity="1" />
+          <End Role="recordComment" Type="Self.recordComment" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="record">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="recordComment">
+              <PropertyRef Name="dataset_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_role">
+          <End Role="role" Type="Self.role" Multiplicity="1" />
+          <End Role="user" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="comment" EntityType="Self.comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="file" EntityType="Self.file" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="fileSearchtag" EntityType="Self.fileSearchtag" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="licence" EntityType="Self.licence" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="publisher" EntityType="Self.publisher" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="record" EntityType="Self.record" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="recordComment" EntityType="Self.recordComment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="role" EntityType="Self.role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="searchtag" EntityType="Self.searchtag" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_file_record" Association="Self.FK_file_record">
+            <End Role="record" EntitySet="record" />
+            <End Role="file" EntitySet="file" />
+          </AssociationSet>
+          <AssociationSet Name="FK_fileSearchtag_file" Association="Self.FK_fileSearchtag_file">
+            <End Role="file" EntitySet="file" />
+            <End Role="fileSearchtag" EntitySet="fileSearchtag" />
+          </AssociationSet>
+          <AssociationSet Name="FK_fileSearchtag_searchStag" Association="Self.FK_fileSearchtag_searchStag">
+            <End Role="searchtag" EntitySet="searchtag" />
+            <End Role="fileSearchtag" EntitySet="fileSearchtag" />
+          </AssociationSet>
+          <AssociationSet Name="FK_record_category" Association="Self.FK_record_category">
+            <End Role="category" EntitySet="category" />
+            <End Role="record" EntitySet="record" />
+          </AssociationSet>
+          <AssociationSet Name="FK_record_publisher" Association="Self.FK_record_publisher">
+            <End Role="publisher" EntitySet="publisher" />
+            <End Role="record" EntitySet="record" />
+          </AssociationSet>
+          <AssociationSet Name="FK_recordComment_comment" Association="Self.FK_recordComment_comment">
+            <End Role="comment" EntitySet="comment" />
+            <End Role="recordComment" EntitySet="recordComment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_recordComment_record" Association="Self.FK_recordComment_record">
+            <End Role="record" EntitySet="record" />
+            <End Role="recordComment" EntitySet="recordComment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_role" Association="Self.FK_user_role">
+            <End Role="role" EntitySet="role" />
+            <End Role="user" EntitySet="user" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="category" EntityType="Model.category" />
+          <EntitySet Name="comment" EntityType="Model.comment" />
+          <EntitySet Name="file" EntityType="Model.file" />
+          <EntitySet Name="licence" EntityType="Model.licence" />
+          <EntitySet Name="publisher" EntityType="Model.publisher" />
+          <EntitySet Name="record" EntityType="Model.record" />
+          <EntitySet Name="role" EntityType="Model.role" />
+          <EntitySet Name="searchtag" EntityType="Model.searchtag" />
+          <EntitySet Name="user" EntityType="Model.user" />
+          <AssociationSet Name="FK_record_category" Association="Model.FK_record_category">
+            <End Role="category" EntitySet="category" />
+            <End Role="record" EntitySet="record" />
+          </AssociationSet>
+          <AssociationSet Name="FK_file_record" Association="Model.FK_file_record">
+            <End Role="record" EntitySet="record" />
+            <End Role="file" EntitySet="file" />
+          </AssociationSet>
+          <AssociationSet Name="FK_record_publisher" Association="Model.FK_record_publisher">
+            <End Role="publisher" EntitySet="publisher" />
+            <End Role="record" EntitySet="record" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_role" Association="Model.FK_user_role">
+            <End Role="role" EntitySet="role" />
+            <End Role="user" EntitySet="user" />
+          </AssociationSet>
+          <AssociationSet Name="fileSearchtag" Association="Model.fileSearchtag">
+            <End Role="file" EntitySet="file" />
+            <End Role="searchtag" EntitySet="searchtag" />
+          </AssociationSet>
+          <AssociationSet Name="recordComment" Association="Model.recordComment">
+            <End Role="comment" EntitySet="comment" />
+            <End Role="record" EntitySet="record" />
+          </AssociationSet>
+          <AssociationSet Name="recordlicence" Association="Model.recordlicence">
+            <End Role="record" EntitySet="record" />
+            <End Role="licence" EntitySet="licence" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="parent_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="icon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="record" Relationship="Model.FK_record_category" FromRole="category" ToRole="record" />
+        </EntityType>
+        <EntityType Name="comment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="person_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="bewertung" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="record" Relationship="Model.recordComment" FromRole="comment" ToRole="record" />
+        </EntityType>
+        <EntityType Name="file">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="record_id" Type="Int32" Nullable="false" />
+          <Property Name="file_upload_date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="download_count" Type="Int32" />
+          <Property Name="file_icon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="diagram_data" Type="Int32" />
+          <Property Name="map_data" Type="Int32" />
+          <Property Name="file_size" Type="Double" />
+          <NavigationProperty Name="record" Relationship="Model.FK_file_record" FromRole="file" ToRole="record" />
+          <NavigationProperty Name="searchtag" Relationship="Model.fileSearchtag" FromRole="file" ToRole="searchtag" />
+        </EntityType>
+        <EntityType Name="licence">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="record" Relationship="Model.recordlicence" FromRole="licence" ToRole="record" />
+        </EntityType>
+        <EntityType Name="publisher">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="record" Relationship="Model.FK_record_publisher" FromRole="publisher" ToRole="record" />
+        </EntityType>
+        <EntityType Name="record">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="dataset_upload" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="dataset_modified_date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="category_id" Type="Int32" />
+          <Property Name="licence_id" Type="Int32" />
+          <Property Name="publisher_id" Type="Int32" />
+          <Property Name="rating" Type="Int32" />
+          <Property Name="role_id" Type="Int32" />
+          <Property Name="record_active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="category" Relationship="Model.FK_record_category" FromRole="record" ToRole="category" />
+          <NavigationProperty Name="file" Relationship="Model.FK_file_record" FromRole="record" ToRole="file" />
+          <NavigationProperty Name="publisher" Relationship="Model.FK_record_publisher" FromRole="record" ToRole="publisher" />
+          <NavigationProperty Name="comment" Relationship="Model.recordComment" FromRole="record" ToRole="comment" />
+          <NavigationProperty Name="licence" Relationship="Model.recordlicence" FromRole="record" ToRole="licence" />
+        </EntityType>
+        <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="user" Relationship="Model.FK_user_role" FromRole="role" ToRole="user" />
+        </EntityType>
+        <EntityType Name="searchtag">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="file" Relationship="Model.fileSearchtag" FromRole="searchtag" ToRole="file" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="role_id" Type="Int32" Nullable="false" />
+          <Property Name="department_id" Type="Int32" Nullable="false" />
+          <Property Name="first_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="last_password_change" Type="DateTime" Precision="7" />
+          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="account_active" Type="Boolean" Nullable="false" />
+          <Property Name="login_attempts" Type="Int32" />
+          <Property Name="last_login" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="role" Relationship="Model.FK_user_role" FromRole="user" ToRole="role" />
+        </EntityType>
+        <Association Name="FK_record_category">
+          <End Type="Model.category" Role="category" Multiplicity="0..1" />
+          <End Type="Model.record" Role="record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="record">
+              <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_file_record">
+          <End Type="Model.record" Role="record" Multiplicity="1" />
+          <End Type="Model.file" Role="file" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="record">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="file">
+              <PropertyRef Name="record_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_record_publisher">
+          <End Type="Model.publisher" Role="publisher" Multiplicity="0..1" />
+          <End Type="Model.record" Role="record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="publisher">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="record">
+              <PropertyRef Name="publisher_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_role">
+          <End Type="Model.role" Role="role" Multiplicity="1" />
+          <End Type="Model.user" Role="user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fileSearchtag">
+          <End Type="Model.file" Role="file" Multiplicity="*" />
+          <End Type="Model.searchtag" Role="searchtag" Multiplicity="0..1" />
+        </Association>
+        <Association Name="recordComment">
+          <End Type="Model.comment" Role="comment" Multiplicity="0..1" />
+          <End Type="Model.record" Role="record" Multiplicity="*" />
+        </Association>
+        <Association Name="recordlicence">
+          <End Type="Model.record" Role="record" Multiplicity="*" />
+          <End Type="Model.licence" Role="licence" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="licence">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="record">
+              <PropertyRef Name="licence_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="category">
+            <EntityTypeMapping TypeName="Model.category">
+              <MappingFragment StoreEntitySet="category">
+                <ScalarProperty Name="icon" ColumnName="icon" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="parent_id" ColumnName="parent_id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="comment">
+            <EntityTypeMapping TypeName="Model.comment">
+              <MappingFragment StoreEntitySet="comment">
+                <ScalarProperty Name="bewertung" ColumnName="bewertung" />
+                <ScalarProperty Name="person_name" ColumnName="person_name" />
+                <ScalarProperty Name="text" ColumnName="text" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="file">
+            <EntityTypeMapping TypeName="Model.file">
+              <MappingFragment StoreEntitySet="file">
+                <ScalarProperty Name="file_size" ColumnName="file_size" />
+                <ScalarProperty Name="map_data" ColumnName="map_data" />
+                <ScalarProperty Name="diagram_data" ColumnName="diagram_data" />
+                <ScalarProperty Name="file_icon" ColumnName="file_icon" />
+                <ScalarProperty Name="download_count" ColumnName="download_count" />
+                <ScalarProperty Name="file_upload_date" ColumnName="file_upload_date" />
+                <ScalarProperty Name="record_id" ColumnName="record_id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="licence">
+            <EntityTypeMapping TypeName="Model.licence">
+              <MappingFragment StoreEntitySet="licence">
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="publisher">
+            <EntityTypeMapping TypeName="Model.publisher">
+              <MappingFragment StoreEntitySet="publisher">
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="record">
+            <EntityTypeMapping TypeName="Model.record">
+              <MappingFragment StoreEntitySet="record">
+                <ScalarProperty Name="record_active" ColumnName="record_active" />
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+                <ScalarProperty Name="rating" ColumnName="rating" />
+                <ScalarProperty Name="publisher_id" ColumnName="publisher_id" />
+                <ScalarProperty Name="licence_id" ColumnName="licence_id" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="dataset_modified_date" ColumnName="dataset_modified_date" />
+                <ScalarProperty Name="dataset_upload" ColumnName="dataset_upload" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="role">
+            <EntityTypeMapping TypeName="Model.role">
+              <MappingFragment StoreEntitySet="role">
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="searchtag">
+            <EntityTypeMapping TypeName="Model.searchtag">
+              <MappingFragment StoreEntitySet="searchtag">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user">
+            <EntityTypeMapping TypeName="Model.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="last_login" ColumnName="last_login" />
+                <ScalarProperty Name="login_attempts" ColumnName="login_attempts" />
+                <ScalarProperty Name="account_active" ColumnName="account_active" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="last_password_change" ColumnName="last_password_change" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="department_id" ColumnName="department_id" />
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="fileSearchtag" TypeName="Model.fileSearchtag" StoreEntitySet="fileSearchtag">
+            <EndProperty Name="searchtag">
+              <ScalarProperty Name="Id" ColumnName="search_tag_id" />
+            </EndProperty>
+            <EndProperty Name="file">
+              <ScalarProperty Name="Id" ColumnName="file_id" />
+            </EndProperty>
+            <Condition ColumnName="search_tag_id" IsNull="false" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="recordComment" TypeName="Model.recordComment" StoreEntitySet="recordComment">
+            <EndProperty Name="record">
+              <ScalarProperty Name="Id" ColumnName="dataset_id" />
+            </EndProperty>
+            <EndProperty Name="comment">
+              <ScalarProperty Name="Id" ColumnName="comment_id" />
+            </EndProperty>
+            <Condition ColumnName="comment_id" IsNull="false" />
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Kein" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -66,20 +66,19 @@
     <Build Include="dbo\Tables\record.sql" />
     <Build Include="dbo\Tables\file.sql" />
     <Build Include="dbo\Tables\category.sql" />
-    <Build Include="dbo\Tables\file_search_tag.sql" />
-    <Build Include="dbo\Tables\search_tag.sql" />
+    <Build Include="dbo\Tables\fileSearchtag.sql" />
+    <Build Include="dbo\Tables\searchtag.sql" />
     <Build Include="dbo\Tables\licence.sql" />
     <Build Include="dbo\Tables\publisher.sql" />
     <Build Include="dbo\Tables\comment.sql" />
-    <Build Include="dbo\Tables\record_comment.sql" />
+    <Build Include="dbo\Tables\recordComment.sql" />
     <Build Include="dbo\Tables\role.sql" />
     <Build Include="dbo\Tables\user.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Geolocation-Portal.Database.publish.xml" />
-    <None Include="Geolocation-Portal_1.Database.publish.xml" />
+    <RefactorLog Include="Geolocation-Portal.Database.refactorlog" />
   </ItemGroup>
   <ItemGroup>
-    <RefactorLog Include="Geolocation-Portal.Database.refactorlog" />
+    <None Include="Geolocation-Portal.Database.publish.xml" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,14 @@
+﻿@model IEnumerable<Geolocation_Portal_Test.Models.file>
+
+@foreach (var item in Model)
+{
+    if (item.map_data > 0 || item.diagram_data > 0)
+    {
+        <span><img class="float-right ml-2" width="25" height="25" src="~/icons/@Html.DisplayFor(modelItem => item.file_icon)" /></span>
+    }
+    else
+    {
+        <span><img class="float-left mr-2" width="25" height="25" src="~/icons/@Html.DisplayFor(modelItem => item.file_icon)" /></span>
+    }
+
+}
