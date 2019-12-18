@@ -1,7 +1,52 @@
-﻿
+﻿@model IEnumerable<Geolocation_Portal_Test.Models.record>
+
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Open-Data der Stadt Mosbach";
 }
 
-<h2>Index</h2>
+<article>
+    <h1>@ViewBag.Title</h1>
 
+    <div class="toolBar">
+        <a class="nolink" href="#" title="Suchen"><i class="fa fa-search"></i></a>
+        <a class="nolink" href="#" title="Sortieren"><i class="fa fa-sort-amount-asc"></i></a>
+        <a class="nolink" href="#" title="Filtern"><i class="fa fa-filter"></i></a>
+        <a class="nolink" href="#" title="Datensatz hinzufügen"><i class="fa fa-plus"></i></a>
+    </div>
+</article>
+
+<div class="card-columns">
+    @foreach (var item in Model)
+    {
+        <div class="card bg-light mb-3" style="max-width: 40rem;">
+            <div class="card-block">
+                <div class="card-header">
+                    <h4>
+                        <img class="icon" width="20" height="20" src="~/icons/Category/@Html.DisplayFor(modelItem => item.category.icon)" />
+                        @Html.DisplayFor(modelItem => item.title)
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="card-subtitle">
+                        <div class="d-flex justify-content-between">
+                            <span>
+                                <i class="fa fa-calendar"></i>
+                                @Html.DisplayFor(modelItem => item.dataset_modified_date)
+                            </span>
+                            <span><i class="fa fa-download"></i> 143</span>
+                            @Html.Partial("_rating", item.rating)
+                        </div>
+                    </div>
+                    <p class="card-text">
+                        @Html.DisplayFor(modelItem => item.description)
+                    </p>
+
+                </div>
+                <div class="card-footer" style="min-height:50px;">
+                    @Html.Action("Files", "OpenData", new { id = item.Id })
+                </div>
+                <a href="#" class="stretched-link"></a>
+            </div>
+        </div>
+    }
+</div>
