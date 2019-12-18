@@ -84,7 +84,7 @@ main > article {
     margin: 5px;
     box-shadow: 2px;
     box-shadow: 3px 3px 1px #aaaaaa;
-    max-width: 500px;
+    flex-basis: 100%;
 }
 
 .container {
@@ -198,7 +198,7 @@ footer {
     color: black;
 }
 
-#socialmedia, #backtotop {
+#socialmedia, #backtotop, #footer-nav, #copyright {
     background-color: #d7efff;
     padding-bottom: 10px;
 }
@@ -225,10 +225,6 @@ footer {
 
 #socialmedia img:hover {
     filter: none;
-}
-
-#footer-nav {
-    background-color: #d7efff;
 }
 
 #footer-nav ul {
@@ -288,6 +284,18 @@ No media query for `xs` since this is the default in Bootstrap */
 
     .showOnDesktop {
         display: block;
+    }
+
+    .record-container section {
+        flex-basis: 49%;
+    }
+
+    #footer-nav a {
+        display: contents;
+    }
+
+    #footer-nav span:not(:last-child):after {
+        content: ' | ';
     }
 }
 
