@@ -197,6 +197,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OpenDataController.cs" />
     <Compile Include="Controllers\userController.cs" />
+	<Compile Include="Controllers\NewRecordController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -428,6 +429,7 @@
     <Content Include="Views\Home\Impressum.cshtml" />
     <Content Include="Views\Home\WeitereGemeindeseiten.cshtml" />
     <Content Include="Views\OpenData\Index.cshtml" />
+	<Content Include="Views\NewRecord\Index.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper.js.flow" />
