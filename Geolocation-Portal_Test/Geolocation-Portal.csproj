@@ -171,6 +171,7 @@
     <Compile Include="Controllers\FAQController.cs" />
     <Compile Include="Controllers\GeoDataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\NewRecordController.cs" />
     <Compile Include="Controllers\OpenDataController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -344,6 +345,7 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Benutzer\Index.cshtml" />
+    <Content Include="Views\NewRecord\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
