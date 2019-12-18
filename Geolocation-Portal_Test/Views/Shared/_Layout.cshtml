@@ -110,15 +110,15 @@
             </div>
 
             <div id="footer-nav">
-                @Html.ActionLink("Kontakt", "Kontakt", "Home")
-                @Html.ActionLink("Impressum", "Impressum", "Home")
-                @Html.ActionLink("Datenschutz", "Datenschutz", "Home")
-                @Html.ActionLink("Nutzungsbedingungen", "Nutzungsbedingungen", "Home")
-                @Html.ActionLink("Weitere Gemeindeseiten", "WeitereGemeindeseiten", "Home")
+                <span>@Html.ActionLink("Kontakt", "Kontakt", "Home")</span>
+                <span>@Html.ActionLink("Impressum", "Impressum", "Home")</span>
+                <span>@Html.ActionLink("Datenschutz", "Datenschutz", "Home")</span>
+                <span>@Html.ActionLink("Nutzungsbedingungen", "Nutzungsbedingungen", "Home")</span>
+                <span>@Html.ActionLink("Weitere Gemeindeseiten", "WeitereGemeindeseiten", "Home")</span>
+            </div>
 
-                <div class="text-center">
-                    <p>&copy; @DateTime.Now.Year - Große Kreisstadt Mosbach</p>
-                </div>
+            <div id="copyright">
+                <p>&copy; @DateTime.Now.Year - Große Kreisstadt Mosbach</p>
             </div>
         </footer>
 
