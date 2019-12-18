@@ -1,15 +1,18 @@
 ﻿@model int
 <div class="float-right">
-    @for (int i = 1; i <= 5; i++)
-    {
-        if (i <= Model)
+    <b>@Model</b>
+    <span class="ranking">
+        @for (int i = 1; i <= 5; i++)
         {
-            <img class="" width="15" height="15" src="~/icons/Star-Icon.png" />
+            if (i <= Model)
+            {
+                <i class="fa fa-star"></i>
+            }
+            else
+            {
+                <i class="fa fa-star-o"></i>
+            }
         }
-        else
-        {
-            <img class="" width="15" height="15" src="~/icons/Star-Black-Icon.png" />
-        }
-    }
+    </span>
 </div>
 
