@@ -129,24 +129,26 @@
             }
 
             function changeFontSize(btnClicked) {
-                if (localStorage["is_font_large"] == null) {
-                    localStorage["is_font_large"] = true;
+                var isFontLarge = localStorage["is_font_large"];
+
+                if (isFontLarge == null) {
+                    isFontLarge = true;
                 }
 
                 console.log("changeFontSize Method called")
                 if (btnClicked) {
                     console.log("btnClicked is true")
                     console.log("change is_font_large session variable");
-                    if (localStorage["is_font_large"] == "true") {
-                        localStorage["is_font_large"] = false;
+                    if (isFontLarge == "true") {
+                        lisFontLarge = false;
                         console.log("to false");
                     } else {
-                        localStorage["is_font_large"] = true;
+                        isFontLarge = true;
                         console.log("to true");
                     }
                 }
 
-                if (localStorage["is_font_large"] == "true") {
+                if (isFontLarge == "true") {
                     document.documentElement.style.fontSize = "1.6rem";
                     //document.getElementById("MyBody").style.fontSize = "1.6em";
                     console.log("set fontSize to 1.6rem");
@@ -155,32 +157,41 @@
                     //document.getElementById("MyBody").style.fontSize = "1em";
                     console.log("set fontSize to 1rem");
                 }
+
+                localStorage["is_font_large"] = isFontLarge;
             }
 
             function changeColorTheme(btnClicked) {
+                console.log("changeColorTheme Method called")
+
                 if (localStorage["is_colorTheme_changed"] == null) {
                     localStorage["is_colorTheme_changed"] = true;
                 }
 
-                console.log("changeColorTheme Method called")
+                var isColorThemeChanged = JSON.parse(localStorage["is_colorTheme_changed"]);
+
+                console.log("1. local Storage variable with name is_colorTheme_changed has the value: " + isColorThemeChanged);
+
                 if (btnClicked) {
                     console.log("btnClicked is true")
                     console.log("change is_colorTheme_changed session variable");
-                    if (localStorage["is_colorTheme_changed"] == "true") {
-                        localStorage["is_colorTheme_changed"] = false;
+                    if (isColorThemeChanged == true) {
+                        isColorThemeChanged = false;
                         console.log("to false");
                     } else {
-                        localStorage["is_colorTheme_changed"] = true;
+                        isColorThemeChanged = true;
                         console.log("to true");
                     }
                 }
 
-                if (localStorage["is_colorTheme_changed"] == "true") {
+                console.log("2. local Storage variable with name is_colorTheme_changed has the value: " + isColorThemeChanged);
+                if (isColorThemeChanged == true) {
+                    console.log("3. change Color by if boolean true");
                     // Change color of the header elements
                     document.getElementById("MyHeader").style.backgroundColor = "#f1f1f1";
 
                     // Change color of the open-data page
-                    document.getElementById("toolBar").style.backgroundColor = "f1f1f1";
+                    document.getElementById("toolBar").style.backgroundColor = "#f1f1f1";
 
                     // Change color of the footer elemens
                     document.getElementById("page-settings").style.backgroundColor = "#f1f1f1";
@@ -188,13 +199,14 @@
                     document.getElementById("backtotop").style.backgroundColor = "#ffffff";
                     document.getElementById("footer-nav").style.backgroundColor = "#ffffff";
                     document.getElementById("copyright").style.backgroundColor = "#ffffff";
-                    console.log("set backgroundColor to #f1f1f1");
+                    console.log("set backgroundColor to #f1f1f1 and #ffffff");
                 } else {
+                    console.log("3. change Color by if boolean false");
                     // Change color of the header elements
                     document.getElementById("MyHeader").style.backgroundColor = "#ddf4ff";
 
                     // Change color of the open-data page
-                    document.getElementById("toolBar").style.backgroundColor = "a6a6a6";
+                    document.getElementById("toolBar").style.backgroundColor = "#a6a6a6";
 
                     // Change color of the footer elemens
                     document.getElementById("page-settings").style.backgroundColor = "#a6a6a6";
@@ -202,8 +214,10 @@
                     document.getElementById("backtotop").style.backgroundColor = "#ddf4ff";
                     document.getElementById("footer-nav").style.backgroundColor = "#ddf4ff";
                     document.getElementById("copyright").style.backgroundColor = "#ddf4ff";
-                    console.log("set backgroundColor to #d7efff");
+                    console.log("set backgroundColor to #ddf4ff and #a6a6a6");
                 }
+
+                localStorage["is_colorTheme_changed"] = isColorThemeChanged;
             }
         </script>
 
