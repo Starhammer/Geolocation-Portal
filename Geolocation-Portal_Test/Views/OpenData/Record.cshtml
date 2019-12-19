@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Record";
 }
 
 @using (Html.BeginForm())
@@ -8,7 +8,7 @@
     <div class="container">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <form>
-            <h2>Datensatz manipulieren</h2>
+            <h2>Datensatz hinzufügen</h2>
             <br />
             <div class="form-group row">
                 <label for="title" class="col-3">Titel</label>

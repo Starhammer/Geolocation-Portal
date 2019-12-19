@@ -24,6 +24,13 @@ namespace Geolocation_Portal_Test.Controllers
             
         }
 
+        public ActionResult Record()
+        {
+            ViewBag.Message = "Your application description page.";
+
+            return View();
+        }
+
         //GET: OpenDate/Category/5
         public ActionResult Category(int? id)
         {
