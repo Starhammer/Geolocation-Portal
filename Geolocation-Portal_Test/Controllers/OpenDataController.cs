@@ -16,6 +16,10 @@ namespace Geolocation_Portal_Test.Controllers
         // GET: OpenData
         public ActionResult Index()
         {  
+            if(db.record == null) {
+                return new HttpStatusCodeResult(HttpStatusCode.NoContent);
+            }
+
             var data = from f in db.record
                             where f.record_active == true
                             select f;
