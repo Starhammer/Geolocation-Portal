@@ -176,16 +176,32 @@
                 }
 
                 if (localStorage["is_colorTheme_changed"] == "true") {
+                    // Change color of the header elements
                     document.getElementById("MyHeader").style.backgroundColor = "#f1f1f1";
+
+                    // Change color of the open-data page
+                    document.getElementById("toolBar").style.backgroundColor = "f1f1f1";
+
+                    // Change color of the footer elemens
                     document.getElementById("page-settings").style.backgroundColor = "#f1f1f1";
-                    document.getElementById("socialmedia").style.backgroundColor = "#f1f1f1";
-                    document.getElementById("footer-nav").style.backgroundColor = "#f1f1f1";
+                    document.getElementById("socialmedia").style.backgroundColor = "#ffffff";
+                    document.getElementById("backtotop").style.backgroundColor = "#ffffff";
+                    document.getElementById("footer-nav").style.backgroundColor = "#ffffff";
+                    document.getElementById("copyright").style.backgroundColor = "#ffffff";
                     console.log("set backgroundColor to #f1f1f1");
                 } else {
-                    document.getElementById("MyHeader").style.backgroundColor = "#d7efff";
+                    // Change color of the header elements
+                    document.getElementById("MyHeader").style.backgroundColor = "#ddf4ff";
+
+                    // Change color of the open-data page
+                    document.getElementById("toolBar").style.backgroundColor = "a6a6a6";
+
+                    // Change color of the footer elemens
                     document.getElementById("page-settings").style.backgroundColor = "#a6a6a6";
-                    document.getElementById("socialmedia").style.backgroundColor = "#d7efff";
-                    document.getElementById("footer-nav").style.backgroundColor = "#d7efff";
+                    document.getElementById("socialmedia").style.backgroundColor = "#ddf4ff";
+                    document.getElementById("backtotop").style.backgroundColor = "#ddf4ff";
+                    document.getElementById("footer-nav").style.backgroundColor = "#ddf4ff";
+                    document.getElementById("copyright").style.backgroundColor = "#ddf4ff";
                     console.log("set backgroundColor to #d7efff");
                 }
             }

@@ -19,7 +19,7 @@ body {
 }
 
 header {
-    background-color: #d7efff;
+    background-color: #ddf4ff;
     font-size: 24px;
     font-weight: bold;
 }
@@ -64,10 +64,11 @@ main > article {
     margin-bottom: 8px;
 }
 
-.toolBar {
+#toolBar {
     text-align: right;
-    background-color: gray;
+    background-color: #a6a6a6;
     padding: 10px;
+    margin-bottom: 10px;
     font-size: 1.8em;
 }
 
@@ -183,6 +184,7 @@ main > article {
     justify-content: space-between;
 }
 
+/* Footer area */
 footer {
     display: contents;
     text-align: center;
@@ -199,7 +201,7 @@ footer {
 }
 
 #socialmedia, #backtotop, #footer-nav, #copyright {
-    background-color: #d7efff;
+    background-color: #ddf4ff;
     padding-bottom: 10px;
 }
 

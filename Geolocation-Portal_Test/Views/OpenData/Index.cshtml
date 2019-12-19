@@ -4,16 +4,14 @@
     ViewBag.Title = "Open-Data der Stadt Mosbach";
 }
 
-<article>
-    <h1>@ViewBag.Title</h1>
+<h1>@ViewBag.Title</h1>
 
-    <div class="toolBar">
-        <a class="nolink" href="#" title="Suchen"><i class="fa fa-search"></i></a>
-        <a class="nolink" href="#" title="Sortieren"><i class="fa fa-sort-amount-asc"></i></a>
-        <a class="nolink" href="#" title="Filtern"><i class="fa fa-filter"></i></a>
-        <a class="nolink" href="@Url.Action("Record", "OpenData")" title="Datensatz hinzufügen"><i class="fa fa-plus"></i></a>
-    </div>
-</article>
+<div id="toolBar">
+    <a class="nolink" href="#" title="Suchen"><i class="fa fa-search"></i></a>
+    <a class="nolink" href="#" title="Sortieren"><i class="fa fa-sort-amount-asc"></i></a>
+    <a class="nolink" href="#" title="Filtern"><i class="fa fa-filter"></i></a>
+    <a class="nolink" href="@Url.Action("Record", "OpenData")" title="Datensatz hinzufügen"><i class="fa fa-plus"></i></a>
+</div>
 
 <div class="card-columns">
     @foreach (var item in Model)
