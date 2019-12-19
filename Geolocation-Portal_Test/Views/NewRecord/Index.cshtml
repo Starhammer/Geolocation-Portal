@@ -1,0 +1,101 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="container">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <form>
+            <h2>Datensatz manipulieren</h2>
+            <br />
+            <div class="form-group row">
+                <label for="title" class="col-3">Titel</label>
+                <div class="col-9">
+                    <input type="text" class="form-control mw-100" id="title">
+                </div>
+                <div class="col-3">
+                    <label for="licence">Lizenz</label>
+                </div>
+                <div class="col-9">
+                    <select class="form-control mw-100" id="selectLicence">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                    </select>
+                </div>
+                <div class="col-3">
+                    <label for="role">Sichtbarkeit</label>
+                </div>
+                <div class="col-9">
+                    <select class="form-control mw-100" id="selectRole">
+                        <option>Gastuser</option>
+                        <option>Mitarbeiter</option>
+                        <option>Administrator</option>
+                        <option>4</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Beschreibung</label>
+                <textarea class="form-control mw-100" id="textareaDescription" rows="10"></textarea>
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label for="Category">Kategorie</label>
+                </div>
+                <div class="col-9">
+                    <select class="form-control mw-100" id="selectCategory">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label for="Location">Ort</label>
+                </div>
+                <div class="col-9">
+                    <select class="form-control mw-100" id="selectLocation">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                    </select>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col">
+                    Dateien und Quellen
+                </div>
+                <div class="col">
+                    <button class="btn btn-primary" type="button">Dateien auswählen</button>
+                </div>
+            </div>
+            <br />
+
+            <div class="form-group row">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="checkIsGeoFile">
+                    <label class="custom-control-label" for="checkIsGeoFile">Datensatz enthält Geo-Location-Datei</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="checkIsDiagramFile">
+                    <label class="custom-control-label" for="checkIsDiagramFile">Datensatz enthält Diagramm</label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Datensatz hochladen</button>
+
+
+        </form>
+    </div>
+}
