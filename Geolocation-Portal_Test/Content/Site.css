@@ -136,11 +136,18 @@ main > article {
 }
 
 .fa-bars {
-    font-size: 1.8em;
+    font-size: 1.6em;
 }
 
-.noMobilDisplay,
-.showOnDesktop {
+.navbar-brand {
+    flex-grow: 1;
+}
+
+.mobileContentOnly {
+    display: initial;
+}
+
+.desktopContentOnly {
     display: none;
 }
 
@@ -268,27 +275,20 @@ No media query for `xs` since this is the default in Bootstrap */
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
-    .noMobilDisplay {
-        display: block;
-    }
-
-    .noTabletDisplay {
-        display: none;
-    }
 }
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
-    .noDesktopDisplay {
+    .navbar-brand {
+        flex-grow: 0;
+    }
+
+    .mobileContentOnly {
         display: none;
     }
 
-    .showOnDesktop {
+    .desktopContentOnly {
         display: block;
-    }
-
-    .record-container section {
-        flex-basis: 49%;
     }
 
     #footer-nav a {
@@ -302,5 +302,5 @@ No media query for `xs` since this is the default in Bootstrap */
 
 /* Extra large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
-    ...
+
 }

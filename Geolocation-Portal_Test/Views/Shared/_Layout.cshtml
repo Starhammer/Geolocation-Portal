@@ -11,17 +11,32 @@
     </head>
     <body id="MyBody" onload="checkPageSettings()">
         <header id="MyHeader">
-            <nav class="navbar navbar-expand-md">
+            <nav class="navbar navbar-expand-lg primary-color">
                 <a class="navbar-brand" href="@Url.Action("Index", "Home")">
                     <img src="~/Content/Images/logo-mosbach.png" height="60" alt="">
                 </a>
 
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <div class="align-middle m1-auto order-lg-last">
+                    <form class="form-inline mt-md-0">
+                        <input class="desktopContentOnly form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                        <a class="mr-sm-2" href="#" title="Suche starten">
+                            <i class="fa fa-search"></i>
+                        </a>
+
+                        <a class="mr-sm-2" href="@Url.Action("Index", "Benutzer")" title="Weiter zur Loginmaske">
+                            <i class="fa fa-user"></i>
+                        </a>
+                    </form>
+                </div>
+                <!--
+                <button class="btn btn-sm align-middle btn-primary m1-auto mr-3 order-lg-last" type="button">Always visible here!</button>
+                    -->
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"><i class="fa fa-bars"></i></span>
                 </button>
 
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <ul class="navbar-nav mr-auto">
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="p-2 text-dark" href="@Url.Action("Index", "Home")">Home <span class="sr-only">(current)</span></a>
                         </li>
@@ -35,36 +50,21 @@
                             <a class="p-2 text-dark" href="@Url.Action("Index", "FAQ")">FAQ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="p-2 text-dark noTabletDisplay" href="@Url.Action("Kontakt", "Home")">Kontakt</a>
+                            <a class="p-2 text-dark mobileContentOnly" href="@Url.Action("Kontakt", "Home")">Kontakt</a>
                         </li>
                         <li class="nav-item">
-                            <a class="p-2 text-dark noTabletDisplay" href="@Url.Action("Impressum", "Home")">Impressum</a>
+                            <a class="p-2 text-dark mobileContentOnly" href="@Url.Action("Impressum", "Home")">Impressum</a>
                         </li>
                         <li class="nav-item">
-                            <a class="p-2 text-dark noTabletDisplay" href="@Url.Action("Datenschutz", "Home")">Datenschutz</a>
+                            <a class="p-2 text-dark mobileContentOnly" href="@Url.Action("Datenschutz", "Home")">Datenschutz</a>
                         </li>
                         <li class="nav-item">
-                            <a class="p-2 text-dark noTabletDisplay" href="@Url.Action("Nutzungsbedingungen", "Home")">Nutzungsbedingungen</a>
+                            <a class="p-2 text-dark mobileContentOnly" href="@Url.Action("Nutzungsbedingungen", "Home")">Nutzungsbedingungen</a>
                         </li>
                         <li class="nav-item">
-                            <a class="p-2 text-dark noTabletDisplay" href="@Url.Action("WeitereGemeindeseiten", "Home")">Weitere Gemeindeseiten</a>
+                            <a class="p-2 text-dark mobileContentOnly" href="@Url.Action("WeitereGemeindeseiten", "Home")">Weitere Gemeindeseiten</a>
                         </li>
                     </ul>
-
-                    <div class="noDesktopDisplay nav-tool-bar form-inline mt-2 mt-md-0">
-                        <a href="#" title="Suche starten">
-                            <i class="fa fa-search"></i>
-                        </a>
-
-                        <a href="@Url.Action("Index", "Benutzer")" title="Weiter zur Loginmaske">
-                            <i class="fa fa-user"></i>
-                        </a>
-                    </div>
-
-                    <form class="showOnDesktop form-inline mt-2 mt-md-0">
-                        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                    </form>
                 </div>
             </nav>
         </header>
@@ -128,96 +128,87 @@
                 changeColorTheme(false);
             }
 
+            /**
+             * This function changes the font size for better Readability. 
+             * param btnClicked is necessary so that the font size is only changed when the user clicks the button.
+             */
             function changeFontSize(btnClicked) {
-                var isFontLarge = localStorage["is_font_large"];
+                console.log("changeFontSize Method called");
 
-                if (isFontLarge == null) {
-                    isFontLarge = true;
+                // Check if session variable exists.
+                if (localStorage["is_font_large"] == null) {
+                    localStorage["is_font_large"] = false;
                 }
 
-                console.log("changeFontSize Method called")
+                // Parse session variable value to boolean.
+                var isFontLarge = JSON.parse(localStorage["is_font_large"]);
+
+                // Check if user clicked the font size button.
                 if (btnClicked) {
-                    console.log("btnClicked is true")
-                    console.log("change is_font_large session variable");
-                    if (isFontLarge == "true") {
-                        lisFontLarge = false;
-                        console.log("to false");
-                    } else {
-                        isFontLarge = true;
-                        console.log("to true");
-                    }
+                    isFontLarge = !isFontLarge;
+                    localStorage["is_font_large"] = isFontLarge;
                 }
 
-                if (isFontLarge == "true") {
-                    document.documentElement.style.fontSize = "1.6rem";
-                    //document.getElementById("MyBody").style.fontSize = "1.6em";
-                    console.log("set fontSize to 1.6rem");
+                // Change the font size of the page.
+                if (isFontLarge == true) {
+                    var newFontSize = "1.6rem";
                 } else {
-                    document.documentElement.style.fontSize = "1rem";
-                    //document.getElementById("MyBody").style.fontSize = "1em";
-                    console.log("set fontSize to 1rem");
+                    var newFontSize = "1rem";
                 }
 
-                localStorage["is_font_large"] = isFontLarge;
+                // Weitere Möglichkeit => Aktuelle Schriftgröße holen und dann multiplizieren...
+                $('html').css('font-size', newFontSize);
             }
 
+            /**
+             * This function changes the color scheme for better Readability. 
+             * param btnClicked is necessary so that the color schema is only changed when the user clicks the button.
+             */
             function changeColorTheme(btnClicked) {
-                console.log("changeColorTheme Method called")
+                console.log("changeColorTheme Method called");
 
+                // Check if session variable exists.
                 if (localStorage["is_colorTheme_changed"] == null) {
-                    localStorage["is_colorTheme_changed"] = true;
+                    localStorage["is_colorTheme_changed"] = false;
                 }
 
+                // Parse session variable value to boolean.
                 var isColorThemeChanged = JSON.parse(localStorage["is_colorTheme_changed"]);
 
-                console.log("1. local Storage variable with name is_colorTheme_changed has the value: " + isColorThemeChanged);
-
+                // Check if user clicked the contrast button.
                 if (btnClicked) {
-                    console.log("btnClicked is true")
-                    console.log("change is_colorTheme_changed session variable");
-                    if (isColorThemeChanged == true) {
-                        isColorThemeChanged = false;
-                        console.log("to false");
-                    } else {
-                        isColorThemeChanged = true;
-                        console.log("to true");
-                    }
+                    isColorThemeChanged = !isColorThemeChanged;
+                    localStorage["is_colorTheme_changed"] = isColorThemeChanged;
                 }
 
-                console.log("2. local Storage variable with name is_colorTheme_changed has the value: " + isColorThemeChanged);
+                // Change the color schema of the page.
                 if (isColorThemeChanged == true) {
-                    console.log("3. change Color by if boolean true");
-                    // Change color of the header elements
-                    document.getElementById("MyHeader").style.backgroundColor = "#f1f1f1";
-
-                    // Change color of the open-data page
-                    document.getElementById("toolBar").style.backgroundColor = "#f1f1f1";
-
-                    // Change color of the footer elemens
-                    document.getElementById("page-settings").style.backgroundColor = "#f1f1f1";
-                    document.getElementById("socialmedia").style.backgroundColor = "#ffffff";
-                    document.getElementById("backtotop").style.backgroundColor = "#ffffff";
-                    document.getElementById("footer-nav").style.backgroundColor = "#ffffff";
-                    document.getElementById("copyright").style.backgroundColor = "#ffffff";
-                    console.log("set backgroundColor to #f1f1f1 and #ffffff");
+                    var colorSchema1 = "#f1f1f1";
+                    var colorSchema2 = "#ffffff";
+                    var colorSchema3 = "#f1f1f1";
                 } else {
-                    console.log("3. change Color by if boolean false");
-                    // Change color of the header elements
-                    document.getElementById("MyHeader").style.backgroundColor = "#ddf4ff";
-
-                    // Change color of the open-data page
-                    document.getElementById("toolBar").style.backgroundColor = "#a6a6a6";
-
-                    // Change color of the footer elemens
-                    document.getElementById("page-settings").style.backgroundColor = "#a6a6a6";
-                    document.getElementById("socialmedia").style.backgroundColor = "#ddf4ff";
-                    document.getElementById("backtotop").style.backgroundColor = "#ddf4ff";
-                    document.getElementById("footer-nav").style.backgroundColor = "#ddf4ff";
-                    document.getElementById("copyright").style.backgroundColor = "#ddf4ff";
-                    console.log("set backgroundColor to #ddf4ff and #a6a6a6");
+                    var colorSchema1 = "#e8e8e8";
+                    var colorSchema2 = "#d7efff";
+                    var colorSchema3 = "#d7efff";
                 }
 
-                localStorage["is_colorTheme_changed"] = isColorThemeChanged;
+                // Change color of the header elements
+                $("#MyHeader").css('background-color', colorSchema3);
+
+                // Change color of the open-data page
+                if ($("#toolBar").length) {
+                    console.log("toolBar length is true");
+                    $("#toolBar").css('background-color', colorSchema1);
+                } else {
+                    console.log("toolBar length is false");
+                }
+
+                // Change color of the footer elemens
+                $("#page-settings").css('background-color', colorSchema1);
+                $("#socialmedia").css('background-color', colorSchema2);
+                $("#backtotop").css('background-color', colorSchema2);
+                $("#footer-nav").css('background-color', colorSchema2);
+                $("#copyright").css('background-color', colorSchema2);
             }
         </script>
 
