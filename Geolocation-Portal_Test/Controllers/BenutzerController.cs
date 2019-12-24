@@ -13,5 +13,15 @@ namespace Geolocation_Portal_Test.Controllers
         {
             return View();
         }
+
+        public ActionResult Abmelden()
+        {
+            return View();
+        }
+
+        public ActionResult Verwalten()
+        {
+            return View();
+        }
     }
 }

@@ -13,7 +13,7 @@
         <header id="MyHeader">
             <nav class="navbar navbar-expand-lg primary-color">
                 <a class="navbar-brand" href="@Url.Action("Index", "Home")">
-                    <img src="~/Content/Images/logo-mosbach.png" height="60" alt="">
+                    <img src="~/Content/Images/logo-mosbach.png" title="Zur Startsete" height="60" alt="">
                 </a>
 
                 <div class="align-middle m1-auto order-lg-last">
@@ -23,8 +23,16 @@
                             <i class="fa fa-search"></i>
                         </a>
 
-                        <a class="mr-sm-2" href="@Url.Action("Index", "Benutzer")" title="Weiter zur Loginmaske">
-                            <i class="fa fa-user"></i>
+                        <a class="mr-sm-2" href="@Url.Action("Index", "Benutzer")" title="Login">
+                            <i class="fa fa-sign-in"></i>
+                        </a>
+
+                        <a class="mr-sm-2" href="@Url.Action("Index", "Benutzer")" title="Logout">
+                            <i class="fa fa-sign-out"></i>
+                        </a>
+
+                        <a class="mr-sm-2" href="@Url.Action("Verwalten", "Benutzer")" title="Administrative Einstellungen">
+                            <i class="fa fa-cog"></i>
                         </a>
                     </form>
                 </div>
@@ -95,7 +103,7 @@
             </div>
 
             <div id="backtotop">
-                <a href="#top"><i class="fa fa-arrow-circle-up"></i></a>
+                <a href="#top" title="Nach oben scrollen"><i class="fa fa-arrow-circle-up"></i></a>
                 <p>Nach oben</p>
             </div>
 
@@ -103,9 +111,9 @@
                 <h2>Social Media</h2>
 
                 <div class="n-column-wrapper">
-                    <a class="btn" href="http://www.instagram.de" title=""><img src="~/Content/Images/SocialMedia/instagram.png" alt="" title=""></a>
-                    <a class="btn" href="http://www.facebook.de" title=""><img src="~/Content/Images/SocialMedia/facebook.png" alt="" title=""></a>
-                    <a class="btn" href="http://www.twitter.de" title=""><img src="~/Content/Images/SocialMedia/twitter.png" alt="" title=""></a>
+                    <a class="btn" href="http://www.instagram.de" title=""><img src="~/Content/Images/SocialMedia/instagram.png" alt="" title="Instagram"></a>
+                    <a class="btn" href="http://www.facebook.de" title=""><img src="~/Content/Images/SocialMedia/facebook.png" alt="" title="Facebook"></a>
+                    <a class="btn" href="http://www.twitter.de" title=""><img src="~/Content/Images/SocialMedia/twitter.png" alt="" title="Twitter"></a>
                 </div>
             </div>
 

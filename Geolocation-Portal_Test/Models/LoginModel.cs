@@ -10,12 +10,14 @@ namespace Geolocation_Portal_Test.Models
     {
         [Required(ErrorMessage ="Gib bitte deinen Benutzernamen ein.")]
         [Display(Name ="Benutzername:")]
-        public string UserName { get; set; }
+        [StringLength(60, MinimumLength = 3)]
+        public string username { get; set; }
 
         [Required(ErrorMessage ="Gib bitte dein Passwort ein.")]
         [Display(Name ="Passwort:")]
         [DataType(DataType.Password)]
-        public string Password { get; set; }
+        [StringLength(30, MinimumLength = 3)]
+        public string password { get; set; }
 
         [Display(Name ="Angemeldet bleiben:")]
         public bool RememberMe { get; set; }

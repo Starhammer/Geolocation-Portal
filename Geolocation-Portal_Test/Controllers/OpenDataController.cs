@@ -28,6 +28,9 @@ namespace Geolocation_Portal_Test.Controllers
             
         }
 
+        /**
+         * Öffnet ein Formular mit welchem ein neuer Datensatz hinzugefügt werden kann.
+         */
         public ActionResult Record()
         {
             ViewBag.Message = "Your application description page.";
@@ -68,6 +71,22 @@ namespace Geolocation_Portal_Test.Controllers
                        select f;
 
             return PartialView("_files", data.ToList());
+        }
+
+        /**
+         * Zeigt einen Datensatz als Diagramm an.
+         */
+        public ActionResult Diagramm()
+        {
+            return View();
+        }
+
+        /**
+         * Erstellt aus einer Datei ein Diagramm.
+         */
+        public ActionResult createDiagram()
+        {
+            return View();
         }
     }
 }

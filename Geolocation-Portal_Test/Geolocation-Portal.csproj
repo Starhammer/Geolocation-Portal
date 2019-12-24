@@ -247,6 +247,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\data.xml" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
@@ -391,6 +392,9 @@
     <Content Include="Models\DatabaseModel.edmx.diagram">
       <DependentUpon>DatabaseModel.edmx</DependentUpon>
     </Content>
+    <None Include="App_Data\data.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -418,7 +422,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Benutzer\Abmelden.cshtml" />
     <Content Include="Views\Benutzer\Profil.cshtml" />
-    <Content Include="Views\Benutzer\Registrieren.cshtml" />
+    <Content Include="Views\Benutzer\Erstellen.cshtml" />
     <Content Include="Views\Benutzer\Verwalten.cshtml" />
     <Content Include="Views\FAQ\Index.cshtml" />
     <Content Include="Views\GeoData\Index.cshtml" />
@@ -448,10 +452,10 @@
     <Content Include="Views\OpenData\_files.cshtml" />
     <Content Include="Views\OpenData\_rating.cshtml" />
     <Content Include="Views\OpenData\Record.cshtml" />
+    <Content Include="Views\OpenData\Diagramm.cshtml" />
+    <Content Include="Views\OpenData\createDiagram.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
