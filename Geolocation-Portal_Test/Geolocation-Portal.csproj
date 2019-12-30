@@ -422,8 +422,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Benutzer\Abmelden.cshtml" />
     <Content Include="Views\Benutzer\Profil.cshtml" />
-    <Content Include="Views\Benutzer\Erstellen.cshtml" />
-    <Content Include="Views\Benutzer\Verwalten.cshtml" />
+    <Content Include="Views\Benutzer\Benutzererstellung.cshtml" />
+    <Content Include="Views\Benutzer\Rollenverwaltung.cshtml" />
     <Content Include="Views\FAQ\Index.cshtml" />
     <Content Include="Views\GeoData\Index.cshtml" />
     <Content Include="Views\Home\Datenschutz.cshtml" />
@@ -442,7 +442,7 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\Benutzer\Index.cshtml" />
+    <Content Include="Views\Benutzer\Anmelden.cshtml" />
     <Content Include="Views\Home\SuccessMessage.cshtml" />
     <Content Include="Views\user\Create.cshtml" />
     <Content Include="Views\user\Delete.cshtml" />
@@ -454,6 +454,12 @@
     <Content Include="Views\OpenData\Record.cshtml" />
     <Content Include="Views\OpenData\Diagramm.cshtml" />
     <Content Include="Views\OpenData\createDiagram.cshtml" />
+    <Content Include="Views\Home\Verwaltung.cshtml" />
+    <Content Include="Views\Benutzer\Benutzerverwaltung.cshtml" />
+    <Content Include="Views\OpenData\Datensatzverwaltung.cshtml" />
+    <Content Include="Views\Benutzer\Benutzerentfernung.cshtml" />
+    <Content Include="Views\Benutzer\Benutzerdetails.cshtml" />
+    <Content Include="Views\Benutzer\Benutzerbearbeitung.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

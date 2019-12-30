@@ -16,6 +16,11 @@ namespace Geolocation_Portal_Test.Controllers
             return View();
         }
 
+        public ActionResult Verwaltung()
+        {
+            return View();
+        }
+
         public ActionResult Datenschutz()
         {
             ViewBag.Message = "Your application description page.";

@@ -28,6 +28,11 @@ namespace Geolocation_Portal_Test.Controllers
             
         }
 
+        public ActionResult Datensatzverwaltung()
+        {
+            return View(db.record.ToList());
+        }
+
         /**
          * Öffnet ein Formular mit welchem ein neuer Datensatz hinzugefügt werden kann.
          */
