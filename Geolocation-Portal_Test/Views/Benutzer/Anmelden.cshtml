@@ -1,14 +1,14 @@
 ﻿@model Geolocation_Portal_Test.Models.LoginModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Anmelden";
 }
 
 <br />
 <h4>Melden Sie sich mit Ihren Zugangsdaten an:</h4>
 <hr />
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Anmelden", "Benutzer", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 

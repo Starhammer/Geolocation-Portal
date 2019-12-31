@@ -1,0 +1,28 @@
+﻿@model Geolocation_Portal_Test.Models.role
+
+@{
+    ViewBag.Title = "LoginTest";
+}
+
+@if (Session["UserName"] != null)
+{
+    <h2>Willkommen <b>@Session["UserName"].ToString()</b>!</h2>
+
+    <p>Als "@Html.DisplayFor(model => model.name)" haben Sie auf dem Geolocation Portal der Großen Kreisstadt Mosbach auf folgende Funktionen Zugriff:</p>
+
+    <ul>
+        <li><a href="#">Profilbearbeitung</a></li>
+        @if (Convert.ToInt32(Session["UserRole"]) < 3)
+        {
+            <li><a href="#">Einsicht in interne Dokumente</a></li>
+            <li><a href="#">Hochladen von Dokumenten</a></li>
+        }
+
+        @if (Convert.ToInt32(Session["UserRole"]) < 2)
+        {
+            <li><a href="#">Rollenverwaltung</a></li>
+            <li><a href="#">Benutzerverwaltung</a></li>
+            <li><a href="#">Datensatzverwaltung</a></li>
+        }
+    </ul>
+}

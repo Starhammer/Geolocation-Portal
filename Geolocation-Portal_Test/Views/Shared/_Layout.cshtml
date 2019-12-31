@@ -22,18 +22,22 @@
                         <a class="mr-sm-2" href="#" title="Suche starten">
                             <i class="fa fa-search"></i>
                         </a>
+                        @if (Session["UserName"] == null)
+                        {
+                            <a class="mr-sm-2" href="@Url.Action("Anmelden", "Benutzer")" title="Login">
+                                <i class="fa fa-sign-in"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="mr-sm-2" href="@Url.Action("Abmelden", "Benutzer")" title="Logout">
+                                <i class="fa fa-sign-out"></i>
+                            </a>
 
-                        <a class="mr-sm-2" href="@Url.Action("Anmelden", "Benutzer")" title="Login">
-                            <i class="fa fa-sign-in"></i>
-                        </a>
-
-                        <a class="mr-sm-2" href="@Url.Action("Abmelden", "Benutzer")" title="Logout">
-                            <i class="fa fa-sign-out"></i>
-                        </a>
-
-                        <a class="mr-sm-2" href="@Url.Action("Verwaltung", "Home")" title="Administrative Einstellungen">
-                            <i class="fa fa-cog"></i>
-                        </a>
+                            <a class="mr-sm-2" href="@Url.Action("Verwaltung", "Home")" title="Administrative Einstellungen">
+                                <i class="fa fa-cog"></i>
+                            </a>
+                        }
                     </form>
                 </div>
                 <!--

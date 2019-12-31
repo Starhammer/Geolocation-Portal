@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Geolocation_Portal_Test.Models;
 
@@ -14,14 +12,52 @@ namespace Geolocation_Portal_Test.Controllers
     {
         private Entities db = new Entities();
 
-        // GET: Benutzer
         public ActionResult Anmelden()
         {
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Anmelden(user objUser)
+        {
+            if (ModelState.IsValid)
+            {
+                using (Entities db = new Entities())
+                {
+                    var obj = db.user.Where(a => string.Equals(a.username, objUser.username) && string.Equals(a.password, objUser.password)).FirstOrDefault();
+                    if (obj != null)
+                    {
+                        Session["UserID"] = obj.Id.ToString();
+                        Session["UserName"] = obj.username.ToString();
+                        Session["UserRole"] = obj.role_id.ToString();
+                        return RedirectToAction("WelcomePage");
+                    }
+                }
+            }
+            return View(objUser);
+        }
+
+        public ActionResult WelcomePage()
+        {
+            if (Session["UserID"] != null)
+            {
+                role role = db.role.Find(Convert.ToInt32(Session["UserRole"]));
+                if (role == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(role);
+            }
+            else
+            {
+                return RedirectToAction("Anmelden");
+            }
+        }
+
         public ActionResult Abmelden()
         {
+            Session.Clear();
             return View();
         }
 

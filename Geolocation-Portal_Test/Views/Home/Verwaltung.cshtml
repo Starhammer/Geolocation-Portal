@@ -9,9 +9,16 @@
     Diese Seite bietet administrative Verwaltungen. Klicken Sie auf einen Eintrag in der Liste, um Änderungen vorzunehmen.
 </p>
 
+<p>
+    Angemeldeter Benutzer: <b>@Session["UserName"]</b>
+</p>
+
 <ul>
     <li><a href="#" title="">Profil bearbeiten</a></li>
-    <li><a href="@Url.Action("Benutzerverwaltung", "Benutzer")" title="">Benutzerverwaltung</a></li>
-    <li><a href="@Url.Action("Rollenverwaltung", "Benutzer")" title="">Rollenverwaltung</a></li>
-    <li><a href="@Url.Action("Datensatzverwaltung", "OpenData")" title="">Datensatzverwaltung</a></li>
+    @if (Convert.ToInt32(Session["UserRole"]) == 1)
+    {
+        <li><a href="@Url.Action("Benutzerverwaltung", "Benutzer")" title="">Benutzerverwaltung</a></li>
+        <li><a href="@Url.Action("Rollenverwaltung", "Benutzer")" title="">Rollenverwaltung</a></li>
+        <li><a href="@Url.Action("Datensatzverwaltung", "OpenData")" title="">Datensatzverwaltung</a></li>
+    }
 </ul>
