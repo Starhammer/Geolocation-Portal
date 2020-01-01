@@ -26,6 +26,7 @@ namespace Geolocation_Portal_Test.Controllers
                 using (Entities db = new Entities())
                 {
                     var obj = db.user.Where(a => string.Equals(a.username, objUser.username) && string.Equals(a.password, objUser.password)).FirstOrDefault();
+                    
                     if (obj != null)
                     {
                         Session["UserID"] = obj.Id.ToString();
@@ -35,28 +36,43 @@ namespace Geolocation_Portal_Test.Controllers
                     }
                 }
             }
+
             return View(objUser);
         }
 
         public ActionResult WelcomePage()
         {
-            if (Session["UserID"] != null)
-            {
-                role role = db.role.Find(Convert.ToInt32(Session["UserRole"]));
-                if (role == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(role);
-            }
-            else
+            if (!checkSession())
             {
                 return RedirectToAction("Anmelden");
             }
+
+            role role = db.role.Find(Convert.ToInt32(Session["UserRole"]));
+            if (role == null)
+            {
+                return HttpNotFound();
+            }
+            
+            return View(role);
+        }
+
+        public ActionResult Profil()
+        {
+            if (!checkSession())
+            {
+                return RedirectToAction("Anmelden");
+            }
+
+            return View();
         }
 
         public ActionResult Abmelden()
         {
+            if (!checkSession())
+            {
+                return RedirectToAction("Anmelden");
+            }
+
             Session.Clear();
             return View();
         }
@@ -64,30 +80,53 @@ namespace Geolocation_Portal_Test.Controllers
         // GET: user/Details/5
         public ActionResult Benutzerdetails(int? id)
         {
+            if (!checkSession())
+            {
+                return RedirectToAction("Anmelden");
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             user user = db.user.Find(id);
+
             if (user == null)
             {
                 return HttpNotFound();
             }
+
             return View(user);
         }
 
         public ActionResult Benutzerverwaltung()
         {
+            if (!checkSession())
+            {
+                return RedirectToAction("Anmelden");
+            }
+
             return View(db.user.ToList());
         }
 
         public ActionResult Rollenverwaltung()
         {
+            if(!checkSession())
+            {
+                return RedirectToAction("Anmelden");
+            }
+
             return View(db.role.ToList());
         }
 
         public ActionResult Benutzererstellung()
         {
+            if (!checkSession())
+            {
+                return RedirectToAction("Anmelden");
+            }
+
             return View();
         }
         
@@ -98,6 +137,11 @@ namespace Geolocation_Portal_Test.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Benutzererstellung([Bind(Include = "Id,role_id,department_id,first_name,last_name,username,password,last_password_change,create_date,account_active,login_attempts,last_login")] user user)
         {
+            if (!checkSession())
+            {
+                return RedirectToAction("Anmelden");
+            }
+
             if (ModelState.IsValid)
             {
                 db.user.Add(user);
@@ -111,15 +155,23 @@ namespace Geolocation_Portal_Test.Controllers
         // GET: user/Edit/5
         public ActionResult Benutzerbearbeitung(int? id)
         {
+            if (!checkSession())
+            {
+                return RedirectToAction("Anmelden");
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             user user = db.user.Find(id);
+            
             if (user == null)
             {
                 return HttpNotFound();
             }
+            
             return View(user);
         }
 
@@ -130,27 +182,41 @@ namespace Geolocation_Portal_Test.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Benutzerbearbeitung([Bind(Include = "Id,role_id,department_id,first_name,last_name,username,password,last_password_change,create_date,account_active,login_attempts,last_login")] user user)
         {
+            if (!checkSession())
+            {
+                return RedirectToAction("Anmelden");
+            }
+
             if (ModelState.IsValid)
             {
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Benutzerverwaltung");
             }
+
             return View(user);
         }
 
         // GET: user/Delete/5
         public ActionResult Benutzerentfernung(int? id)
         {
+            if (!checkSession())
+            {
+                return RedirectToAction("Anmelden");
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            
             user user = db.user.Find(id);
+            
             if (user == null)
             {
                 return HttpNotFound();
             }
+            
             return View(user);
         }
 
@@ -159,6 +225,11 @@ namespace Geolocation_Portal_Test.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult BenutzerentfernungConfirmed(int id)
         {
+            if (!checkSession())
+            {
+                return RedirectToAction("Anmelden");
+            }
+
             user user = db.user.Find(id);
             db.user.Remove(user);
             db.SaveChanges();
@@ -171,7 +242,20 @@ namespace Geolocation_Portal_Test.Controllers
             {
                 db.Dispose();
             }
+
             base.Dispose(disposing);
+        }
+
+        private bool checkSession()
+        {
+            if (Session["UserRole"] != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

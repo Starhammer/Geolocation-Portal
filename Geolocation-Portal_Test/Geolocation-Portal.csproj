@@ -455,6 +455,10 @@
     <Content Include="Views\Benutzer\Benutzerdetails.cshtml" />
     <Content Include="Views\Benutzer\Benutzerbearbeitung.cshtml" />
     <Content Include="Views\Benutzer\WelcomePage.cshtml" />
+    <Content Include="Views\Benutzer\Rollenerstellung.cshtml" />
+    <Content Include="Views\Benutzer\Rollenbearbeitung.cshtml" />
+    <Content Include="Views\Benutzer\Rollendetails.cshtml" />
+    <Content Include="Views\Benutzer\Rollenentfernung.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
