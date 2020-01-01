@@ -11,6 +11,8 @@ namespace Geolocation_Portal_Test.Controllers
 {
     public class HomeController : Controller
     {
+        private Entities db = new Entities();
+
         public ActionResult Index()
         {
             return View();
@@ -18,7 +20,19 @@ namespace Geolocation_Portal_Test.Controllers
 
         public ActionResult Verwaltung()
         {
-            return View();
+            if (Session["UserRole"] != null)
+            {
+                role role = db.role.Find(Convert.ToInt32(Session["UserRole"]));
+                if (role == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(role);
+            }
+            else
+            {
+                return RedirectToAction("Anmelden", "Benutzer");
+            }
         }
 
         public ActionResult Datenschutz()
