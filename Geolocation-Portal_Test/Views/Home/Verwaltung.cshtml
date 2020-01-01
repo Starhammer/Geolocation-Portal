@@ -14,7 +14,7 @@
 </p>
 
 <ul>
-    <li><a href="#" title="">Profil bearbeiten</a></li>
+    <li><a href="@Url.Action("Profil", "Benutzer")" title="">Profilbearbeitung</a></li>
     @if (Session["UserRole"] != null && Convert.ToInt32(Session["UserRole"]) == 1)
     {
         <li><a href="@Url.Action("Benutzerverwaltung", "Benutzer")" title="">Benutzerverwaltung</a></li>
