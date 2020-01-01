@@ -11,18 +11,18 @@
     <p>Als "@Html.DisplayFor(model => model.name)" haben Sie auf dem Geolocation Portal der Großen Kreisstadt Mosbach auf folgende Funktionen Zugriff:</p>
 
     <ul>
-        <li><a href="#">Profilbearbeitung</a></li>
+        <li><a href="@Url.Action("Profil", "Benutzer")">Profilbearbeitung</a></li>
         @if (Convert.ToInt32(Session["UserRole"]) < 3)
         {
-            <li><a href="#">Einsicht in interne Dokumente</a></li>
-            <li><a href="#">Hochladen von Dokumenten</a></li>
+            <li><a href="@Url.Action("Index", "OpenData")">Einsicht in interne Dokumente</a></li>
+            <li><a href="@Url.Action("Record", "OpenData")">Hochladen von Dokumenten</a></li>
         }
 
         @if (Convert.ToInt32(Session["UserRole"]) < 2)
         {
-            <li><a href="#">Rollenverwaltung</a></li>
-            <li><a href="#">Benutzerverwaltung</a></li>
-            <li><a href="#">Datensatzverwaltung</a></li>
+            <li><a href="@Url.Action("Rollenverwaltung", "Benutzer")">Rollenverwaltung</a></li>
+            <li><a href="@Url.Action("Benutzerverwaltung", "Benutzer")">Benutzerverwaltung</a></li>
+            <li><a href="@Url.Action("Datensatzverwaltung", "OpenData")">Datensatzverwaltung</a></li>
         }
     </ul>
 }

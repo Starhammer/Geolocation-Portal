@@ -459,6 +459,9 @@
     <Content Include="Views\Benutzer\Rollenbearbeitung.cshtml" />
     <Content Include="Views\Benutzer\Rollendetails.cshtml" />
     <Content Include="Views\Benutzer\Rollenentfernung.cshtml" />
+    <Content Include="Views\OpenData\Recorddetails.cshtml" />
+    <Content Include="Views\OpenData\Recordentfernung.cshtml" />
+    <Content Include="Views\OpenData\Recordbearbeitung.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
