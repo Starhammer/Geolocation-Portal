@@ -3,5 +3,108 @@
     ViewBag.Title = "Recordbearbeitung";
 }
 
-<h2>Recordbearbeitung</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="container">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <form>
+            <h2>Datensatz manipulieren</h2>
+            <br />
+            <div class="form-group row">
+                <label for="title" class="col-3">Titel</label>
+                <div class="col-9">
+                    <input type="text" class="form-control mw-100" id="title" maxlength="50">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label for="licence">Lizenz</label>
+                </div>
+                <div class="col-9">
+                    <select class="form-control mw-100" id="selectLicence">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label for="role">Sichtbarkeit</label>
+                </div>
+                <div class="col-9">
+                    <select class="form-control mw-100" id="selectRole">
+                        <option>Gastuser</option>
+                        <option>Mitarbeiter</option>
+                        <option>Administrator</option>
+                        <option>4</option>
+                    </select>
+                </div>
+            </div>
 
+            <div class="form-group">
+                <label for="description">Beschreibung</label>
+                <textarea class="form-control mw-100" id="textareaDescription" rows="10" maxlength="3000"></textarea>
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label for="Category">Kategorie</label>
+                </div>
+                <div class="col-9">
+                    <select class="form-control mw-100" id="selectCategory">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label for="Location">Ort</label>
+                </div>
+                <div class="col-9">
+                    <select class="form-control mw-100" id="selectLocation">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                    </select>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col">
+                    Dateien und Quellen
+                </div>
+                <div class="col">
+                    <button class="btn btn-primary" type="button">Dateien auswählen</button>
+                </div>
+            </div>
+            <br />
+
+            <!-- Default checked -->
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="radioNormal" name="defaultExampleRadios" checked>
+                <label class="custom-control-label" for="radioNormal">Datensatz kann nicht auf Karte angezeigt werden und enthält kein Diagramm</label>
+            </div>
+            <br />
+            <!-- Default unchecked -->
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="radioGeoFile" name="defaultExampleRadios">
+                <label class="custom-control-label" for="radioGeoFile">Datensatz kann auf Karte angezeigt werden</label>
+            </div>
+            <br />
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="radioDiagram" name="defaultExampleRadios">
+                <label class="custom-control-label" for="radioDiagram">Datensatz enthält ein Diagramm</label>
+            </div>
+            <br />
+            <button type="submit" class="btn btn-primary">Datensatz hochladen</button>
+
+
+        </form>
+    </div>
+}

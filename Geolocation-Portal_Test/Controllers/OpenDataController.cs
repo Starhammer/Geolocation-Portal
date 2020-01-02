@@ -39,6 +39,11 @@ namespace Geolocation_Portal_Test.Controllers
             return View();
         }
 
+        public ActionResult Recordbearbeitung()
+        {
+            return View();
+        }
+
         //GET: OpenDate/Category/5
         public ActionResult Category(int? id)
         {
