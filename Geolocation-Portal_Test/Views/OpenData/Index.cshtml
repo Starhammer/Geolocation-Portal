@@ -25,6 +25,15 @@
                     <h4>
                         <img class="icon" width="20" height="20" src="~/icons/Category/@Html.DisplayFor(modelItem => item.category.icon)" />
                         @Html.DisplayFor(modelItem => item.title)
+
+                        @if (Session["UserRole"] != null && Convert.ToInt32(Session["UserRole"]) < 3)
+                        {
+                        <div class="fa-pull-right">
+                            <a class="card-link" href="@Url.Action("Record", "OpenData")" title="Datensatz bearbeiten"><i class="fa fa-edit"></i></a>
+                            <a class="nolink" href="@Url.Action("Record", "OpenData")" title="Datensatz löschen"><i class="fa fa-trash"></i></a>
+                        </div>
+                        }
+
                     </h4>
                 </div>
                 <div class="card-body">
