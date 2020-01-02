@@ -84,16 +84,23 @@
             </div>
             <br />
 
-            <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="checkIsGeoFile">
-                <label class="form-check-label" for="checkIsGeoFile">Datensatz enthält Geo-Location-Datei</label>
+            <!-- Default checked -->
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="radioNormal" name="defaultExampleRadios" checked>
+                <label class="custom-control-label" for="radioNormal">Datensatz kann nicht auf Karte angezeigt werden und enthält kein Diagramm</label>
             </div>
-
-            <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="checkIsDiagramFile">
-                <label class="form-check-label" for="checkIsDiagramFile">Datensatz enthält Diagramm</label>
+            <br />
+            <!-- Default unchecked -->
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="radioGeoFile" name="defaultExampleRadios">
+                <label class="custom-control-label" for="radioGeoFile">Datensatz kann auf Karte angezeigt werden</label>
             </div>
-
+            <br />
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="radioDiagram" name="defaultExampleRadios">
+                <label class="custom-control-label" for="radioDiagram">Datensatz enthält ein Diagramm</label>
+            </div>
+            <br />
             <button type="submit" class="btn btn-primary">Datensatz hochladen</button>
 
 
