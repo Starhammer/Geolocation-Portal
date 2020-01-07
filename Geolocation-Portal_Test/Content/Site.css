@@ -28,6 +28,10 @@ a {
     color: black;
 }
 
+.padding-left-10 {
+    padding-left: 10px;
+}
+
 .nav-tool-bar a {
     text-decoration: none;
     color: black;
