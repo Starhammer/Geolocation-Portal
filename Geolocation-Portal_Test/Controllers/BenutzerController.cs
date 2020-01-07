@@ -56,6 +56,17 @@ namespace Geolocation_Portal_Test.Controllers
             return View(role);
         }
 
+        public ActionResult Abmelden()
+        {
+            if (!checkSession())
+            {
+                return RedirectToAction("Anmelden");
+            }
+
+            Session.Clear();
+            return View();
+        }
+
         public ActionResult Profil()
         {
             if (!checkSession())
@@ -66,15 +77,14 @@ namespace Geolocation_Portal_Test.Controllers
             return View();
         }
 
-        public ActionResult Abmelden()
+        public ActionResult Benutzerverwaltung()
         {
             if (!checkSession())
             {
                 return RedirectToAction("Anmelden");
             }
 
-            Session.Clear();
-            return View();
+            return View(db.user.ToList());
         }
 
         // GET: user/Details/5
@@ -98,26 +108,6 @@ namespace Geolocation_Portal_Test.Controllers
             }
 
             return View(user);
-        }
-
-        public ActionResult Benutzerverwaltung()
-        {
-            if (!checkSession())
-            {
-                return RedirectToAction("Anmelden");
-            }
-
-            return View(db.user.ToList());
-        }
-
-        public ActionResult Rollenverwaltung()
-        {
-            if(!checkSession())
-            {
-                return RedirectToAction("Anmelden");
-            }
-
-            return View(db.role.ToList());
         }
 
         public ActionResult Benutzererstellung()
@@ -234,6 +224,153 @@ namespace Geolocation_Portal_Test.Controllers
             db.user.Remove(user);
             db.SaveChanges();
             return RedirectToAction("Benutzerverwaltung");
+        }
+
+        public ActionResult Rollenverwaltung()
+        {
+            if (!checkSession())
+            {
+                return RedirectToAction("Anmelden");
+            }
+
+            return View(db.role.ToList());
+        }// GET: user/Details/5
+        public ActionResult Rollendetails(int? id)
+        {
+            if (!checkSession())
+            {
+                return RedirectToAction("Anmelden");
+            }
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            role role = db.role.Find(id);
+
+            if (role == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(role);
+        }
+
+        public ActionResult Rollenerstellung()
+        {
+            if (!checkSession())
+            {
+                return RedirectToAction("Anmelden");
+            }
+
+            return View();
+        }
+
+        // POST: user/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Rollenerstellung([Bind(Include = "Id,name,description")] role role)
+        {
+            if (!checkSession())
+            {
+                return RedirectToAction("Anmelden");
+            }
+
+            if (ModelState.IsValid)
+            {
+                db.role.Add(role);
+                db.SaveChanges();
+                return RedirectToAction("Rollenverwaltung");
+            }
+
+            return View(role);
+        }
+
+        // GET: user/Edit/5
+        public ActionResult Rollenbearbeitung(int? id)
+        {
+            if (!checkSession())
+            {
+                return RedirectToAction("Anmelden");
+            }
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            role role = db.role.Find(id);
+
+            if (role == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(role);
+        }
+
+        // POST: user/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Rollenbearbeitung([Bind(Include = "Id,name,description")] role role)
+        {
+            if (!checkSession())
+            {
+                return RedirectToAction("Anmelden");
+            }
+
+            if (ModelState.IsValid)
+            {
+                db.Entry(role).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Rollenverwaltung");
+            }
+
+            return View(role);
+        }
+
+        // GET: user/Delete/5
+        public ActionResult Rollenentfernung(int? id)
+        {
+            if (!checkSession())
+            {
+                return RedirectToAction("Anmelden");
+            }
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            role role = db.role.Find(id);
+
+            if (role == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(role);
+        }
+
+        // POST: user/Delete/5
+        [HttpPost, ActionName("Rollenentfernung")]
+        [ValidateAntiForgeryToken]
+        public ActionResult RollenentfernungConfirmed(int id)
+        {
+            if (!checkSession())
+            {
+                return RedirectToAction("Anmelden");
+            }
+
+            role role = db.role.Find(id);
+            db.role.Remove(role);
+            db.SaveChanges();
+            return RedirectToAction("Rollenverwaltung");
         }
 
         protected override void Dispose(bool disposing)
