@@ -7,7 +7,7 @@
 <h2>Rollenverwaltung</h2>
 
 <p>
-    <a href="@Url.Action("Rollenerstellung", "Benutzer")" class="btn btn-primary">Benutzer hinzufügen</a>
+    <a href="@Url.Action("Rollenerstellung", "Benutzer")" class="btn btn-primary">Rolle hinzufügen</a>
 </p>
 <table class="table">
     <tr>
@@ -33,12 +33,9 @@
                 @Html.DisplayFor(modelItem => item.name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.description)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                @Html.ActionLink("Bearbeiten", "Rollenbearbeitung", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Rollendetails", new { id = item.Id }) |
+                @Html.ActionLink("Entfernen", "Rollenentfernung", new { id = item.Id })
             </td>
         </tr>
     }
