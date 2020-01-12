@@ -1,42 +1,40 @@
 ﻿@model Geolocation_Portal_Test.Models.ContactModel
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    <h4>Große Kreisstadt Mosbach</h4>
-    <hr />
 
-    <h5>Oberbürgermeister - Michael Jann</h5>
-    <address>
-        <i class="fa fa-phone"></i> Telefon: <a href="tel:+49626182200">+49 (0) 6261/82-200</a><br />
-        <i class="fa fa-envelope"></i> E-Mail: 		<a href="mailto:ob@mosbach.de">ob@mosbach.de</a>
-    </address>
+<h4>Große Kreisstadt Mosbach</h4>
+<hr />
 
-    <h5>Bürgermeister - Michael Kailbach</h5>
-    <address>
-        <i class="fa fa-phone"></i> Telefon: <a href="tel:+49626182252">+49 (0) 6261/82-252</a><br />
-        <i class="fa fa-envelope"></i> E-Mail: 		<a href="mailto:bm@mosbach.de">bm@mosbach.de</a>
-    </address>
+<h5>Oberbürgermeister - Michael Jann</h5>
+<address>
+    <i class="fa fa-phone"></i> Telefon: <a href="tel:+49626182200">+49 (0) 6261/82-200</a><br />
+    <i class="fa fa-envelope"></i> E-Mail: 		<a href="mailto:ob@mosbach.de">ob@mosbach.de</a>
+</address>
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.SenderName, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.SenderName, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.SenderName)
+<h5>Bürgermeister - Michael Kailbach</h5>
+<address>
+    <i class="fa fa-phone"></i> Telefon: <a href="tel:+49626182252">+49 (0) 6261/82-252</a><br />
+    <i class="fa fa-envelope"></i> E-Mail: 		<a href="mailto:bm@mosbach.de">bm@mosbach.de</a>
+</address>
+
+<h4>Kontaktformular</h4>
+<!-- Define a form that will point to your Home/Contact action (i.e. the Contact method in your HomeController) -->
+<form action='@Url.Action("Kontakt","Home")' method='post'>
+    <div class="form-group row">
+        <label for="name" class="col-3">Name:</label>
+        <div class="col-9">
+            <input type="text" class="form-control mw-100" name="name" id="name" maxlength="50">
         </div>
     </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.SenderEmail, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.SenderEmail, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.SenderEmail)
+
+    <div class="form-group row">
+        <label for="email" class="col-3">E-Mail:</label>
+        <div class="col-9">
+            <input type="text" class="form-control mw-100" name="email" id="email" maxlength="50">
         </div>
     </div>
+
     <div class="form-group">
-        @Html.LabelFor(m => m.Message, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextAreaFor(m => m.Message, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Message)
-        </div>
+        <label for="message">Nachricht:</label>
+        <textarea class="form-control mw-100" name="message" id="message" rows="10" maxlength="3000"></textarea>
     </div>
 
     <p>
@@ -44,15 +42,11 @@
         vorstehenden von mir angegebenen personenbezogenen Daten. Ich bin damit einverstanden,
         dass die von mir angegebenen personenbezogenen Daten verarbeitet werden, um meine Kontaktanfrage
         zu bearbeiten und mich zu diesem Zwecke zu kontaktieren. Ich willige ebenfalls ein,
-        dass meine IP-Adresse gespeichert wird.Ich habe das Recht, diese Einwilligung jederzeit
-        ohne Angabe von Gründen zu widerrufen (siehe Datenschutzerklärung), ohne dass die
+        dass meine IP-Adresse gespeichert wird. Ich habe das Recht, diese Einwilligung jederzeit
+        ohne Angabe von Gründen zu widerrufen (siehe <a href="@Url.Action("Datenschutz", "Home")">Datenschutzerklärung</a>), ohne dass die
         Rechtmäßigkeit der aufgrund meiner Einwilligung bis zum Widerruf erfolgten Verarbeitung
         davon berührt wird.
     </p>
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Send" />
-        </div>
-    </div>
-}
+    <input class="btn btn-primary" type='submit' value='Absenden' />
+</form>

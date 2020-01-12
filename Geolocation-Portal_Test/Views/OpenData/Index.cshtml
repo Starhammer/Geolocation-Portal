@@ -47,9 +47,19 @@
                         </div>
                     </div>
                     <p class="card-text">
-                        @Html.DisplayFor(modelItem => item.description)
+                        @if (@Html.DisplayFor(modelItem => item.description).ToString().Length > 100)
+                        {
+                            @Html.DisplayFor(modelItem => item.description).ToString().Substring(0, 100)
+                            <span>...</span>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelItem => item.description)
+                        }
                     </p>
-
+                    <div class="text-right">
+                        <a href="@Url.Action("Recorddetails", "OpenData", new { id = item.Id})" title="Details anzeigen">Weiterlesen</a>
+                    </div>
                 </div>
                 <div class="card-footer" style="min-height:50px;">
                     @Html.Action("Files", "OpenData", new { id = item.Id })
@@ -57,6 +67,6 @@
                 <!-- auskommentiert da ansonsten keine weiteren Links auf der card verwendet werden können
                 <a href="#" class="stretched-link"></a> -->
             </div>
-            </div>
-        }
-    </div>  
+        </div>
+    }
+</div>  
