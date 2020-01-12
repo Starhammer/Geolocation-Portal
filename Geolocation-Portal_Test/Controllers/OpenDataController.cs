@@ -101,11 +101,14 @@ namespace Geolocation_Portal_Test.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             record record = db.record.Find(id);
+
             if (record == null)
             {
                 return HttpNotFound();
             }
+
             return View(record);
         }
     }

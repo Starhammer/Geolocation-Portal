@@ -5,13 +5,87 @@
 }
 
 <h2>Recorddetails</h2>
-<hr />
-<h1>@Html.DisplayFor(model => model.title)</h1>
-<br/>   
-<h3>Beschreibung</h3>
-@Html.DisplayFor(model => model.description)
+
+<div>
+    <div class="card bg-light mb-3">
+        <div class="card-block">
+            <div class="card-header">
+                <img class="icon" width="20" height="20" src="~/icons/Category/@Html.DisplayFor(model => model.category.icon)" />
+                @Html.DisplayFor(model => model.title)
+            </div>
+            <div class="card-body">
+                <div class="card-subtitle">
+                    <div class="d-flex justify-content-between">
+                        <span>
+                            <i class="fa fa-calendar"></i>
+                            @Html.DisplayFor(model => model.dataset_modified_date)
+                        </span>
+                        <span><i class="fa fa-download"></i> 143 </span>
+                        @Html.Partial("_rating", Model.rating)
+                    </div>
+                </div>
+                <p class="card-text">
+                    @Html.DisplayFor(model => model.description)
+                </p>
+
+                <h4>Lizenz:</h4>
+                <a href="#" title="Details zur Lizenz anzeigen">@Html.DisplayFor(model => model.licence.name)</a>
+
+                <br /><br />
+
+                <h4>Datensatz veröffentlicht von:</h4>
+                @Html.DisplayFor(model => model.publisher.name)
+
+                <br /><br />
+
+                <h4>Dateien und Quellen:</h4>
+                <!-- Hier muss eine Tabelle mit allen Dateien aufgelistet werden. -->
+                Vorschau | Herunterladen | Speichergröße | Veröffentlichungsdatum<br />
+                Bsp1     | Bsp1          | Bsp1          | Bsp1<br />
+                Bsp2     | Bsp2          | Bsp2          | Bsp2<br />
+                <br />
+
+                Daten auf Karte anzeigen | Diagrammansicht<br />        <!-- Verlinkung des Datensatzes auf die Diagrammansicht oder Karte, wenn vorhanden, ansonsten disable. -->
+            </div>
+            <div class="card-footer" style="min-height:50px;">
+
+                <h4>Kommentar schreiben:</h4>
+                <form>
+                    <div class="form-group row">
+                        <label for="rating" class="col-3">Bewertung:</label>
+                        <div class="col-9">
+                            <!-- Hier muss noch das Auswählen der Sterne implementiert werden. -->
+                            <input type="text" content="Stern1 Stern2 Stern3 Stern4 Stern5" class="form-control mw-100" id="rating" maxlength="50">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="sendername" class="col-3">Ihr Name:</label>
+                        <div class="col-9">
+                            <input type="text" class="form-control mw-100" id="sendername" maxlength="50">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <textarea class="form-control mw-100" id="comment" rows="10" maxlength="3000"></textarea>
+                    </div>
+                </form>
+
+                <button type="submit" class="btn btn-primary">Kommentar veröffentlichen</button>    <!-- Funktion implementieren -->
+
+                <br /><br /><br />
+                <!-- Schleife, um alle bereits vorhandenen Kommentare des Datensatzes aufzulisten. -->
+                <h4>Kommentare:</h4>
+                Kommentar1<br />
+                Kommentar2<br />
+                Kommentar3<br />
+                ...
+            </div>
+        </div>
+    </div>
+</div>
 
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Bearbeiten", "Recordbearbeitung", new { id = Model.Id }) |
+    @Html.ActionLink("Zurück zur Datensatzübersicht", "Index")
 </p>
