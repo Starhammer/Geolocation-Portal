@@ -70,7 +70,7 @@ namespace Geolocation_Portal_Test.Controllers
                     }
 
                     file.SaveAs(filePath);
-
+                    
                     db.file.Add(new Models.file {
                         record_id = record.Id,
                         file_upload_date = System.DateTime.Now,
