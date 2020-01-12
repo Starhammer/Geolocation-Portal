@@ -7,6 +7,10 @@
 <h1>@ViewBag.Title</h1>
 
 <div id="toolBar">
+    @foreach (var item in ViewBag.category)
+    {
+        <a class="nolink float-left" href="./Category/@item.Id" ><img class="icon" width="20" height="20" src="~/icons/Category/@item.icon" title="@item.name"/></a>
+    }
     <a class="nolink" href="#" title="Suchen"><i class="fa fa-search"></i></a>
     <a class="nolink" href="#" title="Sortieren"><i class="fa fa-sort-amount-asc"></i></a>
     <a class="nolink" href="#" title="Filtern"><i class="fa fa-filter"></i></a>
@@ -15,6 +19,8 @@
     <a class="nolink" href="@Url.Action("Record", "OpenData")" title="Datensatz hinzufügen"><i class="fa fa-plus"></i></a>
     }
 </div>
+
+@ViewBag.Message
 
 <div class="card-columns">
     @foreach (var item in Model)

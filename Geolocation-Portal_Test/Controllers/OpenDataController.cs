@@ -1,4 +1,5 @@
 ﻿using Geolocation_Portal_Test.Models;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -21,6 +22,8 @@ namespace Geolocation_Portal_Test.Controllers
             var data = from f in db.record
                             where f.record_active == true
                             select f;
+
+            ViewBag.category = (List<category>)db.category.ToList();
 
             return View(data.ToList());
             
@@ -116,6 +119,7 @@ namespace Geolocation_Portal_Test.Controllers
                    && f.category_id == id
                    select f;
 
+            ViewBag.category = (List<category>)db.category.ToList();
             return View("index", data.ToList());
                 
 
@@ -148,6 +152,31 @@ namespace Geolocation_Portal_Test.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult Search()
+        {
+            var searchtext = Request["search"];
+
+            IQueryable<record> data;
+
+            data = from f in db.record
+                   where f.record_active == true && 
+                   ( f.description.Contains(searchtext) || f.title.Contains(searchtext) )
+                   select f;
+
+            if(data != null && data.Count() > 0)
+            {
+                ViewBag.message = "Die Suche nach '"+ searchtext + "' ergab "+data.Count()+" treffer";
+            }
+            else
+            {
+                ViewBag.message = "Die Suche ergab keine Treffer";
+            }
+            
+            ViewBag.category = (List<category>)db.category.ToList();
+            return View("index", data.ToList());
+        }
+
         /***
          * asdasdad
          */
@@ -156,15 +185,15 @@ namespace Geolocation_Portal_Test.Controllers
             var extension = Path.GetExtension(name);
             switch (extension)
             {
-                case "txt":
+                case ".txt":
                     return "1";
-                case "docx":
+                case ".docx":
                     return "2";
-                case "excl":
+                case ".excl":
                     return "3";
-                case "pdf":
+                case ".pdf":
                     return "4";
-                case "ppp":
+                case ".ppp":
                     return "5";
                 default:
                     return "0";
