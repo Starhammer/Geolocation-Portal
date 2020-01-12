@@ -5,4 +5,13 @@
 }
 
 <h2>Recorddetails</h2>
+<hr />
+<h1>@Html.DisplayFor(model => model.title)</h1>
+<br/>   
+<h3>Beschreibung</h3>
+@Html.DisplayFor(model => model.description)
 
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
