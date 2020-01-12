@@ -94,5 +94,19 @@ namespace Geolocation_Portal_Test.Controllers
         {
             return View();
         }
+
+        public ActionResult Recorddetails(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            record record = db.record.Find(id);
+            if (record == null)
+            {
+                return HttpNotFound();
+            }
+            return View(record);
+        }
     }
 }

@@ -23,12 +23,14 @@
             <div class="card-block">
                 <div class="card-header">
                     <img class="icon" width="20" height="20" src="~/icons/Category/@Html.DisplayFor(modelItem => item.category.icon)" />
-                    @Html.DisplayFor(modelItem => item.title)
+                    <a class="nolink" href="@Url.Action("Recorddetails", "OpenData", new { id = item.Id})" title="Details anzeigen"> 
+                        @Html.DisplayFor(modelItem => item.title) 
+                    </a>
 
                     @if (Session["UserRole"] != null && Convert.ToInt32(Session["UserRole"]) < 3)
                     {
                         <div class="fa-pull-right">
-                            <a class="nolink" href="@Url.Action("Record", "OpenData")" title="Datensatz bearbeiten"><i class="fa fa-edit"></i></a>
+                            <a class="nolink" href="@Url.Action("Recordbearbeitung", "OpenData")" title="Datensatz bearbeiten"><i class="fa fa-edit"></i></a>
                             <a class="nolink" href="@Url.Action("Record", "OpenData")" title="Datensatz löschen"><i class="fa fa-trash"></i></a>
                         </div>
                     }
@@ -52,8 +54,9 @@
                 <div class="card-footer" style="min-height:50px;">
                     @Html.Action("Files", "OpenData", new { id = item.Id })
                 </div>
-                <a href="#" class="stretched-link"></a>
+                <!-- auskommentiert da ansonsten keine weiteren Links auf der card verwendet werden können
+                <a href="#" class="stretched-link"></a> -->
             </div>
-        </div>
-    }
-</div>
+            </div>
+        }
+    </div>  
