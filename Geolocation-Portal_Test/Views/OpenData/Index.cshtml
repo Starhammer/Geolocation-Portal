@@ -10,63 +10,77 @@
     <a class="nolink" href="#" title="Suchen"><i class="fa fa-search"></i></a>
     <a class="nolink" href="#" title="Sortieren"><i class="fa fa-sort-amount-asc"></i></a>
     <a class="nolink" href="#" title="Filtern"><i class="fa fa-filter"></i></a>
+
     @if (Session["UserRole"] != null && Convert.ToInt32(Session["UserRole"]) < 3)
     {
-    <a class="nolink" href="@Url.Action("Record", "OpenData")" title="Datensatz hinzufügen"><i class="fa fa-plus"></i></a>
+        <a class="nolink" href="@Url.Action("Record", "OpenData")" title="Datensatz hinzufügen"><i class="fa fa-plus"></i></a>
     }
 </div>
 
 <div class="card-columns">
     @foreach (var item in Model)
     {
-        <div class="card bg-light mb-3" style="max-width: 40rem;">
-            <div class="card-block">
-                <div class="card-header">
-                    <img class="icon" width="20" height="20" src="~/icons/Category/@Html.DisplayFor(modelItem => item.category.icon)" />
-                    <a class="nolink" href="@Url.Action("Recorddetails", "OpenData", new { id = item.Id})" title="Details anzeigen"> 
-                        @Html.DisplayFor(modelItem => item.title) 
-                    </a>
+        // Generieren einer Role ID, damit nur Datensätze angezeigt werden, wozu der Benutzer berechtigt ist.
+        int role_id = 4; // Es gibt vier Rollen. Die Rolle für Open Data hat die ID = 4.
 
-                    @if (Session["UserRole"] != null && Convert.ToInt32(Session["UserRole"]) < 3)
-                    {
-                        <div class="fa-pull-right">
-                            <a class="nolink" href="@Url.Action("Recordbearbeitung", "OpenData")" title="Datensatz bearbeiten"><i class="fa fa-edit"></i></a>
-                            <a class="nolink" href="@Url.Action("Record", "OpenData")" title="Datensatz löschen"><i class="fa fa-trash"></i></a>
+        if (Session["UserRole"] != null)
+        {
+            // Auslesen der Rollen ID des aktuell eingeloggten User.
+            role_id = Convert.ToInt32(Session["UserRole"]);
+        }
+
+        // Alle Items, deren Rollen ID kleiner als die generierte ist, werden nicht angezeigt.
+        if (item.role_id >= role_id)
+        {
+            <div class="card bg-light mb-3" style="max-width: 40rem;">
+                <div class="card-block">
+                    <div class="card-header">
+                        <img class="icon" width="20" height="20" src="~/icons/Category/@Html.DisplayFor(modelItem => item.category.icon)" />
+                        <a class="nolink" href="@Url.Action("Recorddetails", "OpenData", new { id = item.Id })" title="Details anzeigen">
+                            @Html.DisplayFor(modelItem => item.title)
+                        </a>
+
+                        @if (Session["UserRole"] != null && Convert.ToInt32(Session["UserRole"]) < 3)
+                        {
+                            <div class="fa-pull-right">
+                                <a class="nolink" href="@Url.Action("Recordbearbeitung", "OpenData")" title="Datensatz bearbeiten"><i class="fa fa-edit"></i></a>
+                                <a class="nolink" href="@Url.Action("Record", "OpenData")" title="Datensatz löschen"><i class="fa fa-trash"></i></a>
+                            </div>
+                        }
+                    </div>
+                    <div class="card-body">
+                        <div class="card-subtitle">
+                            <div class="d-flex justify-content-between">
+                                <span>
+                                    <i class="fa fa-calendar"></i>
+                                    @Html.DisplayFor(modelItem => item.dataset_modified_date)
+                                </span>
+                                <span><i class="fa fa-download"></i> 143</span>
+                                @Html.Partial("_rating", item.rating)
+                            </div>
                         </div>
-                    }
-                </div>
-                <div class="card-body">
-                    <div class="card-subtitle">
-                        <div class="d-flex justify-content-between">
-                            <span>
-                                <i class="fa fa-calendar"></i>
-                                @Html.DisplayFor(modelItem => item.dataset_modified_date)
-                            </span>
-                            <span><i class="fa fa-download"></i> 143</span>
-                            @Html.Partial("_rating", item.rating)
+                        <p class="card-text">
+                            @if (@Html.DisplayFor(modelItem => item.description).ToString().Length > 100)
+                            {
+                                @Html.DisplayFor(modelItem => item.description).ToString().Substring(0, 100)
+                                <span>...</span>
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(modelItem => item.description)
+                            }
+                        </p>
+                        <div class="text-right">
+                            <a href="@Url.Action("Recorddetails", "OpenData", new { id = item.Id })" title="Details anzeigen">Weiterlesen</a>
                         </div>
                     </div>
-                    <p class="card-text">
-                        @if (@Html.DisplayFor(modelItem => item.description).ToString().Length > 100)
-                        {
-                            @Html.DisplayFor(modelItem => item.description).ToString().Substring(0, 100)
-                            <span>...</span>
-                        }
-                        else
-                        {
-                            @Html.DisplayFor(modelItem => item.description)
-                        }
-                    </p>
-                    <div class="text-right">
-                        <a href="@Url.Action("Recorddetails", "OpenData", new { id = item.Id})" title="Details anzeigen">Weiterlesen</a>
+                    <div class="card-footer" style="min-height:50px;">
+                        @Html.Action("Files", "OpenData", new { id = item.Id })
                     </div>
+                    <!-- auskommentiert da ansonsten keine weiteren Links auf der card verwendet werden können
+                    <a href="#" class="stretched-link"></a> -->
                 </div>
-                <div class="card-footer" style="min-height:50px;">
-                    @Html.Action("Files", "OpenData", new { id = item.Id })
-                </div>
-                <!-- auskommentiert da ansonsten keine weiteren Links auf der card verwendet werden können
-                <a href="#" class="stretched-link"></a> -->
             </div>
-        </div>
+        }
     }
 </div>  
