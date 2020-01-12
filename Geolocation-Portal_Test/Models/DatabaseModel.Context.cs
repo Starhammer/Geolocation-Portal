@@ -34,5 +34,6 @@ namespace Geolocation_Portal_Test.Models
         public virtual DbSet<role> role { get; set; }
         public virtual DbSet<searchtag> searchtag { get; set; }
         public virtual DbSet<user> user { get; set; }
+        public virtual DbSet<location> location { get; set; }
     }
 }

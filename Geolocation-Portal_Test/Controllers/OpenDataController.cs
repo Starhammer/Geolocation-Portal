@@ -1,6 +1,8 @@
 ﻿using Geolocation_Portal_Test.Models;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
 
 namespace Geolocation_Portal_Test.Controllers
@@ -36,7 +38,37 @@ namespace Geolocation_Portal_Test.Controllers
         {
             ViewBag.Message = "Your application description page.";
 
+            ViewBag.category_id = new SelectList(db.category, "Id", "name");
+            ViewBag.publisher_id = new SelectList(db.publisher, "Id", "name");
+            ViewBag.licence_id = new SelectList(db.licence, "Id", "name");
+            ViewBag.role_id = new SelectList(db.role, "Id", "name");
+
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Record([Bind(Include = "Id,dataset_upload,dataset_modified_date,title,description,category_id,licence_id,publisher_id,rating,role_id,record_active")] record record, HttpPostedFileBase file)
+        {
+            if (ModelState.IsValid)
+            {
+                db.record.Add(record);
+
+                if (file != null && file.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(file.FileName);
+                    var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
+                    file.SaveAs(path);
+                }
+
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.category_id = new SelectList(db.category, "Id", "name", record.category_id);
+            ViewBag.publisher_id = new SelectList(db.publisher, "Id", "name", record.publisher_id);
+            ViewBag.licence_id = new SelectList(db.licence, "Id", "name", record.licence_id);
+            return View(record);
         }
 
         public ActionResult Recordbearbeitung()

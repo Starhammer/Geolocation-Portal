@@ -31,6 +31,7 @@ namespace Geolocation_Portal_Test.Models
         public Nullable<int> rating { get; set; }
         public Nullable<int> role_id { get; set; }
         public bool record_active { get; set; }
+        public int location_id { get; set; }
     
         public virtual category category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -38,5 +39,6 @@ namespace Geolocation_Portal_Test.Models
         public virtual publisher publisher { get; set; }
         public virtual comment comment { get; set; }
         public virtual licence licence { get; set; }
+        public virtual location location { get; set; }
     }
 }

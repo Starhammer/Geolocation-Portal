@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Geolocation_Portal_Test.Models.record>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.dataset_upload)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dataset_modified_date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.rating)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.role_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.record_active)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.category.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.publisher.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.licence.name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.dataset_upload)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dataset_modified_date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.rating)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.role_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.record_active)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.category.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.publisher.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.licence.name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

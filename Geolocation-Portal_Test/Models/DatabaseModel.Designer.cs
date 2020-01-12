@@ -1,4 +1,4 @@
-﻿// Die T4-Codegenerierung ist für Modell 'D:\Daten\Geolocation-Portal\VisualStudio2019\Geolocation-Portal_Test\Models\DatabaseModel.edmx' aktiviert. 
+﻿// Die T4-Codegenerierung ist für Modell 'C:\Users\Imperator\Source\Repos\Geolocation-Portal\Geolocation-Portal_Test\Models\DatabaseModel.edmx' aktiviert. 
 // Um die Generierung von Legacycode zu aktivieren, ändern Sie den Wert der Designer-Eigenschaft 'Code Generation Strategy'
 // in 'Legacy ObjectContext'. Diese Eigenschaft wird im Eigenschaftenfenster angezeigt, wenn das Modell
 // im Designer geöffnet ist.

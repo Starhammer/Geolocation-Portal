@@ -196,6 +196,7 @@
     <Compile Include="Controllers\GeoDataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OpenDataController.cs" />
+    <Compile Include="Controllers\recordsTESTController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -225,6 +226,9 @@
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\licence.cs">
+      <DependentUpon>DatabaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\location.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LoginModel.cs" />
@@ -462,6 +466,11 @@
     <Content Include="Views\OpenData\Recorddetails.cshtml" />
     <Content Include="Views\OpenData\Recordentfernung.cshtml" />
     <Content Include="Views\OpenData\Recordbearbeitung.cshtml" />
+    <Content Include="Views\recordsTEST\Create.cshtml" />
+    <Content Include="Views\recordsTEST\Delete.cshtml" />
+    <Content Include="Views\recordsTEST\Details.cshtml" />
+    <Content Include="Views\recordsTEST\Edit.cshtml" />
+    <Content Include="Views\recordsTEST\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
