@@ -472,7 +472,9 @@
     <Content Include="Views\recordsTEST\Edit.cshtml" />
     <Content Include="Views\recordsTEST\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\uploads\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />

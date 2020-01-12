@@ -42,25 +42,43 @@ namespace Geolocation_Portal_Test.Controllers
             ViewBag.publisher_id = new SelectList(db.publisher, "Id", "name");
             ViewBag.licence_id = new SelectList(db.licence, "Id", "name");
             ViewBag.role_id = new SelectList(db.role, "Id", "name");
+            ViewBag.location_id = new SelectList(db.location, "Id", "name");
 
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Record([Bind(Include = "Id,dataset_upload,dataset_modified_date,title,description,category_id,licence_id,publisher_id,rating,role_id,record_active")] record record, HttpPostedFileBase file)
+        public ActionResult Record([Bind(Include = "Id,dataset_upload,dataset_modified_date,title,description,category_id,licence_id,publisher_id,rating,role_id,record_active,location_id")] record record, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
-                db.record.Add(record);
+                
 
                 if (file != null && file.ContentLength > 0)
                 {
                     var fileName = Path.GetFileName(file.FileName);
-                    var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
-                    file.SaveAs(path);
+                    var path = Server.MapPath("~/App_Data/uploads/" + record.Id);
+                    var filePath = Path.Combine(path, fileName);
+
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+
+                    file.SaveAs(filePath);
+
+                    db.file.Add(new Models.file {
+                        record_id = record.Id,
+                        file_upload_date = System.DateTime.Now,
+                        download_count = 0,
+                        file_size = file.ContentLength,
+                        file_icon = getFileIcon(fileName)
+                    });
+
                 }
 
+                db.record.Add(record);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -68,6 +86,9 @@ namespace Geolocation_Portal_Test.Controllers
             ViewBag.category_id = new SelectList(db.category, "Id", "name", record.category_id);
             ViewBag.publisher_id = new SelectList(db.publisher, "Id", "name", record.publisher_id);
             ViewBag.licence_id = new SelectList(db.licence, "Id", "name", record.licence_id);
+            ViewBag.role_id = new SelectList(db.role, "Id", "name");
+            ViewBag.location_id = new SelectList(db.location, "Id", "name");
+
             return View(record);
         }
 
@@ -125,6 +146,29 @@ namespace Geolocation_Portal_Test.Controllers
         public ActionResult createDiagram()
         {
             return View();
+        }
+
+        /***
+         * asdasdad
+         */
+        private string getFileIcon(string name)
+        {
+            var extension = Path.GetExtension(name);
+            switch (extension)
+            {
+                case "txt":
+                    return "1";
+                case "docx":
+                    return "2";
+                case "excl":
+                    return "3";
+                case "pdf":
+                    return "4";
+                case "ppp":
+                    return "5";
+                default:
+                    return "0";
+            }
         }
     }
 }

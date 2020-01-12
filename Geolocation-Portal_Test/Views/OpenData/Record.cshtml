@@ -4,7 +4,7 @@
     ViewBag.Title = "Record";
 }
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Record", "OpenData", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <div class="container">
@@ -54,15 +54,11 @@
             </div>
             <div class="form-group row">
                 <div class="col-3">
-                    <label for="Location">Ort</label>
+                    @Html.LabelFor(model => model.location_id, "location_id", htmlAttributes: new { @class = "" })
                 </div>
                 <div class="col-9">
-                    <select class="form-control mw-100" id="selectLocation">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
+                    @Html.DropDownList("location_id", null, htmlAttributes: new { @class = "form-control mw-100" })
+                    @Html.ValidationMessageFor(model => model.location_id, "", new { @class = "text-danger" })
                 </div>
             </div>
             <br />
@@ -71,8 +67,7 @@
                     Dateien und Quellen *
                 </div>
                 <div class="col">
-                    <input class="custom-file-input" type="file">Dateien auswählen
-                    <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
+                    @Html.TextBox("file", "", new { type = "file" })
 
                 </div>
             </div>
