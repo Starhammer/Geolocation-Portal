@@ -52,37 +52,15 @@ namespace Geolocation_Portal_Test.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Record([Bind(Include = "Id,dataset_upload,dataset_modified_date,title,description,category_id,licence_id,publisher_id,rating,role_id,record_active,location_id")] record record, HttpPostedFileBase file)
+        public ActionResult Record([Bind(Include = "Id,dataset_upload,dataset_modified_date,title,description,category_id,licence_id,publisher_id,rating,role_id,record_active,location_id")] record record, IEnumerable<HttpPostedFileBase> files)
         {
             if (ModelState.IsValid)
             {
-                
-
-                if (file != null && file.ContentLength > 0)
-                {
-                    var fileName = Path.GetFileName(file.FileName);
-                    var path = Server.MapPath("~/App_Data/uploads/" + record.Id);
-                    var filePath = Path.Combine(path, fileName);
-
-                    if (!Directory.Exists(path))
-                    {
-                        Directory.CreateDirectory(path);
-                    }
-
-                    file.SaveAs(filePath);
-                    
-                    db.file.Add(new Models.file {
-                        record_id = record.Id,
-                        file_upload_date = System.DateTime.Now,
-                        download_count = 0,
-                        file_size = file.ContentLength,
-                        file_icon = getFileIcon(fileName)
-                    });
-
-                }
-
                 db.record.Add(record);
                 db.SaveChanges();
+
+                if (files != null) saveFiles(files, record.Id);
+                
                 return RedirectToAction("Index");
             }
 
@@ -183,21 +161,39 @@ namespace Geolocation_Portal_Test.Controllers
         private string getFileIcon(string name)
         {
             var extension = Path.GetExtension(name);
-            switch (extension)
+            return extension.Remove(0, 1);
+        }
+
+        private void saveFiles(IEnumerable<HttpPostedFileBase> files, int recordID)
+        {
+            foreach (var file in files)
             {
-                case ".txt":
-                    return "1";
-                case ".docx":
-                    return "2";
-                case ".excl":
-                    return "3";
-                case ".pdf":
-                    return "4";
-                case ".ppp":
-                    return "5";
-                default:
-                    return "0";
+                if (file.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(file.FileName);
+                    var path = Server.MapPath("~/App_Data/uploads/" + recordID);
+                    var filePath = Path.Combine(path, fileName);
+
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+
+                    file.SaveAs(filePath);
+
+                    db.file.Add(new Models.file
+                    {
+                        record_id = recordID,
+                        file_upload_date = System.DateTime.Now,
+                        download_count = 0,
+                        file_size = file.ContentLength,
+                        file_icon = getFileIcon(fileName)
+                    });
+
+                }
             }
+
+            db.SaveChanges();
         }
     }
 }

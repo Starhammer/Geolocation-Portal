@@ -67,7 +67,7 @@
                     Dateien und Quellen *
                 </div>
                 <div class="col">
-                    @Html.TextBox("file", "", new { type = "file" })
+                    @Html.TextBox("files", "", htmlAttributes: new { @type = "file", @multiple="true" })
 
                 </div>
             </div>

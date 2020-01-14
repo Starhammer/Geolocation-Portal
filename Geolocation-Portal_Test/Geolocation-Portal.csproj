@@ -276,8 +276,10 @@
     <Content Include="icons\Category\test2.png" />
     <Content Include="icons\Excel-Icon.png" />
     <Content Include="icons\Map-Icon.png" />
+    <Content Include="icons\ppp-icon.png" />
     <Content Include="icons\Star-Black-Icon.png" />
     <Content Include="icons\Star-Icon.png" />
+    <Content Include="icons\txt-icon.png" />
     <Content Include="icons\Word-Icon.png" />
     <Content Include="Models\DatabaseModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

@@ -80,7 +80,7 @@
           <Property Name="category_id" Type="int" />
           <Property Name="licence_id" Type="int" />
           <Property Name="publisher_id" Type="int" />
-          <Property Name="rating" Type="int" />
+          <Property Name="rating" Type="int" Nullable="false" />
           <Property Name="role_id" Type="int" />
           <Property Name="record_active" Type="bit" Nullable="false" />
           <Property Name="location_id" Type="int" Nullable="false" />
@@ -397,7 +397,7 @@
           <Property Name="category_id" Type="Int32" />
           <Property Name="licence_id" Type="Int32" />
           <Property Name="publisher_id" Type="Int32" />
-          <Property Name="rating" Type="Int32" />
+          <Property Name="rating" Type="Int32" Nullable="false" />
           <Property Name="role_id" Type="Int32" />
           <Property Name="record_active" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="category" Relationship="Model.FK_record_category" FromRole="record" ToRole="category" />
