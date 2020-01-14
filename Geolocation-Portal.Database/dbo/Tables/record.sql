@@ -8,7 +8,7 @@
 	 [category_id] INT NULL,
 	 [licence_id] INT NULL,
 	 [publisher_id] INT NULL,
-	 [rating] INT NULL,
+	 [rating] INT NULL DEFAULT 0,
 	 [role_id] INT NULL,
 	 [record_active] BIT NOT NULL DEFAULT 0, 
     [location_id] INT NOT NULL, 
