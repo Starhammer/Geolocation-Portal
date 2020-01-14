@@ -273,6 +273,7 @@
     </Content>
     <Content Include="icons\Calendar-Icon.png" />
     <Content Include="icons\Category\test.png" />
+    <Content Include="icons\Category\test2.png" />
     <Content Include="icons\Excel-Icon.png" />
     <Content Include="icons\Map-Icon.png" />
     <Content Include="icons\Star-Black-Icon.png" />
