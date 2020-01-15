@@ -9,10 +9,12 @@
 {
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
           integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-          crossorigin="" />
+          crossorigin="">
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
             integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
             crossorigin=""></script>
+
+    <script src="/Scripts/leaflet.ajax.min.js"></script>
 
     <style>
         #map {
@@ -23,11 +25,21 @@
 
 <div id="map"></div>
 
-<script>
-    var map = L.map('map')
-        .setView([49.35, 9.14], 12);
+<script src="~/App_Data/kindergarten.geojson" type="text/javascript"></script>
 
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+<script>
+    var map = L.map('map').setView([49.35, 9.14], 12);
+
+    L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
+
+    L.marker([49.345406, 9.134326]).addTo(map).bindPopup("<b>Click cross button to dismiss!</b><br />I am a popup.").openPopup();
+
+    // https://gis.stackexchange.com/questions/68489/loading-external-geojson-file-into-leaflet-map
+    var kindergarten = kindergarten.geojson
+
+    $.getJSON(kindergarten, function (data) {
+        L.geoJson(data).addTo(map);
+    });
 </script>
