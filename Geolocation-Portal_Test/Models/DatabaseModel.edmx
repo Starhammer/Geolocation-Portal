@@ -34,8 +34,8 @@
           <Property Name="file_upload_date" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="download_count" Type="int" />
           <Property Name="file_icon" Type="nvarchar" MaxLength="50" />
-          <Property Name="diagram_data" Type="int" />
-          <Property Name="map_data" Type="int" />
+          <Property Name="diagram_data" Type="bit" />
+          <Property Name="map_data" Type="bit" />
           <Property Name="file_size" Type="float" />
         </EntityType>
         <EntityType Name="fileSearchtag">
@@ -291,6 +291,7 @@
           <EntitySet Name="comment" EntityType="Model.comment" />
           <EntitySet Name="file" EntityType="Model.file" />
           <EntitySet Name="licence" EntityType="Model.licence" />
+          <EntitySet Name="location" EntityType="Model.location" />
           <EntitySet Name="publisher" EntityType="Model.publisher" />
           <EntitySet Name="record" EntityType="Model.record" />
           <EntitySet Name="role" EntityType="Model.role" />
@@ -303,6 +304,10 @@
           <AssociationSet Name="FK_file_record" Association="Model.FK_file_record">
             <End Role="record" EntitySet="record" />
             <End Role="file" EntitySet="file" />
+          </AssociationSet>
+          <AssociationSet Name="FK_record_location" Association="Model.FK_record_location">
+            <End Role="location" EntitySet="location" />
+            <End Role="record" EntitySet="record" />
           </AssociationSet>
           <AssociationSet Name="FK_record_publisher" Association="Model.FK_record_publisher">
             <End Role="publisher" EntitySet="publisher" />
@@ -320,21 +325,12 @@
             <End Role="comment" EntitySet="comment" />
             <End Role="record" EntitySet="record" />
           </AssociationSet>
-          <AssociationSet Name="recordlicence" Association="Model.recordlicence">
-            <End Role="record" EntitySet="record" />
-            <End Role="licence" EntitySet="licence" />
-          </AssociationSet>
-          <EntitySet Name="location" EntityType="Model.location" />
-          <AssociationSet Name="FK_record_location" Association="Model.FK_record_location">
-            <End Role="location" EntitySet="location" />
-            <End Role="record" EntitySet="record" />
-          </AssociationSet>
         </EntityContainer>
         <EntityType Name="category">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="parent_id" Type="Int32" Nullable="false" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -345,7 +341,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="person_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -356,13 +352,13 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="record_id" Type="Int32" Nullable="false" />
           <Property Name="file_upload_date" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="download_count" Type="Int32" />
           <Property Name="file_icon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="diagram_data" Type="Int32" />
-          <Property Name="map_data" Type="Int32" />
+          <Property Name="diagram_data" Type="Boolean" />
+          <Property Name="map_data" Type="Boolean" />
           <Property Name="file_size" Type="Double" />
           <NavigationProperty Name="record" Relationship="Model.FK_file_record" FromRole="file" ToRole="record" />
           <NavigationProperty Name="searchtag" Relationship="Model.fileSearchtag" FromRole="file" ToRole="searchtag" />
@@ -371,16 +367,23 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="record" Relationship="Model.recordlicence" FromRole="licence" ToRole="record" />
+        </EntityType>
+        <EntityType Name="location">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="record" Relationship="Model.FK_record_location" FromRole="location" ToRole="record" />
         </EntityType>
         <EntityType Name="publisher">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="record" Relationship="Model.FK_record_publisher" FromRole="publisher" ToRole="record" />
@@ -389,7 +392,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="dataset_upload" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="dataset_modified_date" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -400,19 +403,18 @@
           <Property Name="rating" Type="Int32" Nullable="false" />
           <Property Name="role_id" Type="Int32" />
           <Property Name="record_active" Type="Boolean" Nullable="false" />
+          <Property Name="location_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="category" Relationship="Model.FK_record_category" FromRole="record" ToRole="category" />
           <NavigationProperty Name="file" Relationship="Model.FK_file_record" FromRole="record" ToRole="file" />
+          <NavigationProperty Name="location" Relationship="Model.FK_record_location" FromRole="record" ToRole="location" />
           <NavigationProperty Name="publisher" Relationship="Model.FK_record_publisher" FromRole="record" ToRole="publisher" />
           <NavigationProperty Name="comment" Relationship="Model.recordComment" FromRole="record" ToRole="comment" />
-          <NavigationProperty Name="licence" Relationship="Model.recordlicence" FromRole="record" ToRole="licence" />
-          <Property Name="location_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="location" Relationship="Model.FK_record_location" FromRole="record" ToRole="location" />
         </EntityType>
         <EntityType Name="role">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="user" Relationship="Model.FK_user_role" FromRole="role" ToRole="user" />
@@ -421,7 +423,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="file" Relationship="Model.fileSearchtag" FromRole="searchtag" ToRole="file" />
         </EntityType>
@@ -429,7 +431,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="role_id" Type="Int32" Nullable="false" />
           <Property Name="department_id" Type="Int32" Nullable="false" />
           <Property Name="first_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -467,6 +469,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_record_location">
+          <End Type="Model.location" Role="location" Multiplicity="1" />
+          <End Type="Model.record" Role="record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="location">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="record">
+              <PropertyRef Name="location_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_record_publisher">
           <End Type="Model.publisher" Role="publisher" Multiplicity="0..1" />
           <End Type="Model.record" Role="record" Multiplicity="*" />
@@ -498,38 +512,6 @@
         <Association Name="recordComment">
           <End Type="Model.comment" Role="comment" Multiplicity="0..1" />
           <End Type="Model.record" Role="record" Multiplicity="*" />
-        </Association>
-        <Association Name="recordlicence">
-          <End Type="Model.record" Role="record" Multiplicity="*" />
-          <End Type="Model.licence" Role="licence" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="licence">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="record">
-              <PropertyRef Name="licence_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="location">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="record" Relationship="Model.FK_record_location" FromRole="location" ToRole="record" />
-        </EntityType>
-        <Association Name="FK_record_location">
-          <End Type="Model.location" Role="location" Multiplicity="1" />
-          <End Type="Model.record" Role="record" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="location">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="record">
-              <PropertyRef Name="location_id" />
-            </Dependent>
-          </ReferentialConstraint>
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -577,6 +559,14 @@
             <EntityTypeMapping TypeName="Model.licence">
               <MappingFragment StoreEntitySet="licence">
                 <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="location">
+            <EntityTypeMapping TypeName="Model.location">
+              <MappingFragment StoreEntitySet="location">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -662,14 +652,6 @@
             </EndProperty>
             <Condition ColumnName="comment_id" IsNull="false" />
           </AssociationSetMapping>
-          <EntitySetMapping Name="location">
-            <EntityTypeMapping TypeName="Model.location">
-              <MappingFragment StoreEntitySet="location">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
