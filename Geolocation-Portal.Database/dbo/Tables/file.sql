@@ -5,8 +5,8 @@
 	[file_upload_date] DATETIME2 NOT NULL,
 	[download_count] INT NULL,
 	[file_icon] NVARCHAR(50) NULL,
-	[diagram_data] INT NULL ,
-	[map_data] INT NULL,
+	[diagram_data] BIT NULL ,
+	[map_data] BIT NULL,
 	[file_size] FLOAT NULL, 
     CONSTRAINT [FK_file_record] FOREIGN KEY (record_id) REFERENCES record(id) 
 )

@@ -29,11 +29,11 @@ namespace Geolocation_Portal_Test.Models
         public virtual DbSet<comment> comment { get; set; }
         public virtual DbSet<file> file { get; set; }
         public virtual DbSet<licence> licence { get; set; }
+        public virtual DbSet<location> location { get; set; }
         public virtual DbSet<publisher> publisher { get; set; }
         public virtual DbSet<record> record { get; set; }
         public virtual DbSet<role> role { get; set; }
         public virtual DbSet<searchtag> searchtag { get; set; }
         public virtual DbSet<user> user { get; set; }
-        public virtual DbSet<location> location { get; set; }
     }
 }
