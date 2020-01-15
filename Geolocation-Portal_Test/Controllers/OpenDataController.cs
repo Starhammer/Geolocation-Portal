@@ -59,7 +59,10 @@ namespace Geolocation_Portal_Test.Controllers
                 db.record.Add(record);
                 db.SaveChanges();
 
-                if (files != null) saveFiles(files, record.Id);
+                
+                
+
+                if (files != null) saveFiles(files, record.Id, Request["dataTyp"]);
                 
                 return RedirectToAction("Index");
             }
@@ -181,7 +184,7 @@ namespace Geolocation_Portal_Test.Controllers
             return extension.Remove(0, 1);
         }
 
-        private void saveFiles(IEnumerable<HttpPostedFileBase> files, int recordID)
+        private void saveFiles(IEnumerable<HttpPostedFileBase> files, int recordID, string datType)
         {
             foreach (var file in files)
             {
@@ -198,13 +201,29 @@ namespace Geolocation_Portal_Test.Controllers
 
                     file.SaveAs(filePath);
 
+                    var geoData = false;
+                    var diaData = false;
+
+                    switch (datType)
+                    {
+                        case "geoData":
+                            geoData = true;
+                            break;
+                        case "diaData":
+                            diaData = true;
+                            break;
+                    }
+
                     db.file.Add(new Models.file
                     {
                         record_id = recordID,
                         file_upload_date = System.DateTime.Now,
                         download_count = 0,
                         file_size = file.ContentLength,
-                        file_icon = getFileIcon(fileName)
+                        file_icon = getFileIcon(fileName),
+                        map_data = geoData,
+                        diagram_data = diaData
+                      
                     });
 
                 }

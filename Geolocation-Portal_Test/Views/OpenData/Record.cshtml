@@ -67,7 +67,7 @@
                     Dateien und Quellen *
                 </div>
                 <div class="col">
-                    @Html.TextBox("files", "", htmlAttributes: new { @type = "file", @multiple="true" })
+                    @Html.TextBox("files", "", htmlAttributes: new { @type = "file", @multiple = "true" })
 
                 </div>
             </div>
@@ -75,18 +75,18 @@
 
             <!-- Default checked -->
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" id="radioNormal" name="defaultExampleRadios" checked>
+                <input type="radio" class="custom-control-input" id="radioNormal" name="dataTyp" value="normal" checked>
                 <label class="custom-control-label" for="radioNormal">Datensatz kann nicht auf Karte angezeigt werden und enthält kein Diagramm</label>
             </div>
             <br />
             <!-- Default unchecked -->
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" id="radioGeoFile" name="defaultExampleRadios">
+                <input type="radio" class="custom-control-input" id="radioGeoFile" name="dataTyp" value="geoData">
                 <label class="custom-control-label" for="radioGeoFile">Datensatz kann auf Karte angezeigt werden</label>
             </div>
             <br />
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" id="radioDiagram" name="defaultExampleRadios">
+                <input type="radio" class="custom-control-input" id="radioDiagram" name="dataTyp" value="diaData">
                 <label class="custom-control-label" for="radioDiagram">Datensatz enthält ein Diagramm</label>
             </div>
             <br />
