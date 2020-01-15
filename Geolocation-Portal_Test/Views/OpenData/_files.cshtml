@@ -2,7 +2,11 @@
 
 @foreach (var item in Model)
 {
-    if (item.map_data == true || item.diagram_data == true)
+    if (item.map_data == true)
+    {
+        <a class="nolink float-right ml-2" href="#" title=""><i class="fa fa-map"></i></a>
+    }
+    else if (item.diagram_data == true)
     {
         <span><img class="float-right ml-2" width="25" height="25" src="~/icons/@Html.DisplayFor(modelItem => item.file_icon)-icon.png" /></span>
     }
