@@ -7,39 +7,65 @@
 
 @section Styles
 {
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-          integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-          crossorigin="">
-    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
-            integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-            crossorigin=""></script>
-
-    <script src="/Scripts/leaflet.ajax.min.js"></script>
+    <script src='https://api.mapbox.com/mapbox.js/v3.2.1/mapbox.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/v3.2.1/mapbox.css' rel='stylesheet' />
 
     <style>
         #map {
+            width: 100%;
             height: 800px;
         }
     </style>
 }
 
-<div id="map"></div>
+<div style="display: flex; flex-direction: row;">
+    <!-- flex-direction muss auf dem Smartphone auf column geändert werden. -->
+    <div id='map'></div>
 
-<script src="~/App_Data/kindergarten.geojson" type="text/javascript"></script>
+    <aside style="min-width: 250px; width: 30%; max-width: 350px; padding: 10px;">
+        <h2 style="margin: 0; margin-bottom: 10px; padding: 0;">Datensätze:</h2>
+
+        <!-- Alle Datensätze anzeigen -->
+        <ul style="list-style-type: none; margin: 0; padding: 0; line-height: 1.4em;">
+            <li><label><input type="checkbox" checked name="dataset1" value="bildungseinrichtungen">Bildungseinrichtungen (12)</input></label></li>
+            <li><label><input type="checkbox" checked name="dataset2" value="bushaltestellen">Bushaltestellen (159)</input></label></li>
+        </ul>
+    </aside>
+</div>
 
 <script>
-    var map = L.map('map').setView([49.35, 9.14], 12);
+    L.mapbox.accessToken = "pk.eyJ1IjoibWlja3JlMTciLCJhIjoiY2s1ZjVtZ2czMmhleDNmbGo2N3d3dnp0eiJ9.CQfwridE_34CUIrMBQ-h1Q";
 
-    L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
+    var map = L.mapbox.map('map')
+        .setView([49.348641, 9.142345], 13)
+        .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/streets-v11'));
+
+    /*
+    L.geoJson("bildungseinrichtungen.geojson", {
+        style: function (feature) {
+            return {color: feature.properties.marker-color};
+        },
+        onEachFeature: function (feature, layer) {
+            layer.bindPopup(feature.properties.Name);
+        }
     }).addTo(map);
+    */
 
-    L.marker([49.345406, 9.134326]).addTo(map).bindPopup("<b>Click cross button to dismiss!</b><br />I am a popup.").openPopup();
+    @{
+        var dataFile = "~/App_Data/bildungseinrichtungen.geojson";
+    }
 
-    // https://gis.stackexchange.com/questions/68489/loading-external-geojson-file-into-leaflet-map
-    var kindergarten = kindergarten.geojson
+    console.log("The dataFile Path: @dataFile");
 
-    $.getJSON(kindergarten, function (data) {
-        L.geoJson(data).addTo(map);
-    });
+    var myLayer = L.mapbox.featureLayer().loadURL("App_Data/bildungseinrichtungen.geojson").addTo(map);
+
+    var myLayer = L.mapbox.featureLayer()
+        .loadURL("<% = dataFile %>")
+        .on('ready', function () {
+            myLayer.eachLayer(function (layer) {
+                map.fitBounds(myLayer.getBounds());
+                layer.bindPopup(layer.features.properties.Name);
+            });
+        })
+        .addTo(map);
 </script>
