@@ -11,7 +11,10 @@ namespace Geolocation_Portal_Test.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+    using System.Web.Mvc;
+
     public partial class record
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,14 +26,35 @@ namespace Geolocation_Portal_Test.Models
         public int Id { get; set; }
         public System.DateTime dataset_upload { get; set; }
         public System.DateTime dataset_modified_date { get; set; }
+
+        [Required(ErrorMessage = "Bitte geben Sie einen Titel an.")]
+        [StringLength(160)]
+        [DisplayName("Titel")]
         public string title { get; set; }
+
+        [StringLength(3000)]
+        [DisplayName("Beschreibung")]
         public string description { get; set; }
+
+        [DisplayName("Kategorie")]
         public Nullable<int> category_id { get; set; }
+
+        [DisplayName("Lizenz")]
         public Nullable<int> licence_id { get; set; }
+
+        [DisplayName("Publisher")]
         public Nullable<int> publisher_id { get; set; }
-        public Nullable<int> rating { get; set; }
+
+        public int rating { get; set; }
+
+        [DisplayName("Sichtbarkeit")]
         public Nullable<int> role_id { get; set; }
+
+        [DisplayName("Anzeigen?")]
         public bool record_active { get; set; }
+
+        [DisplayName("Örtlichkeit")]
+        public int location_id { get; set; }
     
         public virtual category category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -38,5 +62,6 @@ namespace Geolocation_Portal_Test.Models
         public virtual publisher publisher { get; set; }
         public virtual comment comment { get; set; }
         public virtual licence licence { get; set; }
+        public virtual location location { get; set; }
     }
 }

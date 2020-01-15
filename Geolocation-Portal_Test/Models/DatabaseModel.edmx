@@ -9,7 +9,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="parent_id" Type="int" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="description" Type="ntext" />
@@ -19,7 +19,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="title" Type="nvarchar" MaxLength="50" />
           <Property Name="text" Type="ntext" />
           <Property Name="person_name" Type="nvarchar" MaxLength="50" />
@@ -29,7 +29,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="record_id" Type="int" Nullable="false" />
           <Property Name="file_upload_date" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="download_count" Type="int" />
@@ -42,22 +42,29 @@
           <Key>
             <PropertyRef Name="file_id" />
           </Key>
-          <Property Name="file_id" Type="int" Nullable="false" />
+          <Property Name="file_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="search_tag_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="licence">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="description" Type="ntext" />
+        </EntityType>
+        <EntityType Name="location">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="publisher">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="description" Type="ntext" />
         </EntityType>
@@ -65,7 +72,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="dataset_upload" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="dataset_modified_date" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="title" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -73,22 +80,23 @@
           <Property Name="category_id" Type="int" />
           <Property Name="licence_id" Type="int" />
           <Property Name="publisher_id" Type="int" />
-          <Property Name="rating" Type="int" />
+          <Property Name="rating" Type="int" Nullable="false" />
           <Property Name="role_id" Type="int" />
           <Property Name="record_active" Type="bit" Nullable="false" />
+          <Property Name="location_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="recordComment">
           <Key>
             <PropertyRef Name="dataset_id" />
           </Key>
-          <Property Name="dataset_id" Type="int" Nullable="false" />
+          <Property Name="dataset_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="comment_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="role">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="description" Type="ntext" />
         </EntityType>
@@ -96,14 +104,14 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="ntext" Nullable="false" />
         </EntityType>
         <EntityType Name="user">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="role_id" Type="int" Nullable="false" />
           <Property Name="department_id" Type="int" Nullable="false" />
           <Property Name="first_name" Type="nvarchar" MaxLength="50" />
@@ -164,6 +172,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_record_location">
+          <End Role="location" Type="Self.location" Multiplicity="1" />
+          <End Role="record" Type="Self.record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="location">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="record">
+              <PropertyRef Name="location_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_record_publisher">
           <End Role="publisher" Type="Self.publisher" Multiplicity="0..1" />
           <End Role="record" Type="Self.record" Multiplicity="*" />
@@ -218,6 +238,7 @@
           <EntitySet Name="file" EntityType="Self.file" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="fileSearchtag" EntityType="Self.fileSearchtag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="licence" EntityType="Self.licence" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="location" EntityType="Self.location" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="publisher" EntityType="Self.publisher" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="record" EntityType="Self.record" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="recordComment" EntityType="Self.recordComment" Schema="dbo" store:Type="Tables" />
@@ -238,6 +259,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_record_category" Association="Self.FK_record_category">
             <End Role="category" EntitySet="category" />
+            <End Role="record" EntitySet="record" />
+          </AssociationSet>
+          <AssociationSet Name="FK_record_location" Association="Self.FK_record_location">
+            <End Role="location" EntitySet="location" />
             <End Role="record" EntitySet="record" />
           </AssociationSet>
           <AssociationSet Name="FK_record_publisher" Association="Self.FK_record_publisher">
@@ -298,6 +323,11 @@
           <AssociationSet Name="recordlicence" Association="Model.recordlicence">
             <End Role="record" EntitySet="record" />
             <End Role="licence" EntitySet="licence" />
+          </AssociationSet>
+          <EntitySet Name="location" EntityType="Model.location" />
+          <AssociationSet Name="FK_record_location" Association="Model.FK_record_location">
+            <End Role="location" EntitySet="location" />
+            <End Role="record" EntitySet="record" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="category">
@@ -367,7 +397,7 @@
           <Property Name="category_id" Type="Int32" />
           <Property Name="licence_id" Type="Int32" />
           <Property Name="publisher_id" Type="Int32" />
-          <Property Name="rating" Type="Int32" />
+          <Property Name="rating" Type="Int32" Nullable="false" />
           <Property Name="role_id" Type="Int32" />
           <Property Name="record_active" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="category" Relationship="Model.FK_record_category" FromRole="record" ToRole="category" />
@@ -375,6 +405,8 @@
           <NavigationProperty Name="publisher" Relationship="Model.FK_record_publisher" FromRole="record" ToRole="publisher" />
           <NavigationProperty Name="comment" Relationship="Model.recordComment" FromRole="record" ToRole="comment" />
           <NavigationProperty Name="licence" Relationship="Model.recordlicence" FromRole="record" ToRole="licence" />
+          <Property Name="location_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="location" Relationship="Model.FK_record_location" FromRole="record" ToRole="location" />
         </EntityType>
         <EntityType Name="role">
           <Key>
@@ -479,6 +511,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="location">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="record" Relationship="Model.FK_record_location" FromRole="location" ToRole="record" />
+        </EntityType>
+        <Association Name="FK_record_location">
+          <End Type="Model.location" Role="location" Multiplicity="1" />
+          <End Type="Model.record" Role="record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="location">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="record">
+              <PropertyRef Name="location_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -542,6 +594,7 @@
           <EntitySetMapping Name="record">
             <EntityTypeMapping TypeName="Model.record">
               <MappingFragment StoreEntitySet="record">
+                <ScalarProperty Name="location_id" ColumnName="location_id" />
                 <ScalarProperty Name="record_active" ColumnName="record_active" />
                 <ScalarProperty Name="role_id" ColumnName="role_id" />
                 <ScalarProperty Name="rating" ColumnName="rating" />
@@ -609,6 +662,14 @@
             </EndProperty>
             <Condition ColumnName="comment_id" IsNull="false" />
           </AssociationSetMapping>
+          <EntitySetMapping Name="location">
+            <EntityTypeMapping TypeName="Model.location">
+              <MappingFragment StoreEntitySet="location">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -74,6 +74,7 @@
     <Build Include="dbo\Tables\recordComment.sql" />
     <Build Include="dbo\Tables\role.sql" />
     <Build Include="dbo\Tables\user.sql" />
+    <Build Include="dbo\Tables\location.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Geolocation-Portal.Database.refactorlog" />

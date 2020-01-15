@@ -259,5 +259,6 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/Geolocation-Portal_Test/App_Data/uploads
 /Geolocation-Portal_Test/Controllers/recordsTESTController.cs
 /Geolocation-Portal_Test/Views/recordsTEST

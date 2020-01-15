@@ -21,6 +21,8 @@
         <AssociationConnector Association="Model.fileSearchtag" />
         <AssociationConnector Association="Model.recordComment" />
         <AssociationConnector Association="Model.recordlicence" />
+        <EntityTypeShape EntityType="Model.location" Width="1.5" PointX="7.375" PointY="7.875" />
+        <AssociationConnector Association="Model.FK_record_location" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

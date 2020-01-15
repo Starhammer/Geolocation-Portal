@@ -1,6 +1,9 @@
 ﻿using Geolocation_Portal_Test.Models;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
 
 namespace Geolocation_Portal_Test.Controllers
@@ -20,6 +23,8 @@ namespace Geolocation_Portal_Test.Controllers
                             where f.record_active == true
                             select f;
 
+            ViewBag.category = (List<category>)db.category.ToList();
+
             return View(data.ToList());
             
         }
@@ -36,7 +41,36 @@ namespace Geolocation_Portal_Test.Controllers
         {
             ViewBag.Message = "Your application description page.";
 
+            ViewBag.category_id = new SelectList(db.category, "Id", "name");
+            ViewBag.publisher_id = new SelectList(db.publisher, "Id", "name");
+            ViewBag.licence_id = new SelectList(db.licence, "Id", "name");
+            ViewBag.role_id = new SelectList(db.role, "Id", "name");
+            ViewBag.location_id = new SelectList(db.location, "Id", "name");
+
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Record([Bind(Include = "Id,dataset_upload,dataset_modified_date,title,description,category_id,licence_id,publisher_id,rating,role_id,record_active,location_id")] record record, IEnumerable<HttpPostedFileBase> files)
+        {
+            if (ModelState.IsValid)
+            {
+                db.record.Add(record);
+                db.SaveChanges();
+
+                if (files != null) saveFiles(files, record.Id);
+                
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.category_id = new SelectList(db.category, "Id", "name", record.category_id);
+            ViewBag.publisher_id = new SelectList(db.publisher, "Id", "name", record.publisher_id);
+            ViewBag.licence_id = new SelectList(db.licence, "Id", "name", record.licence_id);
+            ViewBag.role_id = new SelectList(db.role, "Id", "name");
+            ViewBag.location_id = new SelectList(db.location, "Id", "name");
+
+            return View(record);
         }
 
         public ActionResult Recordbearbeitung()
@@ -63,6 +97,7 @@ namespace Geolocation_Portal_Test.Controllers
                    && f.category_id == id
                    select f;
 
+            ViewBag.category = (List<category>)db.category.ToList();
             return View("index", data.ToList());
                 
 
@@ -110,6 +145,72 @@ namespace Geolocation_Portal_Test.Controllers
             }
 
             return View(record);
+        }
+
+        [HttpPost]
+        public ActionResult Search()
+        {
+            var searchtext = Request["search"];
+
+            IQueryable<record> data;
+
+            data = from f in db.record
+                   where f.record_active == true && 
+                   ( f.description.Contains(searchtext) || f.title.Contains(searchtext) )
+                   select f;
+
+            if(data != null && data.Count() > 0)
+            {
+                ViewBag.message = "Die Suche nach '"+ searchtext + "' ergab "+data.Count()+" treffer";
+            }
+            else
+            {
+                ViewBag.message = "Die Suche ergab keine Treffer";
+            }
+            
+            ViewBag.category = (List<category>)db.category.ToList();
+            return View("index", data.ToList());
+        }
+
+        /***
+         * asdasdad
+         */
+        private string getFileIcon(string name)
+        {
+            var extension = Path.GetExtension(name);
+            return extension.Remove(0, 1);
+        }
+
+        private void saveFiles(IEnumerable<HttpPostedFileBase> files, int recordID)
+        {
+            foreach (var file in files)
+            {
+                if (file.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(file.FileName);
+                    var path = Server.MapPath("~/App_Data/uploads/" + recordID);
+                    var filePath = Path.Combine(path, fileName);
+
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+
+                    file.SaveAs(filePath);
+
+                    db.file.Add(new Models.file
+                    {
+                        record_id = recordID,
+                        file_upload_date = System.DateTime.Now,
+                        download_count = 0,
+                        file_size = file.ContentLength,
+                        file_icon = getFileIcon(fileName)
+                    });
+
+                }
+            }
+
+            db.SaveChanges();
         }
     }
 }
