@@ -21,7 +21,7 @@
     <div id="filter" style="display:none; height:1.5em;">
         @foreach (var item in ViewBag.category)
         {
-            <a class="float-left" href="./Category/@item.Id"><img class="icon" width="20" height="20" src="~/icons/Category/@item.icon" title="@item.name" /></a>
+            <a class="float-left" href="OpenData/Category/@item.Id"><img class="icon" width="20" height="20" src="~/icons/Category/@item.icon" title="@item.name" /></a>
         }
     </div>
     <div id="search" style="display:none; height:1.5em;">
@@ -94,7 +94,27 @@
                         </div>
                     </div>
                     <div class="card-footer" style="min-height:50px;">
-                        @Html.Action("Files", "OpenData", new { id = item.Id })
+                        @foreach (var file in item.file)
+                        {
+                            if (item.geo_data == true)
+                            {
+                                <a class="nolink float-right ml-2" href="~/GeoData/index/@item.Id" title=""><i class="fa fa-map"></i></a>
+                            }
+                            else if (item.dia_data == true)
+                            {
+                                <span><img class="float-right ml-2" width="25" height="25" src="~/icons/@Html.DisplayFor(modelItem => file.file_icon)-icon.png" /></span>
+                            }
+                            else
+                            {
+                                <span>
+                                    <a href="@Url.Action("Download", "OpenData", new { fileName = file.name, recordId = item.Id})">
+                                        <img class="float-left mr-2" width="25" height="25" src="~/icons/@Html.DisplayFor(modelItem => file.file_icon)-icon.png" />
+                                    </a>
+                                    
+                                </span>
+                            }
+
+                        }
                     </div>
                     <!-- auskommentiert da ansonsten keine weiteren Links auf der card verwendet werden können
                     <a href="#" class="stretched-link"></a> -->

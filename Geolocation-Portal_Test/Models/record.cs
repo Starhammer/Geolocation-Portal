@@ -49,6 +49,8 @@ namespace Geolocation_Portal_Test.Models
 
         [DisplayName("Bewertung")]
         public int rating { get; set; }
+        public bool dia_data { get; set; }
+        public bool geo_data { get; set; }
 
         [DisplayName("Datensatzsichtbarkeit")]
         public Nullable<int> role_id { get; set; }
