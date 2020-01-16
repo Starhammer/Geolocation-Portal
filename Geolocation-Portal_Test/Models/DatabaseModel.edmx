@@ -37,6 +37,7 @@
           <Property Name="diagram_data" Type="bit" />
           <Property Name="map_data" Type="bit" />
           <Property Name="file_size" Type="float" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="fileSearchtag">
           <Key>
@@ -362,6 +363,7 @@
           <Property Name="file_size" Type="Double" />
           <NavigationProperty Name="record" Relationship="Model.FK_file_record" FromRole="file" ToRole="record" />
           <NavigationProperty Name="searchtag" Relationship="Model.fileSearchtag" FromRole="file" ToRole="searchtag" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="licence">
           <Key>
@@ -544,6 +546,7 @@
           <EntitySetMapping Name="file">
             <EntityTypeMapping TypeName="Model.file">
               <MappingFragment StoreEntitySet="file">
+                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="file_size" ColumnName="file_size" />
                 <ScalarProperty Name="map_data" ColumnName="map_data" />
                 <ScalarProperty Name="diagram_data" ColumnName="diagram_data" />

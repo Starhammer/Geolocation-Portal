@@ -26,12 +26,9 @@
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort>44304</IISExpressSSLPort>
-    <IISExpressAnonymousAuthentication>
-    </IISExpressAnonymousAuthentication>
-    <IISExpressWindowsAuthentication>
-    </IISExpressWindowsAuthentication>
-    <IISExpressUseClassicPipelineMode>
-    </IISExpressUseClassicPipelineMode>
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -195,6 +192,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BenutzerController.cs" />
+    <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\FAQController.cs" />
     <Compile Include="Controllers\GeoDataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

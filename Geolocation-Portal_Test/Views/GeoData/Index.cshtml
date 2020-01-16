@@ -57,7 +57,7 @@
 
     console.log("The dataFile Path: @dataFile");
 
-    var myLayer = L.mapbox.featureLayer().loadURL("App_Data/bildungseinrichtungen.geojson").addTo(map);
+    var myLayer = L.mapbox.featureLayer().loadURL("/api/data/@ViewBag.FileId").addTo(map);
 
     var myLayer = L.mapbox.featureLayer()
         .loadURL("<% = dataFile %>")

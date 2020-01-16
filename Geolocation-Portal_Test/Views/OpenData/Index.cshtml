@@ -9,9 +9,9 @@
 <div id="toolBar">
     <div id="">
         
-        <a class="nolink" href="#" title="Suchen"><i class="fa fa-search"></i></a>
+        <a class="nolink" href="#" id="search_button" title="Suchen"><i class="fa fa-search"></i></a>
         <a class="nolink" href="#" title="Sortieren"><i class="fa fa-sort-amount-asc"></i></a>
-        <a class="nolink"  id="filter_button" title="Filtern"><i class="fa fa-filter"></i></a>
+        <a class="nolink" href="#" id="filter_button" title="Filtern"><i class="fa fa-filter"></i></a>
         @if (Session["UserRole"] != null && Convert.ToInt32(Session["UserRole"]) < 3)
         {
             <a class="nolink" href="@Url.Action("Record", "OpenData")" title="Datensatz hinzufügen"><i class="fa fa-plus"></i></a>
@@ -22,6 +22,13 @@
         @foreach (var item in ViewBag.category)
         {
             <a class="float-left" href="./Category/@item.Id"><img class="icon" width="20" height="20" src="~/icons/Category/@item.icon" title="@item.name" /></a>
+        }
+    </div>
+    <div id="search" style="display:none; height:1.5em;">
+        @using (Html.BeginForm("Search", "OpenData", FormMethod.Post))
+        {
+            <input class="desktopContentOnly float-right form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="search">
+            
         }
     </div>
 </div>
@@ -101,6 +108,9 @@
 jQuery(document).ready(function(){
     jQuery("#filter_button").click(function(){
         jQuery("#filter").slideToggle("slow");
-  });
+    });
+    jQuery("#search_button").click(function () {
+        jQuery("#search").slideToggle("slow");
+    });
 });
 </script>

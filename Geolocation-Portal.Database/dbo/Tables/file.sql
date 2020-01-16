@@ -8,5 +8,6 @@
 	[diagram_data] BIT NULL ,
 	[map_data] BIT NULL,
 	[file_size] FLOAT NULL, 
+    [name] NVARCHAR(50) NOT NULL, 
     CONSTRAINT [FK_file_record] FOREIGN KEY (record_id) REFERENCES record(id) 
 )
