@@ -22,6 +22,7 @@ namespace Geolocation_Portal_Test.Models
         public Nullable<bool> diagram_data { get; set; }
         public Nullable<bool> map_data { get; set; }
         public Nullable<double> file_size { get; set; }
+        public string name { get; set; }
     
         public virtual record record { get; set; }
         public virtual searchtag searchtag { get; set; }

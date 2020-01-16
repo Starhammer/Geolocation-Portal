@@ -217,6 +217,7 @@ namespace Geolocation_Portal_Test.Controllers
                     db.file.Add(new Models.file
                     {
                         record_id = recordID,
+                        name = file.FileName,
                         file_upload_date = System.DateTime.Now,
                         download_count = 0,
                         file_size = file.ContentLength,

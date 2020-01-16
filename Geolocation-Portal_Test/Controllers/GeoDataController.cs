@@ -9,8 +9,12 @@ namespace Geolocation_Portal_Test.Controllers
     public class GeoDataController : Controller
     {
         // GET: GeoData
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
+            if (id != null){
+                ViewBag.FileId = id;
+            }
+            
             return View();
         }
     }
