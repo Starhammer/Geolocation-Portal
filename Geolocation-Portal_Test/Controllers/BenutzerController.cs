@@ -38,6 +38,10 @@ namespace Geolocation_Portal_Test.Controllers
                         Session["UserRole"] = obj.role_id.ToString();
                         return RedirectToAction("WelcomePage");
                     }
+                    else
+                    {
+                        return RedirectToAction("Anmelden");
+                    }
                 }
             }
 
