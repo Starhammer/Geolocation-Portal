@@ -59,3 +59,21 @@ INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) 
 INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (11, 0, N'Wahlen', N'Wahlen', NULL)
 INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (12, 0, N'Diagramm-Daten', N'Datensätze, die Diagramme enthalten', NULL)
 SET IDENTITY_INSERT [dbo].[category] OFF
+
+SET IDENTITY_INSERT [dbo].[publisher] ON
+INSERT INTO [dbo].[publisher] ([Id], [name], [description]) VALUES (1, N'Stadtverwaltung Mosbach', N'Stadtverwaltung Mosbach')
+INSERT INTO [dbo].[publisher] ([Id], [name], [description]) VALUES (2, N'Finanzamt Mosbach', N'Finanzamt Mosbach')
+INSERT INTO [dbo].[publisher] ([Id], [name], [description]) VALUES (3, N'Landratsamt Mosbach', N'Landratsamt Mosbach')
+INSERT INTO [dbo].[publisher] ([Id], [name], [description]) VALUES (4, N'Gemeinde Obrigheim', N'Gemeinde Obrigheim')
+INSERT INTO [dbo].[publisher] ([Id], [name], [description]) VALUES (5, N'Rathaus Mosbach', N'Rathaus Mosbach')
+SET IDENTITY_INSERT [dbo].[publisher] OFF
+
+SET IDENTITY_INSERT [dbo].[user] ON
+INSERT INTO [dbo].[user] ([Id], [role_id], [department_id], [first_name], [last_name], [username], [password], [last_password_change], [create_date], [account_active], [login_attempts], [last_login]) VALUES (4, 1, 1, N'Julia', N'Kessler', N'JKessler', N'098f6bcd4621d373cade4e832627b4f6', NULL, N'2019-12-20 00:00:00', 1, NULL, NULL)
+INSERT INTO [dbo].[user] ([Id], [role_id], [department_id], [first_name], [last_name], [username], [password], [last_password_change], [create_date], [account_active], [login_attempts], [last_login]) VALUES (7, 1, 1, N'Manuel', N'Scheub', N'MScheub', N'098f6bcd4621d373cade4e832627b4f6', NULL, N'2019-12-20 00:00:00', 1, NULL, NULL)
+INSERT INTO [dbo].[user] ([Id], [role_id], [department_id], [first_name], [last_name], [username], [password], [last_password_change], [create_date], [account_active], [login_attempts], [last_login]) VALUES (8, 1, 1, N'Laura', N'Schmitt', N'LSchmitt', N'098f6bcd4621d373cade4e832627b4f6', NULL, N'2019-12-20 00:00:00', 1, NULL, NULL)
+INSERT INTO [dbo].[user] ([Id], [role_id], [department_id], [first_name], [last_name], [username], [password], [last_password_change], [create_date], [account_active], [login_attempts], [last_login]) VALUES (10, 1, 1, N'Michael', N'Kress', N'MKress', N'098f6bcd4621d373cade4e832627b4f6', NULL, N'2019-12-20 00:00:00', 1, NULL, NULL)
+INSERT INTO [dbo].[user] ([Id], [role_id], [department_id], [first_name], [last_name], [username], [password], [last_password_change], [create_date], [account_active], [login_attempts], [last_login]) VALUES (11, 2, 1, N'Jan', N'Schumacher', N'JSchumacher', N'098f6bcd4621d373cade4e832627b4f6', NULL, N'2019-12-20 00:00:00', 1, NULL, NULL)
+INSERT INTO [dbo].[user] ([Id], [role_id], [department_id], [first_name], [last_name], [username], [password], [last_password_change], [create_date], [account_active], [login_attempts], [last_login]) VALUES (12, 3, 1, N'Thilo', N'Krause', N'TKrause', N'098f6bcd4621d373cade4e832627b4f6', NULL, N'2019-12-20 00:00:00', 1, NULL, NULL)
+INSERT INTO [dbo].[user] ([Id], [role_id], [department_id], [first_name], [last_name], [username], [password], [last_password_change], [create_date], [account_active], [login_attempts], [last_login]) VALUES (13, 3, 1, N'Alex', N'Moritz', N'AMoritz', N'098f6bcd4621d373cade4e832627b4f6', NULL, N'2019-12-20 00:00:00', 1, NULL, NULL)
+SET IDENTITY_INSERT [dbo].[user] OFF
