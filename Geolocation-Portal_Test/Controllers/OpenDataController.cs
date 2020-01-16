@@ -29,8 +29,13 @@ namespace Geolocation_Portal_Test.Controllers
             
         }
 
-        public ActionResult Datensatzverwaltung()
+        public ActionResult Recordverwaltung()
         {
+            if (!checkSession())
+            {
+                return RedirectToAction("Anmelden");
+            }
+
             return View(db.record.ToList());
         }
 
@@ -39,12 +44,18 @@ namespace Geolocation_Portal_Test.Controllers
          */
         public ActionResult Record()
         {
+            if (!checkSession())
+            {
+                return RedirectToAction("Anmelden");
+            }
+
             ViewBag.Message = "Your application description page.";
 
             ViewBag.category_id = new SelectList(db.category, "Id", "name");
             ViewBag.publisher_id = new SelectList(db.publisher, "Id", "name");
             ViewBag.licence_id = new SelectList(db.licence, "Id", "name");
             ViewBag.role_id = new SelectList(db.role, "Id", "name");
+            ViewBag.role_description = new SelectList(db.role, "Id", "description");
             ViewBag.location_id = new SelectList(db.location, "Id", "name");
 
             return View();
@@ -54,13 +65,15 @@ namespace Geolocation_Portal_Test.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Record([Bind(Include = "Id,dataset_upload,dataset_modified_date,title,description,category_id,licence_id,publisher_id,rating,role_id,record_active,location_id")] record record, IEnumerable<HttpPostedFileBase> files)
         {
+            if (!checkSession())
+            {
+                return RedirectToAction("Anmelden");
+            }
+
             if (ModelState.IsValid)
             {
                 db.record.Add(record);
                 db.SaveChanges();
-
-                
-                
 
                 if (files != null) saveFiles(files, record.Id, Request["dataTyp"]);
                 
@@ -78,6 +91,11 @@ namespace Geolocation_Portal_Test.Controllers
 
         public ActionResult Recordbearbeitung()
         {
+            if (!checkSession())
+            {
+                return RedirectToAction("Anmelden");
+            }
+
             return View();
         }
 
@@ -135,6 +153,11 @@ namespace Geolocation_Portal_Test.Controllers
 
         public ActionResult Recorddetails(int? id)
         {
+            if (!checkSession())
+            {
+                return RedirectToAction("Anmelden");
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -148,6 +171,44 @@ namespace Geolocation_Portal_Test.Controllers
             }
 
             return View(record);
+        }
+
+        public ActionResult Recordentfernung(int? id)
+        {
+            if (!checkSession())
+            {
+                return RedirectToAction("Anmelden");
+            }
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            record record = db.record.Find(id);
+
+            if (record == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(record);
+        }
+
+        // POST: user/Delete/5
+        [HttpPost, ActionName("Recordentfernung")]
+        [ValidateAntiForgeryToken]
+        public ActionResult RecordentfernungConfirmed(int id)
+        {
+            if (!checkSession())
+            {
+                return RedirectToAction("Anmelden");
+            }
+
+            record record = db.record.Find(id);
+            db.record.Remove(record);
+            db.SaveChanges();
+            return RedirectToAction("Recordentfernung");
         }
 
         [HttpPost]
@@ -231,6 +292,18 @@ namespace Geolocation_Portal_Test.Controllers
             }
 
             db.SaveChanges();
+        }
+
+        private bool checkSession()
+        {
+            if (Session["UserRole"] != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

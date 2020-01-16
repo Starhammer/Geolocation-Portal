@@ -25,11 +25,11 @@ namespace Geolocation_Portal_Test.Controllers
         {
             if (ModelState.IsValid)
             {
-                string passwort = generateHash(objUser.password);
+                string password = CreateMD5(objUser.password);
 
                 using (Entities db = new Entities())
                 {
-                    var obj = db.user.Where(useraccount => string.Equals(useraccount.username, objUser.username) && string.Equals(useraccount.password, objUser.password)).FirstOrDefault();
+                    var obj = db.user.Where(useraccount => string.Equals(useraccount.username, objUser.username) && string.Equals(useraccount.password, password)).FirstOrDefault();
                     
                     if (obj != null)
                     {
@@ -41,16 +41,23 @@ namespace Geolocation_Portal_Test.Controllers
                 }
             }
 
-            return View(objUser);
+            return View(new user());
         }
 
-        private string generateHash(string myString)
+        private string CreateMD5(string input)
         {
             MD5 md5 = new MD5CryptoServiceProvider();
-            Byte[] originalBytes = ASCIIEncoding.Default.GetBytes(myString);
-            Byte[] encodedBytes = md5.ComputeHash(originalBytes);
 
-            return BitConverter.ToString(encodedBytes);
+            byte[] inputBytes = Encoding.ASCII.GetBytes(input);
+            byte[] hashBytes = md5.ComputeHash(inputBytes);
+
+            // Convert the byte array to hexadecimal string
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < hashBytes.Length; i++)
+            {
+                sb.Append(hashBytes[i].ToString("X2"));
+            }
+            return sb.ToString();
         }
 
         public ActionResult WelcomePage()
@@ -115,6 +122,9 @@ namespace Geolocation_Portal_Test.Controllers
 
             user user = db.user.Find(id);
 
+            ViewBag.role_id = new SelectList(db.role, "Id", "name");
+            //ViewBag.department_id = new SelectList(db.department, "Id", "name"); ToDo: If department id table in db exists uncomment row.
+
             if (user == null)
             {
                 return HttpNotFound();
@@ -130,9 +140,12 @@ namespace Geolocation_Portal_Test.Controllers
                 return RedirectToAction("Anmelden");
             }
 
+            ViewBag.role_id = new SelectList(db.role, "Id", "name");
+            //ViewBag.department_id = new SelectList(db.department, "Id", "name"); ToDo: If department id table in db exists uncomment row.
+
             return View();
         }
-        
+
         // POST: user/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -147,9 +160,27 @@ namespace Geolocation_Portal_Test.Controllers
 
             if (ModelState.IsValid)
             {
-                db.user.Add(user);
-                db.SaveChanges();
-                return RedirectToAction("Benutzerverwaltung");
+                user.create_date = DateTime.Now;
+                user.last_password_change = DateTime.Now;
+                user.password = CreateMD5(user.password);
+
+                var user_search_data = from userdata in db.user
+                           where userdata.username == user.username
+                           select userdata;
+
+                var user_search = user_search_data.ToList();
+
+                if (user_search.Count() == 0)
+                {
+                    db.user.Add(user);
+                    db.SaveChanges();
+                    return RedirectToAction("Benutzerverwaltung");
+                }
+                else
+                {
+                    // ToDo: Benutzer exisitiert bereits. Fehlermeldung ausgeben.
+                    return RedirectToAction("Benutzererstellung");
+                }
             }
 
             return View(user);
@@ -169,7 +200,10 @@ namespace Geolocation_Portal_Test.Controllers
             }
 
             user user = db.user.Find(id);
-            
+
+            ViewBag.role_id = new SelectList(db.role, "Id", "name");
+            //ViewBag.department_id = new SelectList(db.department, "Id", "name"); ToDo: If department id table in db exists uncomment row.
+
             if (user == null)
             {
                 return HttpNotFound();
@@ -192,6 +226,8 @@ namespace Geolocation_Portal_Test.Controllers
 
             if (ModelState.IsValid)
             {
+                user.password = CreateMD5(user.password);
+
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Benutzerverwaltung");
@@ -214,7 +250,10 @@ namespace Geolocation_Portal_Test.Controllers
             }
             
             user user = db.user.Find(id);
-            
+
+            ViewBag.role_id = new SelectList(db.role, "Id", "name");
+            //ViewBag.department_id = new SelectList(db.department, "Id", "name"); ToDo: If department id table in db exists uncomment row.
+
             if (user == null)
             {
                 return HttpNotFound();

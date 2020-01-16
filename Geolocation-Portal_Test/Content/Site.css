@@ -346,7 +346,7 @@ footer {
 input,
 select,
 textarea {
-    max-width: 280px;
+    /*max-width: 280px;*/
 }
 
 /* Extra small devices (portrait phones, less than 576px)

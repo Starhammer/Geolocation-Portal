@@ -26,9 +26,12 @@
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort>44304</IISExpressSSLPort>
-    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
-    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
-    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
+    <IISExpressAnonymousAuthentication>
+    </IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>
+    </IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>
+    </IISExpressUseClassicPipelineMode>
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -460,7 +463,7 @@
     <Content Include="Views\OpenData\createDiagram.cshtml" />
     <Content Include="Views\Home\Verwaltung.cshtml" />
     <Content Include="Views\Benutzer\Benutzerverwaltung.cshtml" />
-    <Content Include="Views\OpenData\Datensatzverwaltung.cshtml" />
+    <Content Include="Views\OpenData\Recordverwaltung.cshtml" />
     <Content Include="Views\Benutzer\Benutzerentfernung.cshtml" />
     <Content Include="Views\Benutzer\Benutzerdetails.cshtml" />
     <Content Include="Views\Benutzer\Benutzerbearbeitung.cshtml" />

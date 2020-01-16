@@ -1,49 +1,40 @@
 ﻿@model Geolocation_Portal_Test.Models.role
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Rollenentfernung";
 }
 
-<h2>Rolle entfernen</h2>
+<h2>Entfernen einer Rolle</h2>
+<hr />
 
-<h3>Sind Sie sicher, dass Sie diesen Datensatz löschen möchten?</h3>
-<div>
-    <h4>Rolledetails</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
+<div class="form-horizontal">
 
-        <dd>
-            @Html.DisplayFor(model => model.Id)
-        </dd>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
 
-        <dt>
-            @Html.DisplayNameFor(model => model.name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.description)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Löschen" class="btn btn-primary" />
-            <a href="@Url.Action("Rollenverwaltung", "Benutzer")" class="btn btn-primary">Zurück zur Rolleverwaltung</a>
+    <div class="form-group row">
+        @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.name, new { htmlAttributes = new { disabled = "disabled", @readonly = "readonly", @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
         </div>
-    }
+    </div>
+
+    <div class="form-group row">
+        @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10" style="width: 100%;">
+            @Html.EditorFor(model => model.description, new { htmlAttributes = new { disabled = "disabled", @readonly = "readonly", @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Löschen" class="btn btn-primary" />
+        <a href="@Url.Action("Rollenverwaltung", "Benutzer")" class="btn btn-primary">Zurück zur Rolleverwaltung</a>
+    </div>
+}
 </div>

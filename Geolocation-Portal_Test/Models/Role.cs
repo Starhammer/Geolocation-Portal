@@ -11,7 +11,9 @@ namespace Geolocation_Portal_Test.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class role
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,7 +23,10 @@ namespace Geolocation_Portal_Test.Models
         }
     
         public int Id { get; set; }
+        [DisplayName("Name")]
         public string name { get; set; }
+        [DisplayName("Beschreibung")]
+        [StringLength(300)]
         public string description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

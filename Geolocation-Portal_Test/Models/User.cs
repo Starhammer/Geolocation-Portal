@@ -11,20 +11,42 @@ namespace Geolocation_Portal_Test.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class user
     {
         public int Id { get; set; }
+
+        [DisplayName("Rolle")]
         public int role_id { get; set; }
+        [DisplayName("Arbeitsstelle")]
         public int department_id { get; set; }
+        [DisplayName("Vorname")]
+        [StringLength(80)]
         public string first_name { get; set; }
+        [DisplayName("Nachname")]
+        [StringLength(80)]
         public string last_name { get; set; }
+        [DisplayName("Benutzername")]
+        [StringLength(80)]
         public string username { get; set; }
+        [DisplayName("Passwort")]
+        [StringLength(80)]
+        //[StringLength(18, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 4)]
+        //[RegularExpression(@"^((?=.*[a-z])(?=.*[A-Z])(?=.*\d)).+$")]
+        [DataType(DataType.Password)]
         public string password { get; set; }
+        [DisplayName("Letzte Passwortänderung")]
         public Nullable<System.DateTime> last_password_change { get; set; }
+        [DisplayName("Account Erstelldatum")]
         public System.DateTime create_date { get; set; }
+        [DisplayName("Accountaktivierung")]
         public bool account_active { get; set; }
+        [DisplayName("Anmeldeversuche")]
+        [StringLength(1)]
         public Nullable<int> login_attempts { get; set; }
+        [DisplayName("Letztes Anmeldedatum")]
         public Nullable<System.DateTime> last_login { get; set; }
     
         public virtual role role { get; set; }

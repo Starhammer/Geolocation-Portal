@@ -24,7 +24,9 @@ namespace Geolocation_Portal_Test.Models
         }
     
         public int Id { get; set; }
+        [DisplayName("Upload Datum")]
         public System.DateTime dataset_upload { get; set; }
+        [DisplayName("Änderungsdatum")]
         public System.DateTime dataset_modified_date { get; set; }
 
         [Required(ErrorMessage = "Bitte geben Sie einen Titel an.")]
@@ -42,15 +44,16 @@ namespace Geolocation_Portal_Test.Models
         [DisplayName("Lizenz")]
         public Nullable<int> licence_id { get; set; }
 
-        [DisplayName("Publisher")]
+        [DisplayName("Datenbereitsteller")]
         public Nullable<int> publisher_id { get; set; }
 
+        [DisplayName("Bewertung")]
         public int rating { get; set; }
 
-        [DisplayName("Sichtbarkeit")]
+        [DisplayName("Datensatzsichtbarkeit")]
         public Nullable<int> role_id { get; set; }
 
-        [DisplayName("Anzeigen?")]
+        [DisplayName("Datensatzveröffentlichungsstatus")]
         public bool record_active { get; set; }
 
         [DisplayName("Örtlichkeit")]
