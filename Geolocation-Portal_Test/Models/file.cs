@@ -19,8 +19,6 @@ namespace Geolocation_Portal_Test.Models
         public System.DateTime file_upload_date { get; set; }
         public Nullable<int> download_count { get; set; }
         public string file_icon { get; set; }
-        public Nullable<bool> diagram_data { get; set; }
-        public Nullable<bool> map_data { get; set; }
         public Nullable<double> file_size { get; set; }
         public string name { get; set; }
     

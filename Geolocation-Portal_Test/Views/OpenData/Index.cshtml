@@ -94,7 +94,22 @@
                         </div>
                     </div>
                     <div class="card-footer" style="min-height:50px;">
-                        @Html.Action("Files", "OpenData", new { id = item.Id })
+                        @foreach (var file in item.file)
+                        {
+                            if (item.geo_data == true)
+                            {
+                                <a class="nolink float-right ml-2" href="~/GeoData/index/@item.Id" title=""><i class="fa fa-map"></i></a>
+                            }
+                            else if (item.dia_data == true)
+                            {
+                                <span><img class="float-right ml-2" width="25" height="25" src="~/icons/@Html.DisplayFor(modelItem => file.file_icon)-icon.png" /></span>
+                            }
+                            else
+                            {
+                                <span><img class="float-left mr-2" width="25" height="25" src="~/icons/@Html.DisplayFor(modelItem => file.file_icon)-icon.png" /></span>
+                            }
+
+                        }
                     </div>
                     <!-- auskommentiert da ansonsten keine weiteren Links auf der card verwendet werden können
                     <a href="#" class="stretched-link"></a> -->

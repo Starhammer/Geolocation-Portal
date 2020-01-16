@@ -27,16 +27,26 @@ namespace Geolocation_Portal_Test.Controllers
         [ResponseType(typeof(licence))]
         public async Task<IHttpActionResult> GetGeoData(int id)
         {
-            file file = await db.file.FindAsync(id);
-            if (file == null || file.map_data == false)
+            record record = await db.record.FindAsync(id);
+            if (record == null || record.geo_data == false)
             {
-                return NotFound();
+                return BadRequest();
             }
+            foreach(file file in record.file)
+            {
+                if (file.name.Contains(".geojson"))
+                {
+                    string allText = System.IO.File.ReadAllText(HttpContext.Current.Server.MapPath("~/App_Data/uploads/" + id + "/" + file.name));
+                    object jsonObject = JsonConvert.DeserializeObject(allText);
+                    return Ok(jsonObject);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            return NotFound();
 
-            string allText = System.IO.File.ReadAllText(HttpContext.Current.Server.MapPath("~/App_Data/uploads/"+file.record.Id+"/"+file.name));
-            
-            object jsonObject = JsonConvert.DeserializeObject(allText);
-            return Ok(jsonObject);
         }
     }
 }

@@ -46,6 +46,8 @@ namespace Geolocation_Portal_Test.Models
         public Nullable<int> publisher_id { get; set; }
 
         public int rating { get; set; }
+        public bool dia_data { get; set; }
+        public bool geo_data { get; set; }
 
         [DisplayName("Sichtbarkeit")]
         public Nullable<int> role_id { get; set; }

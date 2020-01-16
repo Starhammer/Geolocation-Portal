@@ -34,8 +34,6 @@
           <Property Name="file_upload_date" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="download_count" Type="int" />
           <Property Name="file_icon" Type="nvarchar" MaxLength="50" />
-          <Property Name="diagram_data" Type="bit" />
-          <Property Name="map_data" Type="bit" />
           <Property Name="file_size" Type="float" />
           <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
@@ -85,6 +83,8 @@
           <Property Name="role_id" Type="int" />
           <Property Name="record_active" Type="bit" Nullable="false" />
           <Property Name="location_id" Type="int" Nullable="false" />
+          <Property Name="dia_data" Type="bit" Nullable="false" />
+          <Property Name="geo_data" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="recordComment">
           <Key>
@@ -358,8 +358,6 @@
           <Property Name="file_upload_date" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="download_count" Type="Int32" />
           <Property Name="file_icon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="diagram_data" Type="Boolean" />
-          <Property Name="map_data" Type="Boolean" />
           <Property Name="file_size" Type="Double" />
           <NavigationProperty Name="record" Relationship="Model.FK_file_record" FromRole="file" ToRole="record" />
           <NavigationProperty Name="searchtag" Relationship="Model.fileSearchtag" FromRole="file" ToRole="searchtag" />
@@ -411,6 +409,8 @@
           <NavigationProperty Name="location" Relationship="Model.FK_record_location" FromRole="record" ToRole="location" />
           <NavigationProperty Name="publisher" Relationship="Model.FK_record_publisher" FromRole="record" ToRole="publisher" />
           <NavigationProperty Name="comment" Relationship="Model.recordComment" FromRole="record" ToRole="comment" />
+          <Property Name="geo_data" Type="Boolean" Nullable="false" />
+          <Property Name="dia_data" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="role">
           <Key>
@@ -548,8 +548,6 @@
               <MappingFragment StoreEntitySet="file">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="file_size" ColumnName="file_size" />
-                <ScalarProperty Name="map_data" ColumnName="map_data" />
-                <ScalarProperty Name="diagram_data" ColumnName="diagram_data" />
                 <ScalarProperty Name="file_icon" ColumnName="file_icon" />
                 <ScalarProperty Name="download_count" ColumnName="download_count" />
                 <ScalarProperty Name="file_upload_date" ColumnName="file_upload_date" />
@@ -587,6 +585,8 @@
           <EntitySetMapping Name="record">
             <EntityTypeMapping TypeName="Model.record">
               <MappingFragment StoreEntitySet="record">
+                <ScalarProperty Name="dia_data" ColumnName="dia_data" />
+                <ScalarProperty Name="geo_data" ColumnName="geo_data" />
                 <ScalarProperty Name="location_id" ColumnName="location_id" />
                 <ScalarProperty Name="record_active" ColumnName="record_active" />
                 <ScalarProperty Name="role_id" ColumnName="role_id" />

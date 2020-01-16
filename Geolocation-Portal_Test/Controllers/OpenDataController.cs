@@ -56,13 +56,25 @@ namespace Geolocation_Portal_Test.Controllers
         {
             if (ModelState.IsValid)
             {
+                var datType = Request["dataTyp"];
+
+                switch (datType)
+                {
+                    case "geoData":
+                        record.geo_data = true;
+                        break;
+                    case "diaData":
+                        record.dia_data = true;
+                        break;
+                }
+
                 db.record.Add(record);
                 db.SaveChanges();
 
                 
                 
 
-                if (files != null) saveFiles(files, record.Id, Request["dataTyp"]);
+                if (files != null) saveFiles(files, record.Id);
                 
                 return RedirectToAction("Index");
             }
@@ -104,17 +116,6 @@ namespace Geolocation_Portal_Test.Controllers
             return View("index", data.ToList());
                 
 
-        }
-
-        //Nicht als eigentliche View gedacht
-        //GET: OpenDate/Files/5
-        public ActionResult Files(int id)
-        {
-            var data = from f in db.file
-                       where f.record_id == id
-                       select f;
-
-            return PartialView("_files", data.ToList());
         }
 
         /**
@@ -184,7 +185,7 @@ namespace Geolocation_Portal_Test.Controllers
             return extension.Remove(0, 1);
         }
 
-        private void saveFiles(IEnumerable<HttpPostedFileBase> files, int recordID, string datType)
+        private void saveFiles(IEnumerable<HttpPostedFileBase> files, int recordID)
         {
             foreach (var file in files)
             {
@@ -200,19 +201,7 @@ namespace Geolocation_Portal_Test.Controllers
                     }
 
                     file.SaveAs(filePath);
-
-                    var geoData = false;
-                    var diaData = false;
-
-                    switch (datType)
-                    {
-                        case "geoData":
-                            geoData = true;
-                            break;
-                        case "diaData":
-                            diaData = true;
-                            break;
-                    }
+                    
 
                     db.file.Add(new Models.file
                     {
@@ -221,10 +210,7 @@ namespace Geolocation_Portal_Test.Controllers
                         file_upload_date = System.DateTime.Now,
                         download_count = 0,
                         file_size = file.ContentLength,
-                        file_icon = getFileIcon(fileName),
-                        map_data = geoData,
-                        diagram_data = diaData
-                      
+                        file_icon = getFileIcon(fileName)                      
                     });
 
                 }
