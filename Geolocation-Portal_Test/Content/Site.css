@@ -32,7 +32,7 @@ header {
 
 #overlay {
     position: absolute;
-    top: 20px;
+    top: 30px;
     color: #FFF;
     text-align: center;
     font-size: 20px;
@@ -50,8 +50,8 @@ header {
 
 .oval-thought {
     position: relative;
-    width: 270px;
-    padding: 50px 40px;
+    max-width: 320px;
+    padding: 30px 40px;
     margin: 1em auto 80px;
     text-align: center;
     color: #fff;
@@ -68,47 +68,40 @@ header {
     border-radius: 220px / 120px;
 }
 
-    .oval-thought::before {
-        content: "";
-        position: absolute;
-        bottom: -20px;
-        left: 50px;
-        width: 30px;
-        height: 30px;
-        background: #075698;
-        -webkit-border-radius: 30px;
-        -moz-border-radius: 30px;
-        border-radius: 30px;
-    }
+.oval-thought::before {
+    content: "";
+    position: absolute;
+    bottom: -20px;
+    left: 50px;
+    width: 30px;
+    height: 30px;
+    background: #075698;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    border-radius: 30px;
+}
 
-    .oval-thought::after {
-        content: "";
-        position: absolute;
-        bottom: -30px;
-        left: 30px;
-        width: 15px;
-        height: 15px;
-        background: #075698;
-        -webkit-border-radius: 15px;
-        -moz-border-radius: 15px;
-        border-radius: 15px;
-    }
+.oval-thought::after {
+    content: "";
+    position: absolute;
+    bottom: -30px;
+    left: 30px;
+    width: 15px;
+    height: 15px;
+    background: #075698;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+}
 
-    .oval-thought p {
-        font-size: 1.5em;
-    }
+.oval-thought p {
+    font-size: 1rem;
+}
 
 blockquote p {
     margin: 0;
-    font-size: 2em;
+    font-size: 1.4rem;
 }
-
-
-
-
-
-
-
 
 .color-black {
     color: black;
@@ -387,6 +380,15 @@ No media query for `xs` since this is the default in Bootstrap */
 
     #footer-nav span:not(:last-child):after {
         content: ' | ';
+    }
+
+    .oval-thought p {
+        font-size: 1.5rem;
+    }
+
+    blockquote p {
+        margin: 0;
+        font-size: 2rem;
     }
 }
 
