@@ -14,4 +14,3 @@
 	[last_login] DATETIME2 NULL, 
     CONSTRAINT [FK_user_role] FOREIGN KEY (role_id) REFERENCES [role](id)
 )
-
