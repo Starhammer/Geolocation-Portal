@@ -106,7 +106,12 @@
                             }
                             else
                             {
-                                <span><img class="float-left mr-2" width="25" height="25" src="~/icons/@Html.DisplayFor(modelItem => file.file_icon)-icon.png" /></span>
+                                <span>
+                                    <a href="@Url.Action("Download", "OpenData", new { fileName = file.name, recordId = item.Id})">
+                                        <img class="float-left mr-2" width="25" height="25" src="~/icons/@Html.DisplayFor(modelItem => file.file_icon)-icon.png" />
+                                    </a>
+                                    
+                                </span>
                             }
 
                         }

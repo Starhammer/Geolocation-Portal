@@ -218,5 +218,12 @@ namespace Geolocation_Portal_Test.Controllers
 
             db.SaveChanges();
         }
+
+        public ActionResult DownLoad(string fileName, int recordId)
+        {            
+            string path = Server.MapPath("~/App_Data/uploads/"+ recordId + "/"+ fileName);
+            string mime = MimeMapping.GetMimeMapping(path);
+            return File(path, mime);
+        }
     }
 }
