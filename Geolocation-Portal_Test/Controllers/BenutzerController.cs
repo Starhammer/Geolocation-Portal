@@ -3,6 +3,8 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web.Mvc;
 using Geolocation_Portal_Test.Models;
 
@@ -23,9 +25,11 @@ namespace Geolocation_Portal_Test.Controllers
         {
             if (ModelState.IsValid)
             {
+                string passwort = generateHash(objUser.password);
+
                 using (Entities db = new Entities())
                 {
-                    var obj = db.user.Where(a => string.Equals(a.username, objUser.username) && string.Equals(a.password, objUser.password)).FirstOrDefault();
+                    var obj = db.user.Where(useraccount => string.Equals(useraccount.username, objUser.username) && string.Equals(useraccount.password, objUser.password)).FirstOrDefault();
                     
                     if (obj != null)
                     {
@@ -38,6 +42,15 @@ namespace Geolocation_Portal_Test.Controllers
             }
 
             return View(objUser);
+        }
+
+        private string generateHash(string myString)
+        {
+            MD5 md5 = new MD5CryptoServiceProvider();
+            Byte[] originalBytes = ASCIIEncoding.Default.GetBytes(myString);
+            Byte[] encodedBytes = md5.ComputeHash(originalBytes);
+
+            return BitConverter.ToString(encodedBytes);
         }
 
         public ActionResult WelcomePage()

@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Geolocation_Portal_Test.Controllers.BenutzerController">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAACBACQShABAAAgAAAgCAAAAAAAQACAAAACAIEQ=</HashCode>
+      <FileName>Controllers\BenutzerController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Geolocation_Portal_Test.Controllers.FAQController">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Controllers\FAQController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Geolocation_Portal_Test.Controllers.GeoDataController">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Controllers\GeoDataController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Geolocation_Portal_Test.Controllers.HomeController">
+    <Position X="2.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAMAAgQAAAIAAIAAAAAAAAAAAAIAAEAAAAAAAE=</HashCode>
+      <FileName>Controllers\HomeController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Geolocation_Portal_Test.Controllers.OpenDataController">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAASBAAAABAAABAAAAAEAAAAAAEIAAAgDIA=</HashCode>
+      <FileName>Controllers\OpenDataController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Geolocation_Portal_Test.Models.ContactModel">
+    <Position X="8.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAgAAA=</HashCode>
+      <FileName>Models\ContactModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Geolocation_Portal_Test.Models.Entities">
+    <Position X="4" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQEAAAAAAAAAAAAAAAAABgCEAAAAAAEBAAIAAAAAQA=</HashCode>
+      <FileName>Models\DatabaseModel.Context.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Geolocation_Portal_Test.Models.category">
+    <Position X="9.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAGAAAAAAAAAAAAIAAAAAQAAAAEAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Models\category.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Geolocation_Portal_Test.Models.comment">
+    <Position X="12.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAGAAAAQAAAAQAAAAAAAAAAAAAAAAAIAAAAAAAAACA=</HashCode>
+      <FileName>Models\comment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Geolocation_Portal_Test.Models.file">
+    <Position X="11" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAGAAAAAAAAAAwBAQECAAAAAAAAAAAEAAAAAAAAABA=</HashCode>
+      <FileName>Models\file.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Geolocation_Portal_Test.Models.licence">
+    <Position X="2.25" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAIAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\licence.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Geolocation_Portal_Test.Models.location">
+    <Position X="0.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAGAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\location.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Geolocation_Portal_Test.Models.publisher">
+    <Position X="2.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAGAAAAAAAAAAAAIAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\publisher.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Geolocation_Portal_Test.Models.record">
+    <Position X="7.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgQCQAABRAAAAAAAIAAAAAgCAQAgAIQABAAIAAAAAEA=</HashCode>
+      <FileName>Models\record.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Geolocation_Portal_Test.Models.role">
+    <Position X="9.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAIAAAAAAAAAAEAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Models\role.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Geolocation_Portal_Test.Models.searchtag">
+    <Position X="0.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAA=</HashCode>
+      <FileName>Models\searchtag.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Geolocation_Portal_Test.Models.user">
+    <Position X="5.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgECAAAAAAgAAQAAAAAAABEEAAAAAAAIABAAAgAAQAA=</HashCode>
+      <FileName>Models\user.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Geolocation_Portal_Test.Models.LoginModel">
+    <Position X="10" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAgAgAAA=</HashCode>
+      <FileName>Models\LoginModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
