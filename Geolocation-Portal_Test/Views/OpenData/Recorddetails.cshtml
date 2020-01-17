@@ -4,7 +4,8 @@
     ViewBag.Title = "Recorddetails";
 }
 
-<h2>Recorddetails</h2>
+<h2>Details eines Records</h2>
+<hr />
 
 <div>
     <div class="card bg-light mb-3">
@@ -29,23 +30,76 @@
                 </p>
 
                 <h4>Lizenz:</h4>
-                <a href="#" title="Details zur Lizenz anzeigen">@Html.DisplayFor(model => model.licence.name)</a>
+                <button id="open-dialog" class="btn btn-dark" title="Details zur Lizenz anzeigen">@Html.DisplayFor(model => model.licence.name)</button>
+                <dialog role="dialog" aria-labelledby="dialog-heading">
+                    <button id="close-dialog">Schließen</button>
+                    <h2 id="dialog-heading">Info</h2>
+                    <p> @Html.DisplayFor(model => model.licence.description) </p>
+                </dialog>
+
 
                 <br /><br />
 
                 <h4>Datensatz veröffentlicht von:</h4>
-                @Html.DisplayFor(model => model.publisher.name)
+                <button id="open-dialog" class="btn btn-dark" title="Details zum Publisher anzeigen">@Html.DisplayFor(model => model.publisher.name)</button>
+                <dialog role="dialog" aria-labelledby="dialog-heading">
+                    <button id="close-dialog">Schließen</button>
+                    <h2 id="dialog-heading">Info</h2>
+                    <p> @Html.DisplayFor(model => model.publisher.description) </p>
+                </dialog>
 
                 <br /><br />
 
                 <h4>Dateien und Quellen:</h4>
-                <!-- Hier muss eine Tabelle mit allen Dateien aufgelistet werden. -->
-                Vorschau | Herunterladen | Speichergröße | Veröffentlichungsdatum<br />
-                Bsp1     | Bsp1          | Bsp1          | Bsp1<br />
-                Bsp2     | Bsp2          | Bsp2          | Bsp2<br />
-                <br />
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Dateiname</th>
+                                <th>Speichergröße</th>
+                                <th>Veröffentlichungsdatum</th>
+                                <th>Herunterladen</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Hier muss eine Tabelle mit allen Dateien aufgelistet werden. -->
+                            @foreach (var file in Model.file)
+                            {
+                            <tr>
+                                <td>@file.name</td>
+                                <td>@file.file_size</td>
+                                <td>@file.file_upload_date</td>
+                                <td>
+                                    <a href="@Url.Action("Download", "OpenData", new { fileName = file.name, recordId = Model.Id })" title="Herunterladen">
+                                        <img class="float-left mr-2" width="25" height="25" src="~/icons/@Html.DisplayFor(modelItem => file.file_icon)-icon.png" />
+                                    </a>
 
-                Daten auf Karte anzeigen | Diagrammansicht<br />        <!-- Verlinkung des Datensatzes auf die Diagrammansicht oder Karte, wenn vorhanden, ansonsten disable. -->
+                                    @{
+                                        var filetype = file.name.Split('.');
+
+                                        if (Model.geo_data)
+                                        {
+                                            if (filetype[filetype.Count() - 1] == "geojson")
+                                            {
+                                                int geofileId = file.Id;
+                                                <a href="~/GeoData/index/@geofileId.ToString()" title="Vorschau"><i class="fa fa-map"></i></a>
+                                            }
+                                        }
+                                        else if (Model.dia_data)
+                                        {
+                                            if (filetype[filetype.Count() - 1] == "xml")
+                                            {
+                                                int diafileId = file.Id;
+                                                <a href="~/GeoData/index/@diafileId.ToString()" title="Vorschau"><i class="fa fa-pie-chart"></i></a>
+                                            }
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                             }
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="card-footer" style="min-height:50px;">
 

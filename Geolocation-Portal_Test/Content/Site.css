@@ -346,7 +346,58 @@ footer {
 input,
 select,
 textarea {
-    /*max-width: 280px;*/
+    /*max-width: 280px; 17.01.2020 Auskommentiert von Michael, weil die Formulare mit einer 100% Weite besser dargestellt werden. */
+}
+
+dialog {
+display: none;
+position: relative;
+background: white;
+border: 1px solid grey;
+border-radius: 0 .5em .5em;
+z-index: 1002;
+padding: .5em 1em;
+width: 100%;
+height: auto;
+}
+
+dialog[open="open"] {
+    display: block;
+}
+
+@media (min-width: 30em) {
+    dialog {
+        position: absolute;
+        top: 50%;
+        margin-top: -10em;
+        left: 50%;
+        margin-left: -10em;
+        width: 20em;
+    }
+}
+
+dialog::backdrop,
+#backdrop {
+    /* Ebene zwischen Hintergrund und Dialog-Box, Pseudoelement noch nicht implementiert */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+dialog #close-dialog {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 2em;
+    cursor: pointer;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    font-size: 1.5em;
+    border-radius: 0 .5em .5em;
 }
 
 /* Extra small devices (portrait phones, less than 576px)

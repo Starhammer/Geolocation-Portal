@@ -33,7 +33,7 @@ namespace Geolocation_Portal_Test.Controllers
         {
             if (!checkSession())
             {
-                return RedirectToAction("Anmelden");
+                return RedirectToAction("Anmelden", "Benutzer");
             }
 
             return View(db.record.ToList());
@@ -46,7 +46,7 @@ namespace Geolocation_Portal_Test.Controllers
         {
             if (!checkSession())
             {
-                return RedirectToAction("Anmelden");
+                return RedirectToAction("Anmelden", "Benutzer");
             }
 
             ViewBag.Message = "Your application description page.";
@@ -67,7 +67,7 @@ namespace Geolocation_Portal_Test.Controllers
         {
             if (!checkSession())
             {
-                return RedirectToAction("Anmelden");
+                return RedirectToAction("Anmelden", "Benutzer");
             }
 
             if (ModelState.IsValid)
@@ -108,7 +108,7 @@ namespace Geolocation_Portal_Test.Controllers
         {
             if (!checkSession())
             {
-                return RedirectToAction("Anmelden");
+                return RedirectToAction("Anmelden", "Benutzer");
             }
 
             return View();
@@ -159,7 +159,7 @@ namespace Geolocation_Portal_Test.Controllers
         {
             if (!checkSession())
             {
-                return RedirectToAction("Anmelden");
+                return RedirectToAction("Anmelden", "Benutzer");
             }
 
             if (id == null)
@@ -168,6 +168,8 @@ namespace Geolocation_Portal_Test.Controllers
             }
 
             record record = db.record.Find(id);
+            record.licence = db.licence.Find(record.licence_id);
+            record.publisher = db.publisher.Find(record.publisher_id);
 
             if (record == null)
             {
@@ -181,7 +183,7 @@ namespace Geolocation_Portal_Test.Controllers
         {
             if (!checkSession())
             {
-                return RedirectToAction("Anmelden");
+                return RedirectToAction("Anmelden", "Benutzer");
             }
 
             if (id == null)
@@ -206,7 +208,7 @@ namespace Geolocation_Portal_Test.Controllers
         {
             if (!checkSession())
             {
-                return RedirectToAction("Anmelden");
+                return RedirectToAction("Anmelden", "Benutzer");
             }
 
             record record = db.record.Find(id);
