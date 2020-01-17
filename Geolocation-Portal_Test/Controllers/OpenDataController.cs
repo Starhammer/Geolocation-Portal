@@ -255,7 +255,7 @@ namespace Geolocation_Portal_Test.Controllers
         {
             foreach (var file in files)
             {
-                if (file.ContentLength > 0)
+                if (file != null && file.ContentLength > 0)
                 {
                     var fileName = Path.GetFileName(file.FileName);
                     var path = Server.MapPath("~/App_Data/uploads/" + recordID);
@@ -279,6 +279,10 @@ namespace Geolocation_Portal_Test.Controllers
                         file_icon = getFileIcon(fileName)                      
                     });
 
+                }
+                else
+                {
+                    return;
                 }
             }
 
