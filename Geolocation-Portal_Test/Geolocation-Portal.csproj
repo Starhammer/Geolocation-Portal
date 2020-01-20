@@ -402,11 +402,13 @@
     <Content Include="Models\DatabaseModel.edmx.diagram">
       <DependentUpon>DatabaseModel.edmx</DependentUpon>
     </Content>
+    <Content Include="App_Data\commercial.geojson" />
     <None Include="App_Data\data.xsd">
       <SubType>Designer</SubType>
     </None>
     <Content Include="App_Data\bildungseinrichtungen.geojson" />
     <Content Include="App_Data\kindergarten.geojson" />
+    <Content Include="App_Data\parking.geojson" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
