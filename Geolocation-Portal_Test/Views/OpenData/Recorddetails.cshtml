@@ -131,8 +131,25 @@
 
                 <br /><br /><br />
                 <h4>Kommentare:</h4>
-                <!-- Schleife, um alle bereits vorhandenen Kommentare des Datensatzes aufzulisten. -->
-                
+                <div>
+                    <!-- Schleife, um alle bereits vorhandenen Kommentare des Datensatzes aufzulisten. -->
+                    @foreach (var comment in Model.comment)
+                    {
+                        <div class="border-bottom mt-2">
+                            <div>
+                                <span>@Html.Partial("_rating", comment.bewertung)</span>
+                                <h3>@comment.title</h3>
+                                <span class="blockquote-footer">@comment.person_name</span>
+                            </div>                            
+                            <div>
+                                <p>@comment.text</p>
+                            </div>                            
+                        </div>
+                    }
+
+                </div>
+               
+
             </div>
         </div>
     </div>
