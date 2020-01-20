@@ -9,9 +9,7 @@
 
 <h4>Melden Sie sich mit Ihren Zugangsdaten an:</h4>
 
-<!-- ToDo: Diese Fehlermeldung soll angezeigt werden, wenn der Benutzername oder das Passwort falsch sind.
-<p style="color: red;">Der eingegebene Benutzername oder das eingegebene Passwort ist nicht korrekt. Bitte versuchen Sie es erneut.</p>
-    -->
+<p style="color: red;">@ViewBag.message</p>
 
 @using (Html.BeginForm("Anmelden", "Benutzer", FormMethod.Post))
 {

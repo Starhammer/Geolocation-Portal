@@ -1,4 +1,5 @@
 ﻿using Geolocation_Portal_Test.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -157,26 +158,74 @@ namespace Geolocation_Portal_Test.Controllers
 
         public ActionResult Recorddetails(int? id)
         {
-            if (!checkSession())
-            {
-                return RedirectToAction("Anmelden", "Benutzer");
-            }
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            record record = db.record.Find(id);
-            record.licence = db.licence.Find(record.licence_id);
-            record.publisher = db.publisher.Find(record.publisher_id);
-
-            if (record == null)
+            // Rollenkonzept (ID 4 = Öffentlichkeit)
+            if (db.record.Find(id).role_id > 3)
             {
-                return HttpNotFound();
+                record record = db.record.Find(id);
+                record.licence = db.licence.Find(record.licence_id);
+                record.publisher = db.publisher.Find(record.publisher_id);
+
+                int downloadcount = 0;
+                int file_size_conversion_count = 0; // 0 = Bytes
+
+                foreach (file f in record.file)
+                {
+                    int file_downloadcount = (int)f.download_count;
+                    downloadcount = downloadcount + file_downloadcount;
+
+                    file_size_conversion_count = 0; // 0 = Bytes
+                    while (f.file_size > 1024) {
+                        f.file_size = f.file_size / 1024;
+                        file_size_conversion_count++;
+                    }
+
+                    f.file_size = Math.Round((double)f.file_size, 2);
+                }
+
+                ViewData["downloadcount"] = downloadcount;
+
+                string file_size_extension = "Bytes";
+                switch (file_size_conversion_count) {
+                    case 0:
+                        file_size_extension = "Bytes";
+                        break;
+                    case 1:
+                        file_size_extension = "KB";
+                        break;
+                    case 2:
+                        file_size_extension = "MB";
+                        break;
+                    case 3:
+                        file_size_extension = "GB";
+                        break;
+                    case 4:
+                        file_size_extension = "PB";
+                        break;
+                    default:
+                        file_size_extension = "nicht festgelegt";
+                        break;
+                }
+
+                ViewData["file_size_extension"] = file_size_extension;
+
+                if (record == null)
+                {
+                    return HttpNotFound();
+                }
+
+                return View(record);
+            }
+            else if (!checkSession())
+            {
+                return RedirectToAction("Anmelden", "Benutzer");
             }
 
-            return View(record);
+            return RedirectToAction("Index", "OpenData");
         }
 
         public ActionResult Recordentfernung(int? id)
