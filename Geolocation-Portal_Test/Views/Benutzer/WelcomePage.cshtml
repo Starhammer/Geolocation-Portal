@@ -6,9 +6,12 @@
 
 @if (Session["UserName"] != null)
 {
+    <h1>Login erfolgreich</h1>
+    <hr />
+
     <h2>Willkommen <b>@Session["UserName"].ToString()</b>!</h2>
 
-    <p>Als "@Html.DisplayFor(model => model.name)" haben Sie auf dem Geolocation Portal der Großen Kreisstadt Mosbach auf folgende Funktionen Zugriff:</p>
+    <p>Als "@Html.DisplayFor(model => model.name)" haben Sie auf dem Open Data Geo Location Portal der Großen Kreisstadt Mosbach auf folgende Funktionen Zugriff:</p>
 
     <ul>
         <li><a href="@Url.Action("Profil", "Benutzer")">Profilbearbeitung</a></li>
@@ -25,4 +28,8 @@
             <li><a href="@Url.Action("Recordverwaltung", "OpenData")">Datensatzverwaltung</a></li>
         }
     </ul>
+
+    <p>
+        Unser <a href="#">User Guide</a> hilft Ihnen beim Kennenlernen und Verwenden der Funktionen.
+    </p>
 }
