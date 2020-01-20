@@ -82,7 +82,12 @@
                         <p class="card-text">
                             @if (@Html.DisplayFor(modelItem => item.description).ToString().Length > 100)
                             {
-                                @Html.DisplayFor(modelItem => item.description).ToString().Substring(0, 100)
+                                string record_description = item.description.ToString();
+                                byte[] utf8_bytes = System.Text.Encoding.UTF8.GetBytes(record_description);
+                                var description_substring = System.Text.Encoding.UTF8.GetString(utf8_bytes);
+                                description_substring = description_substring.ToString().Substring(0, 100);
+
+                                @description_substring
                                 <span>...</span>
                             }
                             else
