@@ -82,6 +82,8 @@
                         <p class="card-text">
                             @if (@Html.DisplayFor(modelItem => item.description).ToString().Length > 100)
                             {
+                                // Auf der Übersichtsseite sollen die Beschreibungen nur maximal 100 Zeichen lang sein.
+                                // Um Umlaute nach der ToString() Methode beizubehalten, muss der String encodiert werden.
                                 string record_description = item.description.ToString();
                                 byte[] utf8_bytes = System.Text.Encoding.UTF8.GetBytes(record_description);
                                 var description_substring = System.Text.Encoding.UTF8.GetString(utf8_bytes);

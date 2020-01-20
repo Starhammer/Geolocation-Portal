@@ -38,23 +38,60 @@
                 </p>
 
                 <h4>Lizenz:</h4>
-                <button id="open-dialog" class="btn btn-dark" title="Details zur Lizenz anzeigen">@Html.DisplayFor(model => model.licence.name)</button>
-                <dialog role="dialog" aria-labelledby="dialog-heading">
-                    <button id="close-dialog">Schließen</button>
-                    <h2 id="dialog-heading">Info</h2>
-                    <p> @Html.DisplayFor(model => model.licence.description) </p>
-                </dialog>
 
+                <!-- Begin of Popup Modal for showing licence -->
+                <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#licenceModal">
+                    @Html.DisplayFor(model => model.licence.name)
+                </button>
+
+                <div class="modal fade" id="licenceModal">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Lizenz: @Html.DisplayFor(model => model.licence.name)</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <div class="modal-body">
+                                @Html.DisplayFor(model => model.licence.description)
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End of Pupup Modal for showing licence -->
 
                 <br /><br />
 
                 <h4>Datensatz veröffentlicht von:</h4>
-                <button id="open-dialog" class="btn btn-dark" title="Details zum Publisher anzeigen">@Html.DisplayFor(model => model.publisher.name)</button>
-                <dialog role="dialog" aria-labelledby="dialog-heading">
-                    <button id="close-dialog">Schließen</button>
-                    <h2 id="dialog-heading">Info</h2>
-                    <p> @Html.DisplayFor(model => model.publisher.description) </p>
-                </dialog>
+
+                <!-- Begin of Popup Modal for showing publisher -->
+                <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#publisherModal">
+                    @Html.DisplayFor(model => model.publisher.name)
+                </button>
+
+                <div class="modal fade" id="publisherModal">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Veröffentlicher: @Html.DisplayFor(model => model.publisher.name)</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <div class="modal-body">
+                                @Html.DisplayFor(model => model.publisher.description)
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End of Pupup Modal for showing publisher -->
 
                 <br /><br />
 
@@ -74,39 +111,43 @@
                             <!-- Hier muss eine Tabelle mit allen Dateien aufgelistet werden. -->
                             @foreach (var file in Model.file)
                             {
-                            <tr>
-                                <td>@file.name</td>
-                                <td>@file.file_size.ToString() @ViewData["file_size_extension"]</td>
-                                <td>@file.file_upload_date</td>
-                                <td>@file.download_count</td>
-                                <td>
-                                    <a href="@Url.Action("Download", "OpenData", new { fileName = file.name, recordId = Model.Id })" title="Herunterladen">
-                                        <img class="float-left mr-2" width="25" height="25" src="~/icons/@Html.DisplayFor(modelItem => file.file_icon)-icon.png" />
-                                    </a>
+                                <tr>
+                                    <td>
+                                        <a href="@Url.Action("Download", "OpenData", new { fileName = file.name, recordId = Model.Id })" title="Herunterladen">
+                                            @file.name
+                                        </a>
+                                    </td>
+                                    <td>@file.file_size.ToString() @ViewData["file_size_extension"]</td>
+                                    <td>@file.file_upload_date</td>
+                                    <td>@file.download_count</td>
+                                    <td>
+                                        <a href="@Url.Action("Download", "OpenData", new { fileName = file.name, recordId = Model.Id })" title="Herunterladen">
+                                            <img class="float-left mr-2" width="25" height="25" src="~/icons/@Html.DisplayFor(modelItem => file.file_icon)-icon.png" />
+                                        </a>
 
-                                    @{
-                                        var filetype = file.name.Split('.');
+                                        @{
+                                            var filetype = file.name.Split('.');
 
-                                        if (Model.geo_data)
-                                        {
-                                            if (filetype[filetype.Count() - 1] == "geojson")
+                                            if (Model.geo_data)
                                             {
-                                                int geofileId = file.Id;
-                                                <a href="~/GeoData/index/@geofileId.ToString()" title="Vorschau"><i class="fa fa-map"></i></a>
+                                                if (filetype[filetype.Count() - 1] == "geojson")
+                                                {
+                                                    int geofileId = file.Id;
+                                                    <a href="~/GeoData/index/@geofileId.ToString()" title="Vorschau"><i class="fa fa-map"></i></a>
+                                                }
+                                            }
+                                            else if (Model.dia_data)
+                                            {
+                                                if (filetype[filetype.Count() - 1] == "xml")
+                                                {
+                                                    int diafileId = file.Id;
+                                                    <a href="~/GeoData/index/@diafileId.ToString()" title="Vorschau"><i class="fa fa-pie-chart"></i></a>
+                                                }
                                             }
                                         }
-                                        else if (Model.dia_data)
-                                        {
-                                            if (filetype[filetype.Count() - 1] == "xml")
-                                            {
-                                                int diafileId = file.Id;
-                                                <a href="~/GeoData/index/@diafileId.ToString()" title="Vorschau"><i class="fa fa-pie-chart"></i></a>
-                                            }
-                                        }
-                                    }
-                                </td>
-                            </tr>
-                             }
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -140,7 +181,7 @@
                     <div class="form-group">
                         <textarea class="form-control mw-100" id="text" name="text" rows="10" maxlength="3000" required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Kommentar abshcicken</button>
+                    <button type="submit" class="btn btn-primary">Kommentar veröffentlichen</button>
                 }
                 @if (Model.comment.Count != 0)
                 {
