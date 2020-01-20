@@ -106,7 +106,8 @@
             <div class="card-footer" style="min-height:50px;">
 
                 <h4>Kommentar schreiben:</h4>
-                <form>
+                @using (Html.BeginForm("RecordComment", "OpenData", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
                     <div class="form-group row">
                         <label for="rating" class="col-3">Bewertung:</label>
                         <div class="col-9">
@@ -125,9 +126,7 @@
                     <div class="form-group">
                         <textarea class="form-control mw-100" id="comment" rows="10" maxlength="3000"></textarea>
                     </div>
-                </form>
-
-                <button type="submit" class="btn btn-primary">Kommentar veröffentlichen</button>    <!-- Funktion implementieren -->
+                }
 
                 <br /><br /><br />
                 <h4>Kommentare:</h4>
@@ -140,15 +139,15 @@
                                 <span>@Html.Partial("_rating", comment.bewertung)</span>
                                 <h3>@comment.title</h3>
                                 <span class="blockquote-footer">@comment.person_name</span>
-                            </div>                            
+                            </div>
                             <div>
                                 <p>@comment.text</p>
-                            </div>                            
+                            </div>
                         </div>
                     }
 
                 </div>
-               
+
 
             </div>
         </div>

@@ -363,5 +363,12 @@ namespace Geolocation_Portal_Test.Controllers
 
             return File(path, mime);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RecordComment([Bind(Include = "")] comment comment)
+        {
+            return null;
+        }
     }
 }
