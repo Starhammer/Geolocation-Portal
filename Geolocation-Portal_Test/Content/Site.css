@@ -398,5 +398,8 @@ No media query for `xs` since this is the default in Bootstrap */
 
 /* Extra large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
-
+    #MyHeader nav {
+        max-width: 1920px;
+        margin: auto;
+    }
 }
