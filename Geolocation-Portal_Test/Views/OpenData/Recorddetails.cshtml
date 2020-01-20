@@ -13,6 +13,14 @@
             <div class="card-header">
                 <img class="icon" width="20" height="20" src="~/icons/Category/@Html.DisplayFor(model => model.category.icon)" />
                 @Html.DisplayFor(model => model.title)
+
+                @if (Session["UserRole"] != null && Convert.ToInt32(Session["UserRole"]) < 3)
+                {
+                    <div class="fa-pull-right">
+                        <a class="nolink" href="@Url.Action("Recordbearbeitung", "OpenData")" title="Datensatz bearbeiten"><i class="fa fa-edit"></i></a>
+                        <a class="nolink" href="@Url.Action("Recordentfernung", "OpenData")" title="Datensatz löschen"><i class="fa fa-trash"></i></a>
+                    </div>
+                }
             </div>
             <div class="card-body">
                 <div class="card-subtitle">
