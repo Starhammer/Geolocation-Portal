@@ -367,6 +367,7 @@ namespace Geolocation_Portal_Test.Controllers
         {            
             string path = Server.MapPath("~/App_Data/uploads/"+ recordId + "/"+ fileName);
             string mime = MimeMapping.GetMimeMapping(path);
+            
 
             file file = db.file.Where(f => f.name == fileName && f.record_id == recordId).First();
             if (file != null) { 
@@ -374,7 +375,7 @@ namespace Geolocation_Portal_Test.Controllers
                 db.SaveChanges();
             }
 
-            return File(path, mime);
+            return File(path, mime, file.name);
         }
 
         [HttpPost]
