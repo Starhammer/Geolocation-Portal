@@ -331,9 +331,13 @@ footer {
     display: inline-block;
 }
 
-    #footer-nav a:hover {
-        text-decoration: underline;
-    }
+#footer-nav a:hover {
+    text-decoration: underline;
+}
+
+input[type=search]::-webkit-search-cancel-button {
+    -webkit-appearance: searchfield-cancel-button;
+}
 
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
@@ -350,15 +354,15 @@ textarea {
 }
 
 dialog {
-display: none;
-position: relative;
-background: white;
-border: 1px solid grey;
-border-radius: 0 .5em .5em;
-z-index: 1002;
-padding: .5em 1em;
-width: 100%;
-height: auto;
+    display: none;
+    position: relative;
+    background: white;
+    border: 1px solid grey;
+    border-radius: 0 .5em .5em;
+    z-index: 1002;
+    padding: .5em 1em;
+    width: 100%;
+    height: auto;
 }
 
 dialog[open="open"] {

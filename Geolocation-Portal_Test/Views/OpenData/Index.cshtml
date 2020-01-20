@@ -4,7 +4,8 @@
     ViewBag.Title = "Open-Data der Stadt Mosbach";
 }
 
-<h1>@ViewBag.Title</h1>
+<h1>Open Data Portal</h1>
+<hr />
 
 <div id="toolBar">
     <div id="">
@@ -25,10 +26,10 @@
         }
     </div>
     <div id="search" style="display:none; height:1.5em;">
-        @using (Html.BeginForm("Search", "OpenData", FormMethod.Post))
+        @using (Html.BeginForm("Search", "OpenData", FormMethod.Post, htmlAttributes: new { @class = "n-column-wrapper" } ))
         {
-            <input class="desktopContentOnly float-right form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="search">
-            
+            <input class="float-right form-control" type="search" placeholder="Suchbegriff..." aria-label="Search" name="search" />
+            <button class="btn btn-primary float-right" style="width: 200px; margin-left: 5px;" type="submit" name="submit">Suchen</button>
         }
     </div>
 </div>
@@ -72,7 +73,7 @@
                             <div class="d-flex justify-content-between">
                                 <span>
                                     <i class="fa fa-calendar"></i>
-                                    @Html.DisplayFor(modelItem => item.dataset_modified_date)
+                                    @Html.DisplayFor(modelItem => item.dataset_modified_date.ToString().Split(new char[] { ' ' })[0])
                                 </span>
                                 <span><i class="fa fa-download"></i> @item.file.Sum(f=>f.download_count)</span>
                                 @Html.Partial("_rating", item.rating)

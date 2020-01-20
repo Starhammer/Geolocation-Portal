@@ -4,7 +4,7 @@
     ViewBag.Title = "Recorddetails";
 }
 
-<h2>Details eines Records</h2>
+<h1>Datensatzdetails</h1>
 <hr />
 
 <div>
@@ -19,9 +19,9 @@
                     <div class="d-flex justify-content-between">
                         <span>
                             <i class="fa fa-calendar"></i>
-                            @Html.DisplayFor(model => model.dataset_modified_date)
+                            @Html.DisplayFor(model => model.dataset_modified_date.ToString().Split(new char[] { ' ' })[0])
                         </span>
-                        <span><i class="fa fa-download"></i> 143 </span>
+                        <span><i class="fa fa-download"></i> @ViewData["downloadcount"] </span>
                         @Html.Partial("_rating", Model.rating)
                     </div>
                 </div>
@@ -58,6 +58,7 @@
                                 <th>Dateiname</th>
                                 <th>Speichergröße</th>
                                 <th>Veröffentlichungsdatum</th>
+                                <th>Downloadanzahl</th>
                                 <th>Herunterladen</th>
                             </tr>
                         </thead>
@@ -67,8 +68,9 @@
                             {
                             <tr>
                                 <td>@file.name</td>
-                                <td>@file.file_size</td>
+                                <td>@file.file_size.ToString() @ViewData["file_size_extension"]</td>
                                 <td>@file.file_upload_date</td>
+                                <td>@file.download_count</td>
                                 <td>
                                     <a href="@Url.Action("Download", "OpenData", new { fileName = file.name, recordId = Model.Id })" title="Herunterladen">
                                         <img class="float-left mr-2" width="25" height="25" src="~/icons/@Html.DisplayFor(modelItem => file.file_icon)-icon.png" />
@@ -108,7 +110,7 @@
                     <div class="form-group row">
                         <label for="rating" class="col-3">Bewertung:</label>
                         <div class="col-9">
-                            <!-- Hier muss noch das Auswählen der Sterne implementiert werden. -->
+                            <!-- ToDo: Hier muss noch das Auswählen der Sterne implementiert werden. -->
                             <input type="text" content="Stern1 Stern2 Stern3 Stern4 Stern5" class="form-control mw-100" id="rating" maxlength="50">
                         </div>
                     </div>
@@ -128,12 +130,9 @@
                 <button type="submit" class="btn btn-primary">Kommentar veröffentlichen</button>    <!-- Funktion implementieren -->
 
                 <br /><br /><br />
-                <!-- Schleife, um alle bereits vorhandenen Kommentare des Datensatzes aufzulisten. -->
                 <h4>Kommentare:</h4>
-                Kommentar1<br />
-                Kommentar2<br />
-                Kommentar3<br />
-                ...
+                <!-- Schleife, um alle bereits vorhandenen Kommentare des Datensatzes aufzulisten. -->
+                
             </div>
         </div>
     </div>

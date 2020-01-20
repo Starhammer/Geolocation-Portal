@@ -40,7 +40,8 @@ namespace Geolocation_Portal_Test.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Anmelden");
+                        ViewBag.message = "Der eingegebene Benutzername oder das eingegebene Passwort ist nicht korrekt.Bitte versuchen Sie es erneut.";
+                        return View("Anmelden");
                     }
                 }
             }
