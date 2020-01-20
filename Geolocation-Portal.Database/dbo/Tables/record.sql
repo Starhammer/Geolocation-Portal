@@ -16,6 +16,7 @@
     [geo_data] BIT NOT NULL DEFAULT 0, 
     CONSTRAINT [FK_record_category] FOREIGN KEY (category_id) REFERENCES category(id), 
     CONSTRAINT [FK_record_publisher] FOREIGN KEY (publisher_id) REFERENCES publisher(id), 
-    CONSTRAINT [FK_record_location] FOREIGN KEY (location_id) REFERENCES location(id)
+    CONSTRAINT [FK_record_location] FOREIGN KEY (location_id) REFERENCES location(id),
+	CONSTRAINT [FK_record_licence] FOREIGN KEY (licence_id) REFERENCES licence(id)
 
 )

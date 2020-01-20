@@ -21,6 +21,7 @@ namespace Geolocation_Portal_Test.Models
         public record()
         {
             this.file = new HashSet<file>();
+            this.comment = new HashSet<comment>();
         }
     
         public int Id { get; set; }
@@ -64,9 +65,10 @@ namespace Geolocation_Portal_Test.Models
         public virtual category category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<file> file { get; set; }
-        public virtual publisher publisher { get; set; }
-        public virtual comment comment { get; set; }
+        public virtual publisher publisher { get; set; }        
         public virtual licence licence { get; set; }
         public virtual location location { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<comment> comment { get; set; }
     }
 }
