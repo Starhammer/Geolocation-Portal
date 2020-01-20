@@ -71,7 +71,6 @@
     <Build Include="dbo\Tables\licence.sql" />
     <Build Include="dbo\Tables\publisher.sql" />
     <Build Include="dbo\Tables\comment.sql" />
-    <Build Include="dbo\Tables\recordComment.sql" />
     <Build Include="dbo\Tables\role.sql" />
     <Build Include="dbo\Tables\user.sql" />
     <Build Include="dbo\Tables\location.sql" />
