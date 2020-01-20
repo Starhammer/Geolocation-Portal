@@ -380,9 +380,16 @@ namespace Geolocation_Portal_Test.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult RecordComment([Bind(Include = "")] comment comment)
+        public ActionResult RecordComment([Bind(Include = "title,text,person_name,bewertung,record_id")] comment comment)
         {
-            return null;
+            db.comment.Add(comment); 
+            
+            double avgRating = db.comment.Where(c => c.record_id == comment.record_id).Average(c => c.bewertung);
+
+            db.record.Find(comment.record_id).rating = (int)Math.Round(avgRating);
+
+            db.SaveChangesAsync();
+            return RedirectToAction("Recorddetails", new { id = comment.record_id});
         }
     }
 }
