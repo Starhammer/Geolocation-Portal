@@ -135,28 +135,27 @@
                         <textarea class="form-control mw-100" id="comment" rows="10" maxlength="3000"></textarea>
                     </div>
                 }
-
-                <br /><br /><br />
-                <h4>Kommentare:</h4>
-                <div>
-                    <!-- Schleife, um alle bereits vorhandenen Kommentare des Datensatzes aufzulisten. -->
-                    @foreach (var comment in Model.comment)
-                    {
-                        <div class="border-bottom mt-2">
-                            <div>
-                                <span>@Html.Partial("_rating", comment.bewertung)</span>
-                                <h3>@comment.title</h3>
-                                <span class="blockquote-footer">@comment.person_name</span>
+                @if (Model.comment.Count != 0)
+                {
+                    <br /><br /><br />
+                    <h4>Kommentare:</h4>
+                    <div>
+                        <!-- Schleife, um alle bereits vorhandenen Kommentare des Datensatzes aufzulisten. -->
+                        @foreach (var comment in Model.comment)
+                        {
+                            <div class="border-bottom mt-2">
+                                <div>
+                                    <span>@Html.Partial("_rating", comment.bewertung)</span>
+                                    <h3>@comment.title</h3>
+                                    <span class="blockquote-footer">@comment.person_name</span>
+                                </div>
+                                <div>
+                                    <p>@comment.text</p>
+                                </div>
                             </div>
-                            <div>
-                                <p>@comment.text</p>
-                            </div>
-                        </div>
-                    }
-
-                </div>
-
-
+                        }
+                    </div>
+                }
             </div>
         </div>
     </div>
