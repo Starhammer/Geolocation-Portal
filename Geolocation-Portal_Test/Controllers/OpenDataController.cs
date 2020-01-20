@@ -1,6 +1,7 @@
 ﻿using Geolocation_Portal_Test.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -163,8 +164,19 @@ namespace Geolocation_Portal_Test.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            // Rollenkonzept (ID 4 = Öffentlichkeit)
-            if (db.record.Find(id).role_id > 3)
+            // Datensatz Sichtbarkeit auslesen
+            int record_visibility_role = (int)db.record.Find(id).role_id;
+            int logged_in_user = 4;
+            bool logged_in = false;
+            if (checkSession())
+            {
+                logged_in_user = Convert.ToInt32(Session["UserRole"], new CultureInfo("de-DE"));
+                logged_in = true;
+            }
+
+            // Rollenkonzept:
+            // Datensatz Sichtbarkeit = 4 (Öffentlichkeit) oder Benutzer angemeldet und Rolle berechtigt Datensatz zu sehen
+            if (record_visibility_role > 3 || logged_in == true && record_visibility_role <= logged_in_user)
             {
                 record record = db.record.Find(id);
                 record.licence = db.licence.Find(record.licence_id);
@@ -175,9 +187,11 @@ namespace Geolocation_Portal_Test.Controllers
 
                 foreach (file f in record.file)
                 {
+                    // Downloadanzahl ermitteln.
                     int file_downloadcount = (int)f.download_count;
                     downloadcount = downloadcount + file_downloadcount;
 
+                    // Dateigröße in bessere Darstellung umwandeln.
                     file_size_conversion_count = 0; // 0 = Bytes
                     while (f.file_size > 1024) {
                         f.file_size = f.file_size / 1024;
@@ -187,6 +201,7 @@ namespace Geolocation_Portal_Test.Controllers
                     f.file_size = Math.Round((double)f.file_size, 2);
                 }
 
+                // Dateigrößenbezeichnung ermitteln.
                 ViewData["downloadcount"] = downloadcount;
 
                 string file_size_extension = "Bytes";
@@ -220,12 +235,10 @@ namespace Geolocation_Portal_Test.Controllers
 
                 return View(record);
             }
-            else if (!checkSession())
+            else
             {
                 return RedirectToAction("Anmelden", "Benutzer");
             }
-
-            return RedirectToAction("Index", "OpenData");
         }
 
         public ActionResult Recordentfernung(int? id)
