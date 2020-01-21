@@ -43,12 +43,12 @@ INSERT INTO [dbo].[location] ([Id], [name]) VALUES (16, N'Diedesheim')
 INSERT INTO [dbo].[location] ([Id], [name]) VALUES (17, N'Lohrbach')
 INSERT INTO [dbo].[location] ([Id], [name]) VALUES (18, N'Reichenbuch')
 INSERT INTO [dbo].[location] ([Id], [name]) VALUES (19, N'Sattelbach')
+INSERT INTO [dbo].[location] ([Id], [name]) VALUES (1001, N'Waldstadt')
 SET IDENTITY_INSERT [dbo].[location] OFF
 
 SET IDENTITY_INSERT [dbo].[category] ON
 INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (1, 0, N'Bevölkerung', N'Bevölkerung', N'Bevoelkerung.png')
 INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (2, 0, N'Bildung und Wissenschaft', N'Bildung und Wissenschaft', N'Bildung.png')
-INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (3, 0, N'Geo-Daten', N'Datensätze, die Geo-Daten enthalten', N'Geodaten.png')
 INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (4, 0, N'Gesetze und Justiz', N'Gesetze und Justiz', N'Justiz.png')
 INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (5, 0, N'Infrastruktur, Bauen und Wohnen', N'Infrastruktur, Bauen und Wohnen', N'Infrastruktur.png')
 INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (6, 0, N'Kultur', N'Kultur', N'Kultur.png')
@@ -57,7 +57,6 @@ INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) 
 INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (9, 0, N'Haushalt', N'Haushalt', N'Haushalt.png')
 INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (10, 0, N'Steuern', N'Steuern', N'Steuern.png')
 INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (11, 0, N'Wahlen', N'Wahlen', N'Wahlen.png')
-INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (12, 0, N'Diagramm-Daten', N'Datensätze, die Diagramme enthalten', N'Diagramm.png')
 SET IDENTITY_INSERT [dbo].[category] OFF
 
 SET IDENTITY_INSERT [dbo].[publisher] ON
@@ -80,15 +79,15 @@ SET IDENTITY_INSERT [dbo].[user] OFF
 
 /* Beispiel Datensätze */
 SET IDENTITY_INSERT [dbo].[record] ON
-INSERT INTO [dbo].[record] ([Id], [dataset_upload], [dataset_modified_date], [title], [description], [category_id], [licence_id], [publisher_id], [rating], [role_id], [record_active], [location_id], [dia_data], [geo_data]) VALUES (1, N'0001-01-01 00:00:00', N'0001-01-01 00:00:00', N'Bildungseinrichtungen', N'Dieser Datensatz beinhaltet die Geolocation Daten aller Schulen innerhalb der Gemeinde Mosbach.', 3, 1, 1, 0, 4, 1, 1, 0, 1)
-INSERT INTO [dbo].[record] ([Id], [dataset_upload], [dataset_modified_date], [title], [description], [category_id], [licence_id], [publisher_id], [rating], [role_id], [record_active], [location_id], [dia_data], [geo_data]) VALUES (2, N'0001-01-01 00:00:00', N'0001-01-01 00:00:00', N'Kindergartenübersicht', N'Die Gemeinde Mosbach besitzt in vielen Ortschaften einen Kindergarten. Dieser Geolocation Datensatz zeigt die Position jedes Kindergartens innerhalb der Gemeinde Mosbach.', 3, 1, 1, 0, 4, 1, 1, 0, 1)
-INSERT INTO [dbo].[record] ([Id], [dataset_upload], [dataset_modified_date], [title], [description], [category_id], [licence_id], [publisher_id], [rating], [role_id], [record_active], [location_id], [dia_data], [geo_data]) VALUES (3, N'0001-01-01 00:00:00', N'0001-01-01 00:00:00', N'Parkhausübersicht in der Großen Kreisstadt Mosbach', N'Jede Stadt hat mit dem wachsenden Bedarf an Parkplätzen zu kämpfen. Damit Sie bei Ihrem Stadtbesuch besser planen können, sehen Sie in diesem Geolocation Datensatz die Positionen aller öffentlicher Parklätze in der Stadt Mosbach.', 3, 1, 1, 0, 4, 1, 2, 0, 1)
-INSERT INTO [dbo].[record] ([Id], [dataset_upload], [dataset_modified_date], [title], [description], [category_id], [licence_id], [publisher_id], [rating], [role_id], [record_active], [location_id], [dia_data], [geo_data]) VALUES (4, N'0001-01-01 00:00:00', N'0001-01-01 00:00:00', N'Behörden in Mosbach', N'Dieser Datensatz zeigt die Position der Behörden in Mosbach.', 3, 1, 1, 0, 4, 1, 2, 0, 1)
+INSERT INTO [dbo].[record] ([Id], [dataset_upload], [dataset_modified_date], [title], [description], [category_id], [licence_id], [publisher_id], [rating], [role_id], [record_active], [location_id], [dia_data], [geo_data]) VALUES (1, N'2018-06-23 07:30:20', N'2018-06-23 07:30:20', N'Bildungseinrichtungen', N'Dieser Datensatz beinhaltet die Geolocation Daten aller Schulen innerhalb der Gemeinde Mosbach.', 3, 1, 1, 0, 4, 1, 1, 0, 1)
+INSERT INTO [dbo].[record] ([Id], [dataset_upload], [dataset_modified_date], [title], [description], [category_id], [licence_id], [publisher_id], [rating], [role_id], [record_active], [location_id], [dia_data], [geo_data]) VALUES (2, N'2018-06-23 07:30:20', N'2018-06-23 07:30:20', N'Kindergartenübersicht', N'Die Gemeinde Mosbach besitzt in vielen Ortschaften einen Kindergarten. Dieser Geolocation Datensatz zeigt die Position jedes Kindergartens innerhalb der Gemeinde Mosbach.', 3, 1, 1, 0, 4, 1, 1, 0, 1)
+INSERT INTO [dbo].[record] ([Id], [dataset_upload], [dataset_modified_date], [title], [description], [category_id], [licence_id], [publisher_id], [rating], [role_id], [record_active], [location_id], [dia_data], [geo_data]) VALUES (3, N'2018-06-23 07:30:20', N'2018-06-23 07:30:20', N'Parkhausübersicht in der Großen Kreisstadt Mosbach', N'Jede Stadt hat mit dem wachsenden Bedarf an Parkplätzen zu kämpfen. Damit Sie bei Ihrem Stadtbesuch besser planen können, sehen Sie in diesem Geolocation Datensatz die Positionen aller öffentlicher Parklätze in der Stadt Mosbach.', 3, 1, 1, 0, 4, 1, 2, 0, 1)
+INSERT INTO [dbo].[record] ([Id], [dataset_upload], [dataset_modified_date], [title], [description], [category_id], [licence_id], [publisher_id], [rating], [role_id], [record_active], [location_id], [dia_data], [geo_data]) VALUES (4, N'2018-06-23 07:30:20', N'2018-06-23 07:30:20', N'Behörden in Mosbach', N'Dieser Datensatz zeigt die Position der Behörden in Mosbach.', 3, 1, 1, 0, 4, 1, 2, 0, 1)
 SET IDENTITY_INSERT [dbo].[record] OFF
 
 /* Beispiel Dateien */
 SET IDENTITY_INSERT [dbo].[file] ON
-INSERT INTO [dbo].[file] ([Id], [record_id], [file_upload_date], [download_count], [file_icon], [file_size], [name]) VALUES (1, 1, N'2020-01-20 23:04:23', 0, N'geojson', 7486, N'bildungseinrichtungen.geojson')
+INSERT INTO [dbo].[file] ([Id], [record_id], [file_upload_date], [download_count], [file_icon], [file_size], [name]) VALUES (1, 1, N'2018-06-23 07:30:20', 0, N'geojson', 7486, N'bildungseinrichtungen.geojson')
 INSERT INTO [dbo].[file] ([Id], [record_id], [file_upload_date], [download_count], [file_icon], [file_size], [name]) VALUES (2, 2, N'2020-01-20 23:14:57', 0, N'geojson', 6802, N'kindergarten.geojson')
 INSERT INTO [dbo].[file] ([Id], [record_id], [file_upload_date], [download_count], [file_icon], [file_size], [name]) VALUES (3, 3, N'2020-01-20 23:18:06', 0, N'geojson', 5377, N'parking.geojson')
 INSERT INTO [dbo].[file] ([Id], [record_id], [file_upload_date], [download_count], [file_icon], [file_size], [name]) VALUES (4, 4, N'2020-01-20 23:21:30', 0, N'geojson', 8856, N'commercial.geojson')

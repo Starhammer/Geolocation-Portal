@@ -123,6 +123,9 @@ namespace Geolocation_Portal_Test.Controllers
                         break;
                 }
 
+                record.dataset_upload = DateTime.Now;
+                record.dataset_modified_date = DateTime.Now;
+
                 db.record.Add(record);
                 db.SaveChanges();
 
