@@ -80,6 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Geolocation-Portal.Database.publish.xml" />
+    <None Include="Geolocation-Portal_test.Database.publish.xml" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />
