@@ -43,6 +43,7 @@ INSERT INTO [dbo].[location] ([Id], [name]) VALUES (16, N'Diedesheim')
 INSERT INTO [dbo].[location] ([Id], [name]) VALUES (17, N'Lohrbach')
 INSERT INTO [dbo].[location] ([Id], [name]) VALUES (18, N'Reichenbuch')
 INSERT INTO [dbo].[location] ([Id], [name]) VALUES (19, N'Sattelbach')
+INSERT INTO [dbo].[location] ([Id], [name]) VALUES (1001, N'Waldstadt')
 SET IDENTITY_INSERT [dbo].[location] OFF
 
 SET IDENTITY_INSERT [dbo].[category] ON
