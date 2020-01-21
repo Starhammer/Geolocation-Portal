@@ -49,7 +49,6 @@ SET IDENTITY_INSERT [dbo].[location] OFF
 SET IDENTITY_INSERT [dbo].[category] ON
 INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (1, 0, N'Bevölkerung', N'Bevölkerung', N'Bevoelkerung.png')
 INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (2, 0, N'Bildung und Wissenschaft', N'Bildung und Wissenschaft', N'Bildung.png')
-INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (3, 0, N'Geo-Daten', N'Datensätze, die Geo-Daten enthalten', N'Geodaten.png')
 INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (4, 0, N'Gesetze und Justiz', N'Gesetze und Justiz', N'Justiz.png')
 INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (5, 0, N'Infrastruktur, Bauen und Wohnen', N'Infrastruktur, Bauen und Wohnen', N'Infrastruktur.png')
 INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (6, 0, N'Kultur', N'Kultur', N'Kultur.png')
@@ -58,7 +57,6 @@ INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) 
 INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (9, 0, N'Haushalt', N'Haushalt', N'Haushalt.png')
 INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (10, 0, N'Steuern', N'Steuern', N'Steuern.png')
 INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (11, 0, N'Wahlen', N'Wahlen', N'Wahlen.png')
-INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (12, 0, N'Diagramm-Daten', N'Datensätze, die Diagramme enthalten', N'Diagramm.png')
 SET IDENTITY_INSERT [dbo].[category] OFF
 
 SET IDENTITY_INSERT [dbo].[publisher] ON
