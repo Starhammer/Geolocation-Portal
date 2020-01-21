@@ -64,7 +64,7 @@
                         {
                             <div class="fa-pull-right">
                                 <a class="nolink" href="@Url.Action("Recordbearbeitung", "OpenData")" title="Datensatz bearbeiten"><i class="fa fa-edit"></i></a>
-                                <a class="nolink" href="@Url.Action("Record", "OpenData")" title="Datensatz löschen"><i class="fa fa-trash"></i></a>
+                                <a class="nolink" href="@Url.Action("Recordentfernung", "OpenData", new { id = item.Id })" title="Datensatz löschen"><i class="fa fa-trash"></i></a>
                             </div>
                         }
                     </div>

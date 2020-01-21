@@ -89,9 +89,6 @@ namespace Geolocation_Portal_Test.Controllers
                 db.record.Add(record);
                 db.SaveChanges();
 
-                
-                
-
                 if (files != null) saveFiles(files, record.Id);
                 
                 return RedirectToAction("Index");
@@ -102,6 +99,7 @@ namespace Geolocation_Portal_Test.Controllers
             ViewBag.licence_id = new SelectList(db.licence, "Id", "name", record.licence_id);
             ViewBag.role_id = new SelectList(db.role, "Id", "name");
             ViewBag.location_id = new SelectList(db.location, "Id", "name");
+            ViewBag.licence_description = db.licence.Find(record.licence_id);
 
             return View(record);
         }
