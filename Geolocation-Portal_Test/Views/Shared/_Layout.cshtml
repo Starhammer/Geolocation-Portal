@@ -20,7 +20,7 @@
 
                 <div class="align-middle m1-auto order-lg-last">
                     <form class="form-inline mt-md-0">
-                        <input class="desktopContentOnly form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                        <input class="desktopContentOnly form-control mr-sm-2" type="search" placeholder="Suchbegriff..." aria-label="Search">
                         <a class="nolink mr-sm-2 padding-left-10" href="#" title="Suche starten">
                             <i class="fa fa-search"></i>
                         </a>
@@ -56,9 +56,6 @@
                         </li>
                         <li class="nav-item">
                             <a class="p-2 text-dark" href="@Url.Action("Index", "OpenData")">Open Data</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="p-2 text-dark" href="@Url.Action("Index", "GeoData")">Geo Data</a>
                         </li>
                         <li class="nav-item">
                             <a class="p-2 text-dark" href="@Url.Action("Index", "FAQ")">FAQ</a>
@@ -224,42 +221,6 @@
                 $("#footer-nav").css('background-color', colorSchema2);
                 $("#copyright").css('background-color', colorSchema2);
             }
-        </script>
-
-        <script>
-            'use strict';
-            document.addEventListener("DOMContentLoaded", function () {
-	            //Polyfill für dialog-Element
-	            document.querySelector('#open-dialog')
-		            .addEventListener('click', toggleDialog);
-
-	            function toggleDialog() {
-		            var dialog = document.querySelector('dialog'),
-			            closeButton = document.getElementById('close-dialog');
-		            if (!dialog.hasAttribute('open')) {
-			            // show the dialog 
-			            dialog.setAttribute('open', 'open');
-			            // after displaying the dialog, focus the closeButton inside it
-			            closeButton.focus();
-			            closeButton.addEventListener('click', toggleDialog);
-			            // EventListener für ESC-Taste
-			            document.addEventListener('keydown', function (event) {
-				            if (event.keyCode == 27) {
-					            toggleDialog();
-				            }
-			            }, true);
-			            // only hide the background *after* you've moved focus out of the content that will be "hidden" 
-			            var div = document.createElement('div');
-			            div.id = 'backdrop';
-			            document.body.appendChild(div);
-		            } else {
-			            dialog.removeAttribute('open');
-			            var div = document.querySelector('#backdrop');
-			            div.parentNode.removeChild(div);
-			            lastFocus.focus();
-		            }
-	            }
-            });
         </script>
 
         @Scripts.Render("~/bundles/jquery")

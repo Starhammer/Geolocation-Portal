@@ -3,5 +3,10 @@
     ViewBag.Title = "Profil";
 }
 
-<h2>Profil</h2>
+@if (Session["UserName"] != null)
+{
+    <h1>Profil</h1>
+    <hr />
 
+    <p>Benutzername: @Session["UserName"].ToString()</p>
+}

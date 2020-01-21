@@ -24,6 +24,7 @@
           <Property Name="text" Type="ntext" />
           <Property Name="person_name" Type="nvarchar" MaxLength="50" />
           <Property Name="bewertung" Type="int" Nullable="false" />
+          <Property Name="record_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="file">
           <Key>
@@ -86,13 +87,6 @@
           <Property Name="dia_data" Type="bit" Nullable="false" />
           <Property Name="geo_data" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="recordComment">
-          <Key>
-            <PropertyRef Name="dataset_id" />
-          </Key>
-          <Property Name="dataset_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="comment_id" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="role">
           <Key>
             <PropertyRef Name="Id" />
@@ -125,6 +119,18 @@
           <Property Name="login_attempts" Type="int" />
           <Property Name="last_login" Type="datetime2" Precision="7" />
         </EntityType>
+        <Association Name="FK_comment_record">
+          <End Role="record" Type="Self.record" Multiplicity="1" />
+          <End Role="comment" Type="Self.comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="record">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="comment">
+              <PropertyRef Name="record_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_file_record">
           <End Role="record" Type="Self.record" Multiplicity="1" />
           <End Role="file" Type="Self.file" Multiplicity="*" />
@@ -173,6 +179,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_record_licence">
+          <End Role="licence" Type="Self.licence" Multiplicity="0..1" />
+          <End Role="record" Type="Self.record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="licence">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="record">
+              <PropertyRef Name="licence_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_record_location">
           <End Role="location" Type="Self.location" Multiplicity="1" />
           <End Role="record" Type="Self.record" Multiplicity="*" />
@@ -197,30 +215,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_recordComment_comment">
-          <End Role="comment" Type="Self.comment" Multiplicity="1" />
-          <End Role="recordComment" Type="Self.recordComment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="comment">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="recordComment">
-              <PropertyRef Name="comment_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_recordComment_record">
-          <End Role="record" Type="Self.record" Multiplicity="1" />
-          <End Role="recordComment" Type="Self.recordComment" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="record">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="recordComment">
-              <PropertyRef Name="dataset_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_user_role">
           <End Role="role" Type="Self.role" Multiplicity="1" />
           <End Role="user" Type="Self.user" Multiplicity="*" />
@@ -242,10 +236,13 @@
           <EntitySet Name="location" EntityType="Self.location" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="publisher" EntityType="Self.publisher" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="record" EntityType="Self.record" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="recordComment" EntityType="Self.recordComment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="role" EntityType="Self.role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="searchtag" EntityType="Self.searchtag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_comment_record" Association="Self.FK_comment_record">
+            <End Role="record" EntitySet="record" />
+            <End Role="comment" EntitySet="comment" />
+          </AssociationSet>
           <AssociationSet Name="FK_file_record" Association="Self.FK_file_record">
             <End Role="record" EntitySet="record" />
             <End Role="file" EntitySet="file" />
@@ -262,6 +259,10 @@
             <End Role="category" EntitySet="category" />
             <End Role="record" EntitySet="record" />
           </AssociationSet>
+          <AssociationSet Name="FK_record_licence" Association="Self.FK_record_licence">
+            <End Role="licence" EntitySet="licence" />
+            <End Role="record" EntitySet="record" />
+          </AssociationSet>
           <AssociationSet Name="FK_record_location" Association="Self.FK_record_location">
             <End Role="location" EntitySet="location" />
             <End Role="record" EntitySet="record" />
@@ -269,14 +270,6 @@
           <AssociationSet Name="FK_record_publisher" Association="Self.FK_record_publisher">
             <End Role="publisher" EntitySet="publisher" />
             <End Role="record" EntitySet="record" />
-          </AssociationSet>
-          <AssociationSet Name="FK_recordComment_comment" Association="Self.FK_recordComment_comment">
-            <End Role="comment" EntitySet="comment" />
-            <End Role="recordComment" EntitySet="recordComment" />
-          </AssociationSet>
-          <AssociationSet Name="FK_recordComment_record" Association="Self.FK_recordComment_record">
-            <End Role="record" EntitySet="record" />
-            <End Role="recordComment" EntitySet="recordComment" />
           </AssociationSet>
           <AssociationSet Name="FK_user_role" Association="Self.FK_user_role">
             <End Role="role" EntitySet="role" />
@@ -322,9 +315,13 @@
             <End Role="file" EntitySet="file" />
             <End Role="searchtag" EntitySet="searchtag" />
           </AssociationSet>
-          <AssociationSet Name="recordComment" Association="Model.recordComment">
-            <End Role="comment" EntitySet="comment" />
+          <AssociationSet Name="FK_record_licence" Association="Model.FK_record_licence">
+            <End Role="licence" EntitySet="licence" />
             <End Role="record" EntitySet="record" />
+          </AssociationSet>
+          <AssociationSet Name="FK_comment_record" Association="Model.FK_comment_record">
+            <End Role="record" EntitySet="record" />
+            <End Role="comment" EntitySet="comment" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="category">
@@ -347,7 +344,8 @@
           <Property Name="text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="person_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="bewertung" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="record" Relationship="Model.recordComment" FromRole="comment" ToRole="record" />
+          <Property Name="record_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="record" Relationship="Model.FK_comment_record" FromRole="comment" ToRole="record" />
         </EntityType>
         <EntityType Name="file">
           <Key>
@@ -370,6 +368,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="record" Relationship="Model.FK_record_licence" FromRole="licence" ToRole="record" />
         </EntityType>
         <EntityType Name="location">
           <Key>
@@ -408,9 +407,10 @@
           <NavigationProperty Name="file" Relationship="Model.FK_file_record" FromRole="record" ToRole="file" />
           <NavigationProperty Name="location" Relationship="Model.FK_record_location" FromRole="record" ToRole="location" />
           <NavigationProperty Name="publisher" Relationship="Model.FK_record_publisher" FromRole="record" ToRole="publisher" />
-          <NavigationProperty Name="comment" Relationship="Model.recordComment" FromRole="record" ToRole="comment" />
           <Property Name="geo_data" Type="Boolean" Nullable="false" />
           <Property Name="dia_data" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="licence" Relationship="Model.FK_record_licence" FromRole="record" ToRole="licence" />
+          <NavigationProperty Name="comment" Relationship="Model.FK_comment_record" FromRole="record" ToRole="comment" />
         </EntityType>
         <EntityType Name="role">
           <Key>
@@ -511,9 +511,29 @@
           <End Type="Model.file" Role="file" Multiplicity="*" />
           <End Type="Model.searchtag" Role="searchtag" Multiplicity="0..1" />
         </Association>
-        <Association Name="recordComment">
-          <End Type="Model.comment" Role="comment" Multiplicity="0..1" />
+        <Association Name="FK_record_licence">
+          <End Type="Model.licence" Role="licence" Multiplicity="0..1" />
           <End Type="Model.record" Role="record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="licence">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="record">
+              <PropertyRef Name="licence_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_comment_record">
+          <End Type="Model.record" Role="record" Multiplicity="1" />
+          <End Type="Model.comment" Role="comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="record">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="comment">
+              <PropertyRef Name="record_id" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -535,6 +555,7 @@
           <EntitySetMapping Name="comment">
             <EntityTypeMapping TypeName="Model.comment">
               <MappingFragment StoreEntitySet="comment">
+                <ScalarProperty Name="record_id" ColumnName="record_id" />
                 <ScalarProperty Name="bewertung" ColumnName="bewertung" />
                 <ScalarProperty Name="person_name" ColumnName="person_name" />
                 <ScalarProperty Name="text" ColumnName="text" />
@@ -645,15 +666,6 @@
               <ScalarProperty Name="Id" ColumnName="file_id" />
             </EndProperty>
             <Condition ColumnName="search_tag_id" IsNull="false" />
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="recordComment" TypeName="Model.recordComment" StoreEntitySet="recordComment">
-            <EndProperty Name="record">
-              <ScalarProperty Name="Id" ColumnName="dataset_id" />
-            </EndProperty>
-            <EndProperty Name="comment">
-              <ScalarProperty Name="Id" ColumnName="comment_id" />
-            </EndProperty>
-            <Condition ColumnName="comment_id" IsNull="false" />
           </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>

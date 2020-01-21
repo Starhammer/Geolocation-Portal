@@ -14,8 +14,17 @@ namespace Geolocation_Portal_Test.Models
     
     public partial class licence
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public licence()
+        {
+            this.record = new HashSet<record>();
+        }
+    
         public int Id { get; set; }
         public string name { get; set; }
         public string description { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<record> record { get; set; }
     }
 }

@@ -4,7 +4,7 @@
     ViewBag.Title = "Recorddetails";
 }
 
-<h2>Details eines Records</h2>
+<h1>Datensatzdetails</h1>
 <hr />
 
 <div>
@@ -13,15 +13,23 @@
             <div class="card-header">
                 <img class="icon" width="20" height="20" src="~/icons/Category/@Html.DisplayFor(model => model.category.icon)" />
                 @Html.DisplayFor(model => model.title)
+
+                @if (Session["UserRole"] != null && Convert.ToInt32(Session["UserRole"]) < 3)
+                {
+                    <div class="fa-pull-right">
+                        <a class="nolink" href="@Url.Action("Recordbearbeitung", "OpenData")" title="Datensatz bearbeiten"><i class="fa fa-edit"></i></a>
+                        <a class="nolink" href="@Url.Action("Recordentfernung", "OpenData")" title="Datensatz löschen"><i class="fa fa-trash"></i></a>
+                    </div>
+                }
             </div>
             <div class="card-body">
                 <div class="card-subtitle">
                     <div class="d-flex justify-content-between">
                         <span>
                             <i class="fa fa-calendar"></i>
-                            @Html.DisplayFor(model => model.dataset_modified_date)
+                            @Html.DisplayFor(model => model.dataset_modified_date.ToString().Split(new char[] { ' ' })[0])
                         </span>
-                        <span><i class="fa fa-download"></i> 143 </span>
+                        <span><i class="fa fa-download"></i> @ViewData["downloadcount"] </span>
                         @Html.Partial("_rating", Model.rating)
                     </div>
                 </div>
@@ -30,23 +38,60 @@
                 </p>
 
                 <h4>Lizenz:</h4>
-                <button id="open-dialog" class="btn btn-dark" title="Details zur Lizenz anzeigen">@Html.DisplayFor(model => model.licence.name)</button>
-                <dialog role="dialog" aria-labelledby="dialog-heading">
-                    <button id="close-dialog">Schließen</button>
-                    <h2 id="dialog-heading">Info</h2>
-                    <p> @Html.DisplayFor(model => model.licence.description) </p>
-                </dialog>
 
+                <!-- Begin of Popup Modal for showing licence -->
+                <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#licenceModal">
+                    @Html.DisplayFor(model => model.licence.name)
+                </button>
+
+                <div class="modal fade" id="licenceModal">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Lizenz: @Html.DisplayFor(model => model.licence.name)</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <div class="modal-body">
+                                @Html.DisplayFor(model => model.licence.description)
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End of Pupup Modal for showing licence -->
 
                 <br /><br />
 
                 <h4>Datensatz veröffentlicht von:</h4>
-                <button id="open-dialog" class="btn btn-dark" title="Details zum Publisher anzeigen">@Html.DisplayFor(model => model.publisher.name)</button>
-                <dialog role="dialog" aria-labelledby="dialog-heading">
-                    <button id="close-dialog">Schließen</button>
-                    <h2 id="dialog-heading">Info</h2>
-                    <p> @Html.DisplayFor(model => model.publisher.description) </p>
-                </dialog>
+
+                <!-- Begin of Popup Modal for showing publisher -->
+                <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#publisherModal">
+                    @Html.DisplayFor(model => model.publisher.name)
+                </button>
+
+                <div class="modal fade" id="publisherModal">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Veröffentlicher: @Html.DisplayFor(model => model.publisher.name)</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <div class="modal-body">
+                                @Html.DisplayFor(model => model.publisher.description)
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End of Pupup Modal for showing publisher -->
 
                 <br /><br />
 
@@ -58,6 +103,7 @@
                                 <th>Dateiname</th>
                                 <th>Speichergröße</th>
                                 <th>Veröffentlichungsdatum</th>
+                                <th>Downloadanzahl</th>
                                 <th>Herunterladen</th>
                             </tr>
                         </thead>
@@ -65,38 +111,43 @@
                             <!-- Hier muss eine Tabelle mit allen Dateien aufgelistet werden. -->
                             @foreach (var file in Model.file)
                             {
-                            <tr>
-                                <td>@file.name</td>
-                                <td>@file.file_size</td>
-                                <td>@file.file_upload_date</td>
-                                <td>
-                                    <a href="@Url.Action("Download", "OpenData", new { fileName = file.name, recordId = Model.Id })" title="Herunterladen">
-                                        <img class="float-left mr-2" width="25" height="25" src="~/icons/@Html.DisplayFor(modelItem => file.file_icon)-icon.png" />
-                                    </a>
+                                <tr>
+                                    <td>
+                                        <a href="@Url.Action("Download", "OpenData", new { fileName = file.name, recordId = Model.Id })" title="Herunterladen">
+                                            @file.name
+                                        </a>
+                                    </td>
+                                    <td>@file.file_size.ToString() @ViewData["file_size_extension"]</td>
+                                    <td>@file.file_upload_date</td>
+                                    <td>@file.download_count</td>
+                                    <td>
+                                        <a href="@Url.Action("Download", "OpenData", new { fileName = file.name, recordId = Model.Id })" title="Herunterladen">
+                                            <img class="float-left mr-2" width="25" height="25" src="~/icons/@Html.DisplayFor(modelItem => file.file_icon)-icon.png" />
+                                        </a>
 
-                                    @{
-                                        var filetype = file.name.Split('.');
+                                        @{
+                                            var filetype = file.name.Split('.');
 
-                                        if (Model.geo_data)
-                                        {
-                                            if (filetype[filetype.Count() - 1] == "geojson")
+                                            if (Model.geo_data)
                                             {
-                                                int geofileId = file.Id;
-                                                <a href="~/GeoData/index/@geofileId.ToString()" title="Vorschau"><i class="fa fa-map"></i></a>
+                                                if (filetype[filetype.Count() - 1] == "geojson")
+                                                {
+                                                    int geofileId = file.Id;
+                                                    <a href="~/GeoData/index/@geofileId.ToString()" title="Vorschau"><i class="fa fa-map"></i></a>
+                                                }
+                                            }
+                                            else if (Model.dia_data)
+                                            {
+                                                if (filetype[filetype.Count() - 1] == "xml")
+                                                {
+                                                    int diafileId = file.Id;
+                                                    <a href="~/GeoData/index/@diafileId.ToString()" title="Vorschau"><i class="fa fa-pie-chart"></i></a>
+                                                }
                                             }
                                         }
-                                        else if (Model.dia_data)
-                                        {
-                                            if (filetype[filetype.Count() - 1] == "xml")
-                                            {
-                                                int diafileId = file.Id;
-                                                <a href="~/GeoData/index/@diafileId.ToString()" title="Vorschau"><i class="fa fa-pie-chart"></i></a>
-                                            }
-                                        }
-                                    }
-                                </td>
-                            </tr>
-                             }
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -104,42 +155,56 @@
             <div class="card-footer" style="min-height:50px;">
 
                 <h4>Kommentar schreiben:</h4>
-                <form>
+                @using (Html.BeginForm("RecordComment", "OpenData", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" id="record_id" name="record_id" value="@Model.Id" />
                     <div class="form-group row">
-                        <label for="rating" class="col-3">Bewertung:</label>
+                        <label for="bewertung" class="col-3">Bewertung:</label>
                         <div class="col-9">
-                            <!-- Hier muss noch das Auswählen der Sterne implementiert werden. -->
-                            <input type="text" content="Stern1 Stern2 Stern3 Stern4 Stern5" class="form-control mw-100" id="rating" maxlength="50">
+                            <input type="number" class="form-control mw-100" name="bewertung" id="bewertung" min="0" max="5" value="0" required>
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="sendername" class="col-3">Ihr Name:</label>
+                        <label for="person_name" class="col-3">Ihr Name:</label>
                         <div class="col-9">
-                            <input type="text" class="form-control mw-100" id="sendername" maxlength="50">
+                            <input type="text" class="form-control mw-100" name="person_name" id="person_name" maxlength="50" required>
                         </div>
                     </div>
-
+                    <div class="form-group row">
+                        <label for="title" class="col-3">Überschrift:</label>
+                        <div class="col-9">
+                            <input type="text" class="form-control mw-100" name="title" id="title" maxlength="50" required>
+                        </div>
+                    </div>
                     <div class="form-group">
-                        <textarea class="form-control mw-100" id="comment" rows="10" maxlength="3000"></textarea>
+                        <textarea class="form-control mw-100" id="text" name="text" rows="10" maxlength="3000" required></textarea>
                     </div>
-                </form>
-
-                <button type="submit" class="btn btn-primary">Kommentar veröffentlichen</button>    <!-- Funktion implementieren -->
-
-                <br /><br /><br />
-                <!-- Schleife, um alle bereits vorhandenen Kommentare des Datensatzes aufzulisten. -->
-                <h4>Kommentare:</h4>
-                Kommentar1<br />
-                Kommentar2<br />
-                Kommentar3<br />
-                ...
+                    <button type="submit" class="btn btn-primary">Kommentar veröffentlichen</button>
+                }
+                @if (Model.comment.Count != 0)
+                {
+                    <br /><br /><br />
+                    <h4>Kommentare:</h4>
+                    <div>
+                        <!-- Schleife, um alle bereits vorhandenen Kommentare des Datensatzes aufzulisten. -->
+                        @foreach (var comment in Model.comment)
+                        {
+                            <div class="border-bottom mt-2">
+                                <div>
+                                    <span>@Html.Partial("_rating", comment.bewertung)</span>
+                                    <h3>@comment.title</h3>
+                                    <span class="blockquote-footer">@comment.person_name</span>
+                                </div>
+                                <div>
+                                    <p>@comment.text</p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
             </div>
         </div>
     </div>
 </div>
-
-<p>
-    @Html.ActionLink("Bearbeiten", "Recordbearbeitung", new { id = Model.Id }) |
-    @Html.ActionLink("Zurück zur Datensatzübersicht", "Index")
-</p>

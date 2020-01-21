@@ -77,3 +77,26 @@ INSERT INTO [dbo].[user] ([Id], [role_id], [department_id], [first_name], [last_
 INSERT INTO [dbo].[user] ([Id], [role_id], [department_id], [first_name], [last_name], [username], [password], [last_password_change], [create_date], [account_active], [login_attempts], [last_login]) VALUES (12, 3, 1, N'Thilo', N'Krause', N'TKrause', N'098f6bcd4621d373cade4e832627b4f6', NULL, N'2019-12-20 00:00:00', 1, NULL, NULL)
 INSERT INTO [dbo].[user] ([Id], [role_id], [department_id], [first_name], [last_name], [username], [password], [last_password_change], [create_date], [account_active], [login_attempts], [last_login]) VALUES (13, 3, 1, N'Alex', N'Moritz', N'AMoritz', N'098f6bcd4621d373cade4e832627b4f6', NULL, N'2019-12-20 00:00:00', 1, NULL, NULL)
 SET IDENTITY_INSERT [dbo].[user] OFF
+
+/* Beispiel Datensätze */
+SET IDENTITY_INSERT [dbo].[record] ON
+INSERT INTO [dbo].[record] ([Id], [dataset_upload], [dataset_modified_date], [title], [description], [category_id], [licence_id], [publisher_id], [rating], [role_id], [record_active], [location_id], [dia_data], [geo_data]) VALUES (1, N'0001-01-01 00:00:00', N'0001-01-01 00:00:00', N'Bildungseinrichtungen', N'Dieser Datensatz beinhaltet die Geolocation Daten aller Schulen innerhalb der Gemeinde Mosbach.', 3, 1, 1, 0, 4, 1, 1, 0, 1)
+INSERT INTO [dbo].[record] ([Id], [dataset_upload], [dataset_modified_date], [title], [description], [category_id], [licence_id], [publisher_id], [rating], [role_id], [record_active], [location_id], [dia_data], [geo_data]) VALUES (2, N'0001-01-01 00:00:00', N'0001-01-01 00:00:00', N'Kindergartenübersicht', N'Die Gemeinde Mosbach besitzt in vielen Ortschaften einen Kindergarten. Dieser Geolocation Datensatz zeigt die Position jedes Kindergartens innerhalb der Gemeinde Mosbach.', 3, 1, 1, 0, 4, 1, 1, 0, 1)
+INSERT INTO [dbo].[record] ([Id], [dataset_upload], [dataset_modified_date], [title], [description], [category_id], [licence_id], [publisher_id], [rating], [role_id], [record_active], [location_id], [dia_data], [geo_data]) VALUES (3, N'0001-01-01 00:00:00', N'0001-01-01 00:00:00', N'Parkhausübersicht in der Großen Kreisstadt Mosbach', N'Jede Stadt hat mit dem wachsenden Bedarf an Parkplätzen zu kämpfen. Damit Sie bei Ihrem Stadtbesuch besser planen können, sehen Sie in diesem Geolocation Datensatz die Positionen aller öffentlicher Parklätze in der Stadt Mosbach.', 3, 1, 1, 0, 4, 1, 2, 0, 1)
+INSERT INTO [dbo].[record] ([Id], [dataset_upload], [dataset_modified_date], [title], [description], [category_id], [licence_id], [publisher_id], [rating], [role_id], [record_active], [location_id], [dia_data], [geo_data]) VALUES (4, N'0001-01-01 00:00:00', N'0001-01-01 00:00:00', N'Behörden in Mosbach', N'Dieser Datensatz zeigt die Position der Behörden in Mosbach.', 3, 1, 1, 0, 4, 1, 2, 0, 1)
+SET IDENTITY_INSERT [dbo].[record] OFF
+
+/* Beispiel Dateien */
+SET IDENTITY_INSERT [dbo].[file] ON
+INSERT INTO [dbo].[file] ([Id], [record_id], [file_upload_date], [download_count], [file_icon], [file_size], [name]) VALUES (1, 1, N'2020-01-20 23:04:23', 0, N'geojson', 7486, N'bildungseinrichtungen.geojson')
+INSERT INTO [dbo].[file] ([Id], [record_id], [file_upload_date], [download_count], [file_icon], [file_size], [name]) VALUES (2, 2, N'2020-01-20 23:14:57', 0, N'geojson', 6802, N'kindergarten.geojson')
+INSERT INTO [dbo].[file] ([Id], [record_id], [file_upload_date], [download_count], [file_icon], [file_size], [name]) VALUES (3, 3, N'2020-01-20 23:18:06', 0, N'geojson', 5377, N'parking.geojson')
+INSERT INTO [dbo].[file] ([Id], [record_id], [file_upload_date], [download_count], [file_icon], [file_size], [name]) VALUES (4, 4, N'2020-01-20 23:21:30', 0, N'geojson', 8856, N'commercial.geojson')
+SET IDENTITY_INSERT [dbo].[file] OFF
+
+
+/* Beispiel Kommentare */
+SET IDENTITY_INSERT [dbo].[comment] ON
+INSERT INTO [dbo].[comment] ([Id], [title], [text], [person_name], [bewertung], [record_id]) VALUES (1, N'Top!', N'Die Geolocation Position jeder Schule ist optimal getroffen. Eine übersichtliche Ansicht aller Schulen der Gemeinde Mosbach. Zusätzlich ist auch die DHBW Mosbach zu sehen.', N'Max Musterman', 5, 1)
+INSERT INTO [dbo].[comment] ([Id], [title], [text], [person_name], [bewertung], [record_id]) VALUES (2, N'Besser als in Google', N'Besonders toll dabei sind die zusätzlichen Informationen. Zu fast jeder Schule befindet sich der Link zur Webseite und Kontaktinformationen.', N'Hannah P.', 5, 1)
+SET IDENTITY_INSERT [dbo].[comment] OFF
