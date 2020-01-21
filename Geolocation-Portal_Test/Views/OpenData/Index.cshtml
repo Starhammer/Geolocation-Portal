@@ -8,8 +8,7 @@
 <hr />
 
 <div id="toolBar">
-    <div id="">
-        
+    <div>
         <a class="nolink" href="#" id="search_button" title="Suchen"><i class="fa fa-search"></i></a>
         <a class="nolink" href="#" title="Sortieren"><i class="fa fa-sort-amount-asc"></i></a>
         <a class="nolink" href="#" id="filter_button" title="Filtern"><i class="fa fa-filter"></i></a>
@@ -19,23 +18,41 @@
         }
     </div>
 
-    <div id="filter" style="display:none; height:1.5em;">
+    <!-- Beginn der Filterfunktion -->
+    <div id="filter_settings" style="display: none; text-align: left;">
+        <ul class="list-inline" style="margin: 0;">
+            <li class="list-inline-item"><a class="nolink" href="#" id="filter_settings_category_button" title="Nach Kateogiren filtern">Kategorien</a></li>
+            <li class="list-inline-item"><a class="nolink" href="@Url.Action("Index", "OpenData", new { restriction = "geo" })" title="Nach Geo-Datensätzen filtern">Geo-Datensätze</a></li>
+            <li class="list-inline-item"><a class="nolink" href="@Url.Action("Index", "OpenData", new { restriction = "diagram" })" title="Nach Diagramm-Datensätzen filtern">Diagramm-Datensätze</a></li>
+            <li class="list-inline-item active"></li>
+        </ul>
+    </div>
+    <div id="filter_settings_categories" style="display: none; text-align: left;">
         @foreach (var item in ViewBag.category)
         {
-            <a class="float-left" href="OpenData/Category/@item.Id"><img class="icon" width="20" height="20" src="~/icons/Category/@item.icon" title="@item.name" /></a>
+            <a href="@Url.Action("Category", "OpenData", new { id = item.Id })"><img class="icon" width="20" height="20" src="~/icons/Category/@item.icon" title="@item.name" /></a>
         }
     </div>
-    <div id="search" style="display:none; height:1.5em;">
-        @using (Html.BeginForm("Search", "OpenData", FormMethod.Post, htmlAttributes: new { @class = "n-column-wrapper" } ))
+    <!-- Ende der Filterfunktion -->
+
+    <!-- Beginn der Suchfunktion -->
+    <div id="search" style="display: none;">
+        @using (Html.BeginForm("Search", "OpenData", FormMethod.Post, htmlAttributes: new { @class = "n-column-wrapper" }))
         {
-            <input class="float-right form-control" type="search" placeholder="Suchbegriff..." aria-label="Search" name="search" />
+            <input class="float-right form-control" type="search" placeholder="Suchbegriff..." aria-label="Search" name="search" required="required" pattern="[A-Za-z0-9]{1,20}" />
             <button class="btn btn-primary float-right" style="width: 200px; margin-left: 5px;" type="submit" name="submit">Suchen</button>
         }
     </div>
+    <!-- Ende der Suchfunktion -->
 </div>
 
-
-@ViewBag.Message
+<p>
+    @if (ViewBag.message != null)
+    {
+        @ViewBag.message
+        <a href="@Url.Action("Index", "OpenData")">@ViewBag.function zurücksetzen</a>
+        }
+    </p>
 
 <div class="card-columns">
     @foreach (var item in Model)
@@ -133,10 +150,34 @@
 </div> 
 <script>
 
+/*
+ * Toolbar Einstellungsbereiche ein- und ausblenden.
+ * */
 jQuery(document).ready(function(){
-    jQuery("#filter_button").click(function(){
-        jQuery("#filter").slideToggle("slow");
+    jQuery("#filter_button").click(function() {
+        if ($("#filter_settings_category_button").hasClass("myactive")) {
+            jQuery("#filter_settings_categories").slideToggle("slow");
+        }
+
+        jQuery("#filter_settings").slideToggle("slow");
+
+        if ($("#filter_button").hasClass("myactive")) {
+            $("#filter_button").removeClass("myactive");
+        } else {
+            $("#filter_button").addClass("myactive");
+        }
     });
+
+    jQuery("#filter_settings_category_button").click(function() {
+        jQuery("#filter_settings_categories").slideToggle("slow");
+
+        if ($("#filter_settings_category_button").hasClass("myactive")) {
+            $("#filter_settings_category_button").removeClass("myactive");
+        } else {
+            $("#filter_settings_category_button").addClass("myactive");
+        }
+    });
+
     jQuery("#search_button").click(function () {
         jQuery("#search").slideToggle("slow");
     });

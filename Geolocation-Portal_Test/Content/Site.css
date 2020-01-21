@@ -353,6 +353,10 @@ textarea {
     /*max-width: 280px; 17.01.2020 Auskommentiert von Michael, weil die Formulare mit einer 100% Weite besser dargestellt werden. */
 }
 
+.myactive {
+    color: #0056b3 !important;
+}
+
 /* Extra small devices (portrait phones, less than 576px)
 No media query for `xs` since this is the default in Bootstrap */
 

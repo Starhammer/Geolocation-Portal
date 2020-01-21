@@ -15,20 +15,57 @@ namespace Geolocation_Portal_Test.Controllers
         private Entities db = new Entities();
 
         // GET: OpenData
-        public ActionResult Index()
-        {  
-            if(db.record == null) {
+        public ActionResult Index(string restriction)
+        {
+            // Datenbankinhalt prüfen.
+            if (db.record == null || db.category == null)
+            {
                 return new HttpStatusCodeResult(HttpStatusCode.NoContent);
             }
 
-            var data = from f in db.record
-                            where f.record_active == true
-                            select f;
-
+            // Laden der Kategorien zur Anzeige der Filterfunktion.
             ViewBag.category = (List<category>)db.category.ToList();
 
-            return View(data.ToList());
-            
+            // Auslesen aller "aktiven" Datensätze aus der Datenbank.
+            // Wird an dieser Stelle benötigt, um die Gesamtanzahl der Datensätze auszugeben. --> Ansonsten im switch case default Bereich.
+            IQueryable<record> records = from f in db.record
+                                         where f.record_active == true
+                                         select f;
+
+            int records_complete_count = records.Count();
+
+            // Ergebnis einschränken.
+            switch (restriction)
+            {
+                // Filtern: Geo Datensätze.
+                case ("geo"):
+                    records = from f in db.record
+                           where f.record_active == true
+                           && f.geo_data == true
+                           select f;
+
+                    ViewBag.message = "Es werden " + records.Count() + " von " + records_complete_count + " Datensätze angezeigt.";
+                    ViewBag.function = "Filter";
+
+                    break;
+                // Filtern: Diagramm Datensätze.
+                case ("diagram"):
+                    records = from f in db.record
+                              where f.record_active == true
+                              && f.dia_data == true
+                              select f;
+
+                    ViewBag.message = "Es werden " + records.Count() + " von " + records_complete_count + " Datensätze angezeigt.";
+                    ViewBag.function = "Filter";
+
+                    break;
+                // Vermeidung von Error Meldungen, wenn case nicht vorhanden ist.
+                default:
+                    // do nothing
+                    break;
+            }
+
+            return View(records.ToList());
         }
 
         public ActionResult Recordverwaltung()
@@ -114,29 +151,65 @@ namespace Geolocation_Portal_Test.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult Search()
+        {
+            var searchtext = Request["search"];
+            
+            IQueryable<record> data = from f in db.record
+                                      where f.record_active == true &&
+                                      (f.description.Contains(searchtext) || f.title.Contains(searchtext))
+                                      select f;
+
+            ViewBag.function = "Suche";
+            if (data != null && data.Count() > 0)
+            {
+                ViewBag.message = "Die Suche nach '" + searchtext + "' ergab " + data.Count() + " Treffer";
+            }
+            else
+            {
+                ViewBag.message = "Die Suche ergab keinen Treffer";
+            }
+
+            ViewBag.category = (List<category>)db.category.ToList();
+            return View("index", data.ToList());
+        }
+
         //GET: OpenDate/Category/5
         public ActionResult Category(int? id)
         {
-            IQueryable<record> data;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             category category = db.category.Find(id);
             if (category == null)
             {
                 return HttpNotFound();
             }
 
-            data = from f in db.record
+            IQueryable<record> data = from f in db.record
                    where f.record_active == true
                    && f.category_id == id
                    select f;
 
-            ViewBag.category = (List<category>)db.category.ToList();
-            return View("index", data.ToList());
-                
+            int logged_in_user = 4;
+            if (checkSession())
+            {
+                logged_in_user = Convert.ToInt32(Session["UserRole"], new CultureInfo("de-DE"));
+            }
 
+            IQueryable<record> data_complete = from f in db.record
+                                      where f.record_active == true
+                                      && f.role_id <= logged_in_user
+                                               select f;
+
+            ViewBag.category = (List<category>)db.category.ToList();
+            ViewBag.function = "Filter";
+            ViewBag.message = "Es werden " + data.Count() + " von " + data_complete.Count() + " Datensätze angezeigt.";
+
+            return View("index", data.ToList());
         }
 
         /**
@@ -275,31 +348,6 @@ namespace Geolocation_Portal_Test.Controllers
             db.record.Remove(record);
             db.SaveChanges();
             return RedirectToAction("Recordentfernung");
-        }
-
-        [HttpPost]
-        public ActionResult Search()
-        {
-            var searchtext = Request["search"];
-
-            IQueryable<record> data;
-
-            data = from f in db.record
-                   where f.record_active == true && 
-                   ( f.description.Contains(searchtext) || f.title.Contains(searchtext) )
-                   select f;
-
-            if(data != null && data.Count() > 0)
-            {
-                ViewBag.message = "Die Suche nach '"+ searchtext + "' ergab "+data.Count()+" treffer";
-            }
-            else
-            {
-                ViewBag.message = "Die Suche ergab keine Treffer";
-            }
-            
-            ViewBag.category = (List<category>)db.category.ToList();
-            return View("index", data.ToList());
         }
 
         /***
