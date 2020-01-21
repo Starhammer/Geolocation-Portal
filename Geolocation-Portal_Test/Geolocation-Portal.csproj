@@ -464,6 +464,11 @@
     <Content Include="bin\roslyn\vbc.exe.config" />
     <Content Include="bin\roslyn\vbc.rsp" />
     <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
+    <Content Include="App_Data\uploads\1\bildungseinrichtungen.geojson" />
+    <Content Include="App_Data\uploads\2\kindergarten.geojson" />
+    <Content Include="App_Data\uploads\3\parking.geojson" />
+    <Content Include="App_Data\uploads\4\commercial.geojson" />
+    <Content Include="App_Data\uploads\5\kindergarten.geojson" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\LIVE.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
@@ -540,7 +545,6 @@
     <Content Include="Views\recordsTEST\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\uploads\" />
     <Folder Include="Content\Testfiles\" />
   </ItemGroup>
   <ItemGroup>
