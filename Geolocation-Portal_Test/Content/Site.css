@@ -270,6 +270,16 @@ main > article {
     justify-content: center;
 }
 
+#map {
+    width: 100%;
+    height: 800px;
+}
+
+.map-container {
+    display: flex;
+    flex-direction: column;
+}
+
 .flexspacebetween {
     justify-content: space-between;
 }
@@ -398,7 +408,11 @@ No media query for `xs` since this is the default in Bootstrap */
         margin: 0;
         font-size: 2rem;
     }
-}
+
+    .map-container {
+        display: flex;
+        flex-direction: row;
+    }
 
 /* Extra large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
