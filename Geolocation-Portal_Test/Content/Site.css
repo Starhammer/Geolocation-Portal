@@ -34,10 +34,18 @@ header {
     z-index: 1;
 }
 
-.oval-thought {
+.row {
+    display: block;
+}
+
+.col-9 {
+    max-width: 100%;
+}
+
+#oval-thought {
     position: relative;
-    max-width: 320px;
-    padding: 30px 40px;
+    max-width: 250px;
+    padding: 20px 8px;
     margin: 1em auto 80px;
     text-align: center;
     color: #fff;
@@ -52,12 +60,24 @@ header {
     -webkit-border-bottom-left-radius: 220px 120px;
     -moz-border-radius: 220px / 120px;
     border-radius: 220px / 120px;
+    animation: mymove 14s;
+    animation-iteration-count: infinite;
 }
 
-.oval-thought::before {
+@keyframes mymove {
+    from {
+        left: -110%;
+    }
+
+    to {
+        left: 110%;
+    }
+}
+
+#oval-thought::before {
     content: "";
     position: absolute;
-    bottom: -20px;
+    bottom: -35px;
     left: 50px;
     width: 30px;
     height: 30px;
@@ -67,10 +87,10 @@ header {
     border-radius: 30px;
 }
 
-.oval-thought::after {
+#oval-thought::after {
     content: "";
     position: absolute;
-    bottom: -30px;
+    bottom: -50px;
     left: 30px;
     width: 15px;
     height: 15px;
@@ -80,8 +100,8 @@ header {
     border-radius: 15px;
 }
 
-.oval-thought p {
-    font-size: 1rem;
+#oval-thought p {
+    font-size: 12px;
 }
 
 img {
@@ -102,23 +122,26 @@ img {
     color: white;
     font-weight: bold;
 
-    animation-direction: normal;
-    -webkit-animation: linear infinite normal;
-    -webkit-animation-name: run;
-    -webkit-animation-duration: 20s;
+    opacity: 0;
+    animation: myopacity 14s;
+    animation-iteration-count: infinite;
 }
 
-@-webkit-keyframes run {
-    0% {
-        left: 200px;
+@keyframes myopacity {
+    00% {
+        opacity: 0;
     }
 
-    50% {
-        left: 100%;
+    20% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 1;
     }
 
     100% {
-        left: 100%;
+        opacity: 0;
     }
 }
 
@@ -210,30 +233,6 @@ main > article {
     height: auto;
 }
 
-.overlay {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 50%;
-    width: 40%;
-    opacity: 0.8;
-    transition: .5s ease;
-    background-color: #008CBA;
-}
-
-.thought_bubble {
-    color: white;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    text-align: center;
-}
-
 .ranking {
     color: #ecca4b;
 }
@@ -246,8 +245,21 @@ main > article {
     font-size: 1.6em;
 }
 
+.navbar {
+    padding: 0;
+}
+
 .navbar-brand {
     flex-grow: 1;
+    margin-right: 0;
+}
+
+.navbar-toggler {
+    font-size: 30px;
+}
+
+.form-inline {
+    font-size: 38px;
 }
 
 .mobileContentOnly {
@@ -396,6 +408,13 @@ No media query for `xs` since this is the default in Bootstrap */
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
+    .row {
+        display: flex;
+    }
+
+    .col-9 {
+        max-width: 75%;
+    }
 }
 
 /* Medium devices (tablets, 768px and up) */
@@ -424,13 +443,13 @@ No media query for `xs` since this is the default in Bootstrap */
         content: ' | ';
     }
 
-    .oval-thought p {
-        font-size: 1.5rem;
+    #oval-thought {
+        max-width: 280px;
+        padding: 30px 15px;
     }
 
-    blockquote p {
-        margin: 0;
-        font-size: 2rem;
+    #oval-thought p {
+        font-size: 24px;
     }
 
     .map-container {
