@@ -327,7 +327,6 @@
     <Content Include="icons\Category\Verwaltung.png" />
     <Content Include="icons\Category\Wahlen.png" />
     <Content Include="icons\docx-Icon.png" />
-    <Content Include="icons\Excel-Icon.png" />
     <Content Include="icons\Map-Icon.png" />
     <Content Include="icons\ppp-icon.png" />
     <Content Include="icons\Star-Black-Icon.png" />
