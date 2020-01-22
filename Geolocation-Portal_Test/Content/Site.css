@@ -30,20 +30,6 @@ header {
     height: 100%;
 }
 
-#overlay {
-    position: absolute;
-    top: 30px;
-    color: #FFF;
-    text-align: center;
-    font-size: 20px;
-    //background-color: rgba(221, 221, 221, 0.3);
-    //width: 640px;
-    padding: 10px 0;
-    z-index: 2147483647;
-    border-radius: 50%;
-    right: 50px;
-}
-
 #v {
     z-index: 1;
 }
@@ -96,6 +82,44 @@ header {
 
 .oval-thought p {
     font-size: 1rem;
+}
+
+img {
+    display: block;
+}
+
+.thumbnail {
+    position: relative;
+    display: inline-block;
+}
+
+.caption {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate( -50%, -50% );
+    text-align: center;
+    color: white;
+    font-weight: bold;
+
+    animation-direction: normal;
+    -webkit-animation: linear infinite normal;
+    -webkit-animation-name: run;
+    -webkit-animation-duration: 20s;
+}
+
+@-webkit-keyframes run {
+    0% {
+        left: 200px;
+    }
+
+    50% {
+        left: 100%;
+    }
+
+    100% {
+        left: 100%;
+    }
 }
 
 blockquote p {

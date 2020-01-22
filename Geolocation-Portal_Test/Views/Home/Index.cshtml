@@ -6,19 +6,29 @@
         <h1>Willkommen im Open Data Geolocation-Portal der Stadt Mosbach!</h1>
         <hr />
 
-        <video id="welcomevideo" controls autoplay loop>
-            <source id="mp4" src="~/Content/Videos/walking-man.mp4" type="video/mp4">
-            <p>Your browser does not support the video tag.</p>
-        </video>
         <!-- Tutorial: Overlay responsive erstellen https://stackoverflow.com/questions/43333495/text-over-image-responsive/43333543 -->
-        <div id="overlay">
-            <script>
-                            // ToDo: Schleife mit einigen interessanten Fakten über Mosbach erstellen und in Sprechblase ausgeben lassen.
-            </script>
+        <div id="box-search">
+            <div class="thumbnail">
+                <video id="welcomevideo" controls autoplay loop>
+                    <source src="~/Content/Videos/rathaus_1920px.mp4" type="video/mp4" media="all and (min-width:768px)">
+                    <source src="~/Content/Videos/rathaus_720px.mp4" type="video/mp4" media="all and (min-width:5760px)">
+                    <source src="~/Content/Videos/rathaus_640px.mp4" type="video/mp4" media="all and (min-width:320px)">
 
-            <blockquote class="oval-thought">
-                <p>Ich frage mich wie viele Schulen die Stadt Mosbach besitzt...</p>
-            </blockquote>
+                    <source id="mp4" src="~/Content/Videos/walking-man.mp4" type="video/mp4">
+                    <p>Your browser does not support the video tag.</p>
+                </video>
+                <div class="caption">
+                    <script>
+                                                                                // ToDo: Schleife mit einigen interessanten Fakten über Mosbach erstellen und in Sprechblase ausgeben lassen.
+                    </script>
+                    <blockquote class="oval-thought">
+                        <p>Ich frage mich wie viele Schulen die Stadt Mosbach besitzt...</p>
+                    </blockquote>
+                    <script>
+
+                    </script>
+                </div>
+            </div>
         </div>
     </div>
 
