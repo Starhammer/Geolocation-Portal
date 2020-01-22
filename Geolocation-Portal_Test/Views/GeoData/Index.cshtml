@@ -7,42 +7,22 @@
 
 @section Styles
 {
-    <script src='https://api.mapbox.com/mapbox.js/v3.2.1/mapbox.js'></script>
-    <link href='https://api.mapbox.com/mapbox.js/v3.2.1/mapbox.css' rel='stylesheet' />
+    <script src='https://api.mapbox.com/mapbox.js/v3.2.0/mapbox.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/v3.2.0/mapbox.css' rel='stylesheet' />
 }
 
 <!-- flex-direction muss auf dem Smartphone auf column geändert werden. -->
 <div class="map-container">
     <div style="width: 100%;">
-        <div id="menu">
-            <input id="streets-v11"
-                   type="radio"
-                   name="rtoggle"
-                   value="streets"
-                   checked="checked" />
-            <label for="streets">streets</label>
-            <input id="light-v10" type="radio" name="rtoggle" value="light" />
-            <label for="light">light</label>
-            <input id="dark-v10" type="radio" name="rtoggle" value="dark" />
-            <label for="dark">dark</label>
-            <input id="outdoors-v11" type="radio" name="rtoggle" value="outdoors" />
-            <label for="outdoors">outdoors</label>
-            <input id="satellite-v9" type="radio" name="rtoggle" value="satellite" />
-            <label for="satellite">satellite</label>
-        </div>
 
         <div id='map'>
         </div>
     </div>
 
-    <aside style="min-width: 250px; width: 30%; max-width: 350px; padding: 10px;">
+    <aside style="max-width: 350px; padding: 10px;">
         <h2 style="margin: 0; margin-bottom: 10px; padding: 0;">Datensätze:</h2>
 
-        <!-- Alle Datensätze anzeigen -->
-        <ul style="list-style-type: none; margin: 0; padding: 0; line-height: 1.4em;">
-            <li><label><input type="checkbox" checked name="dataset1" value="bildungseinrichtungen">Bildungseinrichtungen (12)</input></label></li>
-            <li><label><input type="checkbox" checked name="dataset2" value="bushaltestellen">Bushaltestellen (159)</input></label></li>
-        </ul>
+        <nav id="filters"></nav>
     </aside>
 </div>
 
@@ -53,31 +33,99 @@
     var map = L.mapbox.map('map')
         .setView([49.348641, 9.142345], 13)
         .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/streets-v11'));
+    // Satellite: /satellite-v9
 
     map.scrollWheelZoom.disable();
 
-    var layerList = document.getElementById('menu');
-    var inputs = layerList.getElementsByTagName('input');
 
-    function switchLayer(layer) {
-        var layerId = layer.target.id;
-        map.setStyle('mapbox://styles/mapbox/' + layerId);
-    }
+    var myFeatureLayer = L.mapbox.featureLayer().loadURL("/api/data/@ViewBag.FileId").addTo(map);
 
-    for (var i = 0; i < inputs.length; i++) {
-        inputs[i].onclick = switchLayer;
-    }
+    // Find and store a variable reference to the list of filters.
+    var filters = document.getElementById('filters');
 
-    // Satellite: /satellite-v9
+    // Wait until the marker layer is loaded in order to build a list of possible
+    // types. If you are doing this with another featureLayer, you should change
+    // map.featureLayer to the variable you have assigned to your featureLayer.
+    myFeatureLayer.on('ready', function () {
+        // Collect the types of symbols in this layer. you can also just
+        // hardcode an array of types if you know what you want to filter on,
+        // like var types = ['foo', 'bar'];
+        var typesObj = {}, types = [];
+        var features = myFeatureLayer.getGeoJSON().features;
 
-    var myLayer = L.mapbox.featureLayer().loadURL("/api/data/@ViewBag.FileId").addTo(map);
+        for (var i = 0; i < features.length; i++) {
+            typesObj[features[i].properties['marker-symbol']] = true;
+        }
 
-    var myLayer = L.mapbox.featureLayer().loadURL("/api/data/@ViewBag.FileId")
-        .on('ready', function () {
-            myLayer.eachLayer(function (layer) {
-                map.fitBounds(myLayer.getBounds());
-                layer.bindPopup(layer.features.properties.Name);
+        addPopups();
+
+        for (var k in typesObj) types.push(k);
+
+        var checkboxes = [];
+
+        // Create a filter interface.
+        for (var i = 0; i < types.length; i++) {
+            // Create an an input checkbox and label inside.
+            var item = filters.appendChild(document.createElement('div'));
+            var checkbox = item.appendChild(document.createElement('input'));
+            var label = item.appendChild(document.createElement('label'));
+
+            checkbox.type = 'checkbox';
+            checkbox.id = types[i];
+            checkbox.checked = true;
+
+            // create a label to the right of the checkbox with explanatory text
+            label.innerHTML = types[i];
+            label.setAttribute('for', types[i]);
+
+            // Whenever a person clicks on this checkbox, call the update().
+            checkbox.addEventListener('change', update);
+            checkboxes.push(checkbox);
+        }
+
+        // This function is called whenever someone clicks on a checkbox and changes
+        // the selection of markers to be displayed.
+        function update() {
+            var enabled = {};
+
+            // Run through each checkbox and record whether it is checked. If it is,
+            // add it to the object of types to display, otherwise do not.
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].checked) enabled[checkboxes[i].id] = true;
+            }
+
+            myFeatureLayer.setFilter(function (feature) {
+                // If this symbol is in the list, return true. if not, return false.
+                // The 'in' operator in javascript does exactly that: given a string
+                // or number, it says if that is in a object.
+                // 2 in { 2: true } // true
+                // 2 in { } // false
+                return (feature.properties['marker-symbol'] in enabled);
             });
-        })
-        .addTo(map);
+
+            addPopups();
+        }
+
+        function addPopups() {
+            // Bind a popup to each feature in hospitalLayer and libraryLayer
+            myFeatureLayer.eachLayer(function (layer) {
+                var popupcontent = '<div><table><th>Details</th>';
+
+                for (var prop in layer.feature.properties) {
+                    popupcontent += '<tr>';
+                    popupcontent += '<td>' + prop + ':</td><td>' + layer.feature.properties[prop] + '</td>';
+                    popupcontent += '<tr>';
+                }
+            
+                popupcontent += '</table></div>';
+
+                layer.bindPopup(popupcontent, { closeButton: false });
+            }).addTo(map);
+
+            // Open popups on hover
+            myFeatureLayer.on('click', function(e) {
+                e.layer.openPopup();
+            });
+        }
+    });
 </script>
