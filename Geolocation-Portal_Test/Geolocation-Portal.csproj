@@ -303,7 +303,6 @@
     <Content Include="Content\Videos\rathaus_1920px.mp4" />
     <Content Include="Content\Videos\rathaus_640px.mp4" />
     <Content Include="Content\Videos\rathaus_720px.mp4" />
-    <Content Include="Content\Videos\walking-man.mp4" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
@@ -449,13 +448,9 @@
     <Content Include="Models\DatabaseModel.edmx.diagram">
       <DependentUpon>DatabaseModel.edmx</DependentUpon>
     </Content>
-    <Content Include="App_Data\commercial.geojson" />
     <None Include="App_Data\data.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="App_Data\bildungseinrichtungen.geojson" />
-    <Content Include="App_Data\kindergarten.geojson" />
-    <Content Include="App_Data\parking.geojson" />
     <Content Include="bin\roslyn\csc.exe.config" />
     <Content Include="bin\roslyn\csc.rsp" />
     <Content Include="bin\roslyn\csi.exe.config" />
@@ -470,7 +465,7 @@
     <Content Include="App_Data\uploads\2\kindergarten.geojson" />
     <Content Include="App_Data\uploads\3\parking.geojson" />
     <Content Include="App_Data\uploads\4\commercial.geojson" />
-    <Content Include="App_Data\uploads\5\kindergarten.geojson" />
+    <Content Include="App_Data\uploads\5\playground.geojson" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\LIVE.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
