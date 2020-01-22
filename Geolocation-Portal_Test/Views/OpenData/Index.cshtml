@@ -24,7 +24,8 @@
             <li class="list-inline-item"><a class="nolink" href="#" id="filter_settings_category_button" title="Nach Kateogiren filtern">Kategorien</a></li>
             <li class="list-inline-item"><a class="nolink" href="@Url.Action("Index", "OpenData", new { restriction = "geo" })" title="Nach Geo-Datensätzen filtern">Geo-Datensätze</a></li>
             <li class="list-inline-item"><a class="nolink" href="@Url.Action("Index", "OpenData", new { restriction = "diagram" })" title="Nach Diagramm-Datensätzen filtern">Diagramm-Datensätze</a></li>
-            <li class="list-inline-item active"></li>
+            <li class="list-inline-item"><a class="nolink" href="#" id="filter_settings_upload_date_button" title="Nach Upload Datum filtern">Nach Upload-Datum filtern</a></li>
+            <li class="list-inline-item"><a class="nolink" href="#" id="filter_settings_file_type_button" title="Nach Dateityp filtern">Nach Dateityp filtern</a></li>
         </ul>
     </div>
     <div id="filter_settings_categories" style="display: none; text-align: left;">
@@ -33,8 +34,21 @@
             <a href="@Url.Action("Category", "OpenData", new { id = item.Id })"><img class="icon" width="20" height="20" src="~/icons/Category/@item.icon" title="@item.name" /></a>
         }
     </div>
+    <div id="filter_settings_upload_date" style="display: none; text-align: left;">
+        <ul class="list-inline" style="margin: 0;">
+            <li class="list-inline-item"><a class="nolink" href="#">Letzte Woche</a></li>
+            <li class="list-inline-item"><a class="nolink" href="#">Letzten Monat</a></li>
+            <li class="list-inline-item"><a class="nolink" href="#">Dieses Jahr</a></li>
+        </ul>
+    </div>
+    <div id="filter_settings_file_type" style="display: none; text-align: left;">
+        <ul class="list-inline" style="margin: 0;">
+            <li class="list-inline-item"><a class="nolink" href="#">.docx</a></li>
+            <li class="list-inline-item"><a class="nolink" href="#">.pdf</a></li>
+            <li class="list-inline-item"><a class="nolink" href="#">.geojson</a></li>
+        </ul>
+    </div>
     <!-- Ende der Filterfunktion -->
-
     <!-- Beginn der Suchfunktion -->
     <div id="search" style="display: none;">
         @using (Html.BeginForm("Search", "OpenData", FormMethod.Post, htmlAttributes: new { @class = "n-column-wrapper" }))
@@ -159,27 +173,51 @@ jQuery(document).ready(function(){
             jQuery("#filter_settings_categories").slideToggle("slow");
         }
 
+        if ($("#filter_settings_upload_date_button").hasClass("myactive")) {
+            jQuery("#filter_settings_upload_date").slideToggle("slow");
+        }
+
+        if ($("#filter_settings_file_type_button").hasClass("myactive")) {
+            jQuery("#filter_settings_file_type").slideToggle("slow");
+        }
+
         jQuery("#filter_settings").slideToggle("slow");
 
-        if ($("#filter_button").hasClass("myactive")) {
-            $("#filter_button").removeClass("myactive");
-        } else {
-            $("#filter_button").addClass("myactive");
-        }
+        changeActiveState("#filter_button");
     });
 
     jQuery("#filter_settings_category_button").click(function() {
         jQuery("#filter_settings_categories").slideToggle("slow");
 
-        if ($("#filter_settings_category_button").hasClass("myactive")) {
-            $("#filter_settings_category_button").removeClass("myactive");
-        } else {
-            $("#filter_settings_category_button").addClass("myactive");
-        }
+        changeActiveState("#filter_settings_category_button");
     });
 
+    jQuery("#filter_settings_upload_date_button").click(function () {
+        jQuery("#filter_settings_upload_date").slideToggle("slow");
+
+        changeActiveState("#filter_settings_upload_date_button");
+    });
+
+    jQuery("#filter_settings_file_type_button").click(function () {
+        jQuery("#filter_settings_file_type").slideToggle("slow");
+
+        changeActiveState("#filter_settings_file_type_button");
+    });
+
+    
     jQuery("#search_button").click(function () {
         jQuery("#search").slideToggle("slow");
     });
 });
+
+    /**
+     * Diese Methode klappt die Einstellungsboxen wieder ein, wenn ein Eltern-Element eingeklappt wird.
+     */
+    function changeActiveState(button_id) {
+        if ($(button_id).hasClass("myactive")) {
+            $(button_id).removeClass("myactive");
+        } else {
+            $(button_id).addClass("myactive");
+        }
+    }
 </script>
