@@ -9,7 +9,7 @@
         <!-- Tutorial: Overlay responsive erstellen https://stackoverflow.com/questions/43333495/text-over-image-responsive/43333543 -->
         <div id="box-search">
             <div class="thumbnail">
-                <video id="welcomevideo" controls autoplay loop>
+                <video id="welcomevideo" controls autoplay loop muted>
                     <source src="~/Content/Videos/rathaus_1920px.mp4" type="video/mp4" media="all and (min-width:768px)">
                     <source src="~/Content/Videos/rathaus_720px.mp4" type="video/mp4" media="all and (min-width:5760px)">
                     <source src="~/Content/Videos/rathaus_640px.mp4" type="video/mp4" media="all and (min-width:320px)">
@@ -17,17 +17,35 @@
                     <source id="mp4" src="~/Content/Videos/walking-man.mp4" type="video/mp4">
                     <p>Your browser does not support the video tag.</p>
                 </video>
-                <div class="caption">
-                    <script>
-                                                                                // ToDo: Schleife mit einigen interessanten Fakten über Mosbach erstellen und in Sprechblase ausgeben lassen.
-                    </script>
-                    <blockquote class="oval-thought">
-                        <p>Ich frage mich wie viele Schulen die Stadt Mosbach besitzt...</p>
-                    </blockquote>
-                    <script>
 
-                    </script>
+                <div class="caption">
+                    <div id="oval-thought">
+                        <p>Ich frage mich wie viele Schulen die Stadt Mosbach besitzt...</p>
+                    </div>
                 </div>
+
+                <script>
+                    var questions = [
+                        "Wie viele Mülleimer die Stadt Mosbach wohl besitzt?",
+                        "Wo befindet sich das nächste öffentliche WC?",
+                        "Wie haben sich die Mietpreise in den letzten Jahren verändert?"
+                    ];
+
+                    var sec = 14;
+                    var i = 0;
+                    function updateDiv() {
+                        console.log(document.getElementById('oval-thought').innerHTML);
+                        document.getElementById('oval-thought').innerHTML = questions[i];
+                        i = i + 1;
+                        console.log(i);
+
+                        if (i > 2) {
+                            i = 0;
+                        }
+                    }
+
+                    window.setInterval("updateDiv()", (sec * 1000));
+                </script>
             </div>
         </div>
     </div>
