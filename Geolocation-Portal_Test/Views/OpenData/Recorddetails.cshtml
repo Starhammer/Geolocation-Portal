@@ -17,7 +17,7 @@
                 @if (Session["UserRole"] != null && Convert.ToInt32(Session["UserRole"]) < 3)
                 {
                     <div class="fa-pull-right">
-                        <a class="nolink" href="@Url.Action("Recordbearbeitung", "OpenData")" title="Datensatz bearbeiten"><i class="fa fa-edit"></i></a>
+                        <a class="nolink" href="@Url.Action("Recordbearbeitung", "OpenData", new { id = Model.Id })" title="Datensatz bearbeiten"><i class="fa fa-edit"></i></a>
                         <a class="nolink" href="@Url.Action("Recordentfernung", "OpenData", new { id = Model.Id })" title="Datensatz löschen"><i class="fa fa-trash"></i></a>
                     </div>
                 }

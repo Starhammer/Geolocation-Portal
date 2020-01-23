@@ -147,12 +147,70 @@ namespace Geolocation_Portal_Test.Controllers
             return View(record);
         }
 
-        public ActionResult Recordbearbeitung()
+        public ActionResult Recordbearbeitung(int? id)
         {
             if (!checkSession())
             {
                 return RedirectToAction("Anmelden", "Benutzer");
             }
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            record record = db.record.Find(id);
+            if (record == null)
+            {
+                return HttpNotFound();
+            }
+
+            ViewBag.category_id = new SelectList(db.category, "Id", "name", record.category_id);
+            ViewBag.publisher_id = new SelectList(db.publisher, "Id", "name", record.publisher_id);
+            ViewBag.licence_id = new SelectList(db.licence, "Id", "name", record.licence_id);
+            ViewBag.role_id = new SelectList(db.role, "Id", "name", record.role_id);
+            ViewBag.location_id = new SelectList(db.location, "Id", "name", record.location_id);
+            
+            ViewBag.licence_descriptions = db.licence.ToList();    // Send this list to the view
+
+            return View(record);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Recordbearbeitung([Bind(Include = "Id,dataset_upload,dataset_modified_date,title,description,category_id,licence_id,publisher_id,rating,role_id,record_active,location_id")] record record, IEnumerable<HttpPostedFileBase> files)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(record).State = EntityState.Modified;
+
+                var datType = Request["dataTyp"];
+
+                switch (datType)
+                {
+                    case "geoData":
+                        record.geo_data = true;
+                        break;
+                    case "diaData":
+                        record.dia_data = true;
+                        break;
+                }
+                
+                record.dataset_modified_date = DateTime.Now;                
+
+                if (files != null) saveFiles(files, record.Id);
+
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            
+
+                ViewBag.category_id = new SelectList(db.category, "Id", "name");
+            ViewBag.publisher_id = new SelectList(db.publisher, "Id", "name");
+            ViewBag.licence_id = new SelectList(db.licence, "Id", "name");
+            ViewBag.role_id = new SelectList(db.role, "Id", "name");
+            ViewBag.location_id = new SelectList(db.location, "Id", "name");
+
+            var licenses = db.licence.ToList();
+            ViewBag.licence_descriptions = licenses;    // Send this list to the view
 
             return View();
         }
@@ -404,7 +462,7 @@ namespace Geolocation_Portal_Test.Controllers
             record record = db.record.Find(id);
             db.record.Remove(record);
             db.SaveChanges();
-            return RedirectToAction("Recordentfernung");
+            return RedirectToAction("Index");
         }
 
         /***
@@ -479,6 +537,32 @@ namespace Geolocation_Portal_Test.Controllers
             }
 
             return File(path, mime, file.name);
+        }
+
+        public ActionResult Dateientfernung(int id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            file file = db.file.Find(id);
+
+            if (file == null)
+            {
+                return HttpNotFound();
+            }
+
+            string path = Server.MapPath("~/App_Data/uploads/" + file.record_id + "/" + file.name);
+            System.IO.File.Delete(path);
+
+            int record_id = file.record_id;
+
+            db.file.Remove(file);
+            db.SaveChanges();
+
+            //return RedirectToAction("Recordbearbeitung", new { id = record_id } );
+            return Redirect(Request.UrlReferrer.ToString());
         }
 
         [HttpPost]

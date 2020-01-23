@@ -1,78 +1,106 @@
-﻿
+﻿@model Geolocation_Portal_Test.Models.record
+
 @{
     ViewBag.Title = "Recordbearbeitung";
 }
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Recordbearbeitung", "OpenData", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <div class="container">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <form>
-            <h1>Datensatz bearbeiten</h1>
+            <h1>Datensatz hinzufügen</h1>
             <hr />
 
             <div class="form-group row">
-                <label for="title" class="col-3">Titel</label>
+                @Html.LabelFor(model => model.title, htmlAttributes: new { @class = "col-3" })
                 <div class="col-9">
-                    <input type="text" class="form-control mw-100" id="title" maxlength="50">
+                    @Html.EditorFor(model => model.title, new { htmlAttributes = new { @class = "form-control mw-100" } })
+                    @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-3">
-                    <label for="licence">Lizenz</label>
+                    @Html.LabelFor(model => model.licence_id, htmlAttributes: new { @class = "" })
                 </div>
                 <div class="col-9">
-                    <select class="form-control mw-100" id="selectLicence">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-3">
-                    <label for="role">Sichtbarkeit</label>
-                </div>
-                <div class="col-9">
-                    <select class="form-control mw-100" id="selectRole">
-                        <option>Gastuser</option>
-                        <option>Mitarbeiter</option>
-                        <option>Administrator</option>
-                        <option>4</option>
-                    </select>
+                    @Html.DropDownList("licence_id", null, htmlAttributes: new { @class = "form-control mw-100", @id = "licence_dropDownList" })
+                    @Html.ValidationMessageFor(model => model.licence_id, "", new { @class = "text-danger" })
                 </div>
             </div>
 
+            <script>
+                function dropDownListElementChanged() {
+
+                }
+
+                $('#licence_dropDownList').change(function () {
+                    var SelectedValue = $(this).val();
+
+                    @{
+                        var licences = @ViewBag.licence_descriptions;
+                    }
+
+                    @foreach (var c in @licences)
+                    {
+                        // ToDo: Ausgabe der Beschreibung, aber kein Zugriff auf die Eigenschaft description bei c.
+                    }
+
+                    console.log(SelectedValue);
+                });
+            </script>
+
+            <p class="text-info">
+                Hinweis:<br />
+                @ViewBag.licence_description
+            </p>
+
+            <div class="form-group row">
+                <div class="col-3">
+                    @Html.LabelFor(model => model.role_id, htmlAttributes: new { @class = "" })
+                </div>
+                <div class="col-9">
+                    @Html.DropDownList("role_id", null, htmlAttributes: new { @class = "form-control mw-100" })
+                    @Html.ValidationMessageFor(model => model.role_id, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <p class="text-info">
+                Hinweis:<br />
+                @Html.Display("role_description")
+            </p>
+
             <div class="form-group">
-                <label for="description">Beschreibung</label>
-                <textarea class="form-control mw-100" id="textareaDescription" rows="10" maxlength="3000"></textarea>
+                @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "" })
+                @Html.TextAreaFor(model => model.description, htmlAttributes: new { @rows = "10", @class = "form-control mw-100", @maxlength = "3000" })
+                @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
             </div>
             <div class="form-group row">
                 <div class="col-3">
-                    <label for="Category">Kategorie</label>
+                    @Html.LabelFor(model => model.category_id, htmlAttributes: new { @class = "" })
                 </div>
                 <div class="col-9">
-                    <select class="form-control mw-100" id="selectCategory">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
+                    @Html.DropDownList("category_id", null, htmlAttributes: new { @class = "form-control mw-100" })
+                    @Html.ValidationMessageFor(model => model.category_id, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-3">
-                    <label for="Location">Ort</label>
+                    @Html.LabelFor(model => model.location_id, htmlAttributes: new { @class = "" })
                 </div>
                 <div class="col-9">
-                    <select class="form-control mw-100" id="selectLocation">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
+                    @Html.DropDownList("location_id", null, htmlAttributes: new { @class = "form-control mw-100" })
+                    @Html.ValidationMessageFor(model => model.location_id, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    @Html.LabelFor(model => model.publisher_id, htmlAttributes: new { @class = "" })
+                </div>
+                <div class="col-9">
+                    @Html.DropDownList("publisher_id", null, htmlAttributes: new { @class = "form-control mw-100" })
+                    @Html.ValidationMessageFor(model => model.publisher_id, "", new { @class = "text-danger" })
                 </div>
             </div>
             <br />
@@ -80,34 +108,103 @@
                 <div class="col">
                     Dateien und Quellen *
                 </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Dateiname</th>
+                                <th>Speichergröße</th>
+                                <th>Veröffentlichungsdatum</th>
+                                <th>Downloadanzahl</th>
+                                <th>Herunterladen</th>
+                                <th>Löschen</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var file in Model.file)
+                            {
+                                <tr>
+                                    <td>
+                                        <a href="@Url.Action("Download", "OpenData", new { fileName = file.name, recordId = Model.Id })" title="Herunterladen">
+                                            @file.name
+                                        </a>
+                                    </td>
+                                    <td>@file.file_size.ToString() @ViewData["file_size_extension"]</td>
+                                    <td>@file.file_upload_date</td>
+                                    <td>@file.download_count</td>
+                                    <td>
+                                        <a href="@Url.Action("Download", "OpenData", new { fileName = file.name, recordId = Model.Id })" title="Herunterladen">
+                                            <img class="float-left mr-2" width="25" height="25" src="~/icons/@Html.DisplayFor(modelItem => file.file_icon)-icon.png" />
+                                        </a>
+
+                                        @{
+                                            var filetype = file.name.Split('.');
+
+                                            if (Model.geo_data)
+                                            {
+                                                if (filetype[filetype.Count() - 1] == "geojson")
+                                                {
+                                                    int geofileId = file.Id;
+                                                    <a href="~/GeoData/index/@geofileId.ToString()" title="Vorschau"><i class="fa fa-map"></i></a>
+                                                }
+                                            }
+                                            else if (Model.dia_data)
+                                            {
+                                                if (filetype[filetype.Count() - 1] == "xml")
+                                                {
+                                                    int diafileId = file.Id;
+                                                    <a href="~/GeoData/index/@diafileId.ToString()" title="Vorschau"><i class="fa fa-pie-chart"></i></a>
+                                                }
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        <a class="nolink" href="@Url.Action("Dateientfernung", "OpenData", new { id = file.Id })" title="Datei löschen"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
                 <div class="col">
-                    <button class="btn btn-primary" type="button">Dateien auswählen</button>
+                    @Html.TextBox("files", "", htmlAttributes: new { @type = "file", @multiple = "true" })
+
                 </div>
             </div>
-            <br />
+                <br />
 
-            <!-- Default checked -->
-            <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" id="radioNormal" name="defaultExampleRadios" checked>
-                <label class="custom-control-label" for="radioNormal">Datensatz kann nicht auf Karte angezeigt werden und enthält kein Diagramm</label>
-            </div>
-            <br />
-            <!-- Default unchecked -->
-            <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" id="radioGeoFile" name="defaultExampleRadios">
-                <label class="custom-control-label" for="radioGeoFile">Datensatz kann auf Karte angezeigt werden</label>
-            </div>
-            <br />
-            <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" id="radioDiagram" name="defaultExampleRadios">
-                <label class="custom-control-label" for="radioDiagram">Datensatz enthält ein Diagramm</label>
-            </div>
-            <br />
-            <button type="submit" class="btn btn-primary">Datensatz hochladen</button>
-            <br />
-            <br />
-            * Die hochgeladenen Dateien sollen trotz verschiedenen Dateiformate inhaltlich identisch sein.
+                <!-- ToDo: Hier soll eine Tabelle erstellt werden, in welcher die Dateien zwischengespeichert werden. Jede Zeile soll einen Mülleimer zum Entfernen der Datei haben. -->
+                <!-- Default checked -->
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="radioNormal" name="dataTyp" value="normal" @if (!Model.geo_data && !Model.dia_data) { <text> checked </text> }>
+                    <label class="custom-control-label" for="radioNormal">Dieser Datensatz beinhaltet keine geografischen oder visualisierende Daten</label>
+                </div>
+                <br />
+                <!-- Default unchecked -->
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="radioGeoFile" name="dataTyp" value="geoData" @if (Model.geo_data) { <text> checked </text> }>
+                    <label class="custom-control-label" for="radioGeoFile">Dieser Datensatz beinhaltet geografische Daten</label>
+                </div>
+                <br />
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="radioDiagram" name="dataTyp" value="diaData" @if (Model.dia_data) { <text> checked </text> }>
+                    <label class="custom-control-label" for="radioDiagram">Dieser Datensatz beinhaltet visualisierende Daten</label>
+                </div>
+                <br />
+                <div class="form-group row">
+                    <div class="col-3">
+                        @Html.LabelFor(model => model.record_active, htmlAttributes: new { @class = "" })
+                    </div>
+                    <div class="col-9">
+                        @Html.EditorFor(model => model.record_active)
+                        @Html.ValidationMessageFor(model => model.record_active, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Datensatz hochladen</button>
+                <br />
+                <br />
+                * Die hochgeladenen Dateien sollen trotz verschiedenen Dateiformate inhaltlich identisch sein.
 
-        </form>
+</form>
     </div>
 }
