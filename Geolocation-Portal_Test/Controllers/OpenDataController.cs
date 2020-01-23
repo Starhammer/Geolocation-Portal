@@ -1,6 +1,7 @@
 ﻿using Geolocation_Portal_Test.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -179,6 +180,24 @@ namespace Geolocation_Portal_Test.Controllers
             ViewBag.category = (List<category>)db.category.ToList();
             return View("index", data.ToList());
         }
+        public ActionResult Kategorie()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Kategorie([Bind(Include = "parent_id,name,description,icon")] category category)
+        {
+            if (ModelState.IsValid)
+            {
+                db.category.Add(category);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(category);
+        }
 
         //GET: OpenDate/Category/5
         public ActionResult Kategoriedetails(int? id)
@@ -215,10 +234,41 @@ namespace Geolocation_Portal_Test.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Kategoriebearbeitung([Bind(Include = "")] category category)
+        public ActionResult Kategoriebearbeitung([Bind(Include = "parent_id,name,description,icon")] category category)
         {
+            if (ModelState.IsValid)
+            {
+                db.Entry(category).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
             return View(category);
         }
+
+        public ActionResult Kategorieentfernung(int id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            category category = db.category.Find(id);
+            if (category == null)
+            {
+                return HttpNotFound();
+            }
+            return View(category);
+        }
+
+        [HttpPost, ActionName("Kategorieentfernung")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Kategorieentfernungconfirmed(int id)
+        {
+            category category = db.category.Find(id);
+            db.category.Remove(category);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
         /**
          * Zeigt einen Datensatz als Diagramm an.
          */

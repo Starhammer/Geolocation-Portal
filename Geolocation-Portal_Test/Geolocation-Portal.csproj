@@ -541,6 +541,8 @@
     <Content Include="Views\recordsTEST\Index.cshtml" />
     <Content Include="Views\OpenData\Kategoriebearbeitung.cshtml" />
     <Content Include="Views\OpenData\Kategoriedetails.cshtml" />
+    <Content Include="Views\OpenData\Kategorie.cshtml" />
+    <Content Include="Views\OpenData\Kategorieentfernung.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Testfiles\" />
