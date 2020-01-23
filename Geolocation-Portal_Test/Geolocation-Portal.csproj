@@ -461,7 +461,6 @@
     <Content Include="bin\roslyn\vbc.exe.config" />
     <Content Include="bin\roslyn\vbc.rsp" />
     <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
-    <Content Include="App_Data\uploads\5\playground.geojson" />
     <Content Include="App_Data\uploads\1\bildungseinrichtungen.geojson" />
     <Content Include="App_Data\uploads\2\kindergarten.geojson" />
     <Content Include="App_Data\uploads\3\parking.geojson" />
