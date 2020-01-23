@@ -38,25 +38,25 @@ SET IDENTITY_INSERT [dbo].[licence] OFF
 SET IDENTITY_INSERT [dbo].[location] ON
 INSERT INTO [dbo].[location] ([Id], [name]) VALUES (1, N'Mosbach')
 INSERT INTO [dbo].[location] ([Id], [name]) VALUES (2, N'Stadt Mosbach')
-INSERT INTO [dbo].[location] ([Id], [name]) VALUES (15, N'Neckarelz')
-INSERT INTO [dbo].[location] ([Id], [name]) VALUES (16, N'Diedesheim')
-INSERT INTO [dbo].[location] ([Id], [name]) VALUES (17, N'Lohrbach')
-INSERT INTO [dbo].[location] ([Id], [name]) VALUES (18, N'Reichenbuch')
-INSERT INTO [dbo].[location] ([Id], [name]) VALUES (19, N'Sattelbach')
-INSERT INTO [dbo].[location] ([Id], [name]) VALUES (1001, N'Waldstadt')
+INSERT INTO [dbo].[location] ([Id], [name]) VALUES (3, N'Neckarelz')
+INSERT INTO [dbo].[location] ([Id], [name]) VALUES (4, N'Diedesheim')
+INSERT INTO [dbo].[location] ([Id], [name]) VALUES (5, N'Lohrbach')
+INSERT INTO [dbo].[location] ([Id], [name]) VALUES (6, N'Reichenbuch')
+INSERT INTO [dbo].[location] ([Id], [name]) VALUES (7, N'Sattelbach')
+INSERT INTO [dbo].[location] ([Id], [name]) VALUES (8, N'Waldstadt')
 SET IDENTITY_INSERT [dbo].[location] OFF
 
 SET IDENTITY_INSERT [dbo].[category] ON
 INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (1, 0, N'Bevölkerung', N'Bevölkerung', N'Bevoelkerung.png')
 INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (2, 0, N'Bildung und Wissenschaft', N'Bildung und Wissenschaft', N'Bildung.png')
-INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (4, 0, N'Gesetze und Justiz', N'Gesetze und Justiz', N'Justiz.png')
-INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (5, 0, N'Infrastruktur, Bauen und Wohnen', N'Infrastruktur, Bauen und Wohnen', N'Infrastruktur.png')
-INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (6, 0, N'Kultur', N'Kultur', N'Kultur.png')
-INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (7, 0, N'Tourismus', N'Tourismus', N'Tourismus.png')
-INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (8, 0, N'Verwaltung', N'Verwaltung', N'Verwaltung.png')
-INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (9, 0, N'Haushalt', N'Haushalt', N'Haushalt.png')
-INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (10, 0, N'Steuern', N'Steuern', N'Steuern.png')
-INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (11, 0, N'Wahlen', N'Wahlen', N'Wahlen.png')
+INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (3, 0, N'Gesetze und Justiz', N'Gesetze und Justiz', N'Justiz.png')
+INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (4, 0, N'Infrastruktur, Bauen und Wohnen', N'Infrastruktur, Bauen und Wohnen', N'Infrastruktur.png')
+INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (5, 0, N'Kultur', N'Kultur', N'Kultur.png')
+INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (6, 0, N'Tourismus', N'Tourismus', N'Tourismus.png')
+INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (7, 0, N'Verwaltung', N'Verwaltung', N'Verwaltung.png')
+INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (8, 0, N'Haushalt', N'Haushalt', N'Haushalt.png')
+INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (9, 0, N'Steuern', N'Steuern', N'Steuern.png')
+INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) VALUES (10, 0, N'Wahlen', N'Wahlen', N'Wahlen.png')
 SET IDENTITY_INSERT [dbo].[category] OFF
 
 SET IDENTITY_INSERT [dbo].[publisher] ON
@@ -68,13 +68,13 @@ INSERT INTO [dbo].[publisher] ([Id], [name], [description]) VALUES (5, N'Rathaus
 SET IDENTITY_INSERT [dbo].[publisher] OFF
 
 SET IDENTITY_INSERT [dbo].[user] ON
-INSERT INTO [dbo].[user] ([Id], [role_id], [department_id], [first_name], [last_name], [username], [password], [last_password_change], [create_date], [account_active], [login_attempts], [last_login]) VALUES (4, 1, 1, N'Julia', N'Kessler', N'JKessler', N'098f6bcd4621d373cade4e832627b4f6', NULL, N'2019-12-20 00:00:00', 1, NULL, NULL)
-INSERT INTO [dbo].[user] ([Id], [role_id], [department_id], [first_name], [last_name], [username], [password], [last_password_change], [create_date], [account_active], [login_attempts], [last_login]) VALUES (7, 1, 1, N'Manuel', N'Scheub', N'MScheub', N'098f6bcd4621d373cade4e832627b4f6', NULL, N'2019-12-20 00:00:00', 1, NULL, NULL)
-INSERT INTO [dbo].[user] ([Id], [role_id], [department_id], [first_name], [last_name], [username], [password], [last_password_change], [create_date], [account_active], [login_attempts], [last_login]) VALUES (8, 1, 1, N'Laura', N'Schmitt', N'LSchmitt', N'098f6bcd4621d373cade4e832627b4f6', NULL, N'2019-12-20 00:00:00', 1, NULL, NULL)
-INSERT INTO [dbo].[user] ([Id], [role_id], [department_id], [first_name], [last_name], [username], [password], [last_password_change], [create_date], [account_active], [login_attempts], [last_login]) VALUES (10, 1, 1, N'Michael', N'Kress', N'MKress', N'098f6bcd4621d373cade4e832627b4f6', NULL, N'2019-12-20 00:00:00', 1, NULL, NULL)
-INSERT INTO [dbo].[user] ([Id], [role_id], [department_id], [first_name], [last_name], [username], [password], [last_password_change], [create_date], [account_active], [login_attempts], [last_login]) VALUES (11, 2, 1, N'Jan', N'Schumacher', N'JSchumacher', N'098f6bcd4621d373cade4e832627b4f6', NULL, N'2019-12-20 00:00:00', 1, NULL, NULL)
-INSERT INTO [dbo].[user] ([Id], [role_id], [department_id], [first_name], [last_name], [username], [password], [last_password_change], [create_date], [account_active], [login_attempts], [last_login]) VALUES (12, 3, 1, N'Thilo', N'Krause', N'TKrause', N'098f6bcd4621d373cade4e832627b4f6', NULL, N'2019-12-20 00:00:00', 1, NULL, NULL)
-INSERT INTO [dbo].[user] ([Id], [role_id], [department_id], [first_name], [last_name], [username], [password], [last_password_change], [create_date], [account_active], [login_attempts], [last_login]) VALUES (13, 3, 1, N'Alex', N'Moritz', N'AMoritz', N'098f6bcd4621d373cade4e832627b4f6', NULL, N'2019-12-20 00:00:00', 1, NULL, NULL)
+INSERT INTO [dbo].[user] ([Id], [role_id], [department_id], [first_name], [last_name], [username], [password], [last_password_change], [create_date], [account_active], [login_attempts], [last_login]) VALUES (1, 1, 1, N'Julia', N'Kessler', N'JKessler', N'098f6bcd4621d373cade4e832627b4f6', NULL, N'2019-12-20 00:00:00', 1, NULL, NULL)
+INSERT INTO [dbo].[user] ([Id], [role_id], [department_id], [first_name], [last_name], [username], [password], [last_password_change], [create_date], [account_active], [login_attempts], [last_login]) VALUES (2, 1, 1, N'Manuel', N'Scheub', N'MScheub', N'098f6bcd4621d373cade4e832627b4f6', NULL, N'2019-12-20 00:00:00', 1, NULL, NULL)
+INSERT INTO [dbo].[user] ([Id], [role_id], [department_id], [first_name], [last_name], [username], [password], [last_password_change], [create_date], [account_active], [login_attempts], [last_login]) VALUES (3, 1, 1, N'Laura', N'Schmitt', N'LSchmitt', N'098f6bcd4621d373cade4e832627b4f6', NULL, N'2019-12-20 00:00:00', 1, NULL, NULL)
+INSERT INTO [dbo].[user] ([Id], [role_id], [department_id], [first_name], [last_name], [username], [password], [last_password_change], [create_date], [account_active], [login_attempts], [last_login]) VALUES (4, 1, 1, N'Michael', N'Kress', N'MKress', N'098f6bcd4621d373cade4e832627b4f6', NULL, N'2019-12-20 00:00:00', 1, NULL, NULL)
+INSERT INTO [dbo].[user] ([Id], [role_id], [department_id], [first_name], [last_name], [username], [password], [last_password_change], [create_date], [account_active], [login_attempts], [last_login]) VALUES (5, 2, 1, N'Jan', N'Schumacher', N'JSchumacher', N'098f6bcd4621d373cade4e832627b4f6', NULL, N'2019-12-20 00:00:00', 1, NULL, NULL)
+INSERT INTO [dbo].[user] ([Id], [role_id], [department_id], [first_name], [last_name], [username], [password], [last_password_change], [create_date], [account_active], [login_attempts], [last_login]) VALUES (6, 3, 1, N'Thilo', N'Krause', N'TKrause', N'098f6bcd4621d373cade4e832627b4f6', NULL, N'2019-12-20 00:00:00', 1, NULL, NULL)
+INSERT INTO [dbo].[user] ([Id], [role_id], [department_id], [first_name], [last_name], [username], [password], [last_password_change], [create_date], [account_active], [login_attempts], [last_login]) VALUES (7, 3, 1, N'Alex', N'Moritz', N'AMoritz', N'098f6bcd4621d373cade4e832627b4f6', NULL, N'2019-12-20 00:00:00', 1, NULL, NULL)
 SET IDENTITY_INSERT [dbo].[user] OFF
 
 /* Beispiel Datensätze */
