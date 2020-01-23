@@ -37,7 +37,6 @@
 
     map.scrollWheelZoom.disable();
 
-
     var myFeatureLayer = L.mapbox.featureLayer().loadURL("/api/data/@ViewBag.FileId").addTo(map);
 
     // Find and store a variable reference to the list of filters.
@@ -82,6 +81,9 @@
             checkbox.addEventListener('change', update);
             checkboxes.push(checkbox);
         }
+
+        // Zoomt die Karte so, dass alle Marker zu sehen sind.
+        map.fitBounds(myFeatureLayer.getBounds());
 
         // This function is called whenever someone clicks on a checkbox and changes
         // the selection of markers to be displayed.

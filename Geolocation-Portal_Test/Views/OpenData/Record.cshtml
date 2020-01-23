@@ -25,10 +25,31 @@
                     @Html.LabelFor(model => model.licence_id, htmlAttributes: new { @class = "" })
                 </div>
                 <div class="col-9">
-                    @Html.DropDownList("licence_id", null, htmlAttributes: new { @class = "form-control mw-100" })
+                    @Html.DropDownList("licence_id", null, htmlAttributes: new { @class = "form-control mw-100", @id = "licence_dropDownList" })
                     @Html.ValidationMessageFor(model => model.licence_id, "", new { @class = "text-danger" })
                 </div>
             </div>
+
+            <script>
+                function dropDownListElementChanged() {
+
+                }
+
+                $('#licence_dropDownList').change(function () {
+                    var SelectedValue = $(this).val();
+
+                    @{
+                        var licences = @ViewBag.licence_descriptions;
+                    }
+
+                    @foreach (var c in @licences)
+                    {
+                        // ToDo: Ausgabe der Beschreibung, aber kein Zugriff auf die Eigenschaft description bei c.
+                    }
+
+                    console.log(SelectedValue);
+                });
+            </script>
 
             <p class="text-info">
                 Hinweis:<br />
