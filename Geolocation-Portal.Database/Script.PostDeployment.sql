@@ -60,12 +60,12 @@ INSERT INTO [dbo].[category] ([Id], [parent_id], [name], [description], [icon]) 
 SET IDENTITY_INSERT [dbo].[category] OFF
 
 SET IDENTITY_INSERT [dbo].[publisher] ON
-INSERT INTO [dbo].[publisher] ([Id], [name], [description]) VALUES (1, N'Stadtverwaltung Mosbach', N'Stadtverwaltung Mosbach')
-INSERT INTO [dbo].[publisher] ([Id], [name], [description]) VALUES (2, N'Finanzamt Mosbach', N'Finanzamt Mosbach')
-INSERT INTO [dbo].[publisher] ([Id], [name], [description]) VALUES (3, N'Landratsamt Mosbach', N'Landratsamt Mosbach')
-INSERT INTO [dbo].[publisher] ([Id], [name], [description]) VALUES (4, N'Gemeinde Obrigheim', N'Gemeinde Obrigheim')
-INSERT INTO [dbo].[publisher] ([Id], [name], [description]) VALUES (5, N'Rathaus Mosbach', N'Rathaus Mosbach')
+INSERT INTO [dbo].[publisher] ([Id], [name], [description]) VALUES (1, N'Stadtverwaltung Mosbach', N'Die Dateien dieses Datensatzes wurden von der Stadtverwaltung Mosbach erhoben.')
+INSERT INTO [dbo].[publisher] ([Id], [name], [description]) VALUES (2, N'Finanzamt Mosbach', N'Die Dateien dieses Datensatzes wurden vom Finanzamt Mosbach erhoben.')
+INSERT INTO [dbo].[publisher] ([Id], [name], [description]) VALUES (3, N'Landratsamt Neckar-Odenwald-Kreis', N'Die Dateien dieses Datensatzes wurden vom Landratsamt Neckar-Odenwald-Kreis erhoben.')
+INSERT INTO [dbo].[publisher] ([Id], [name], [description]) VALUES (4, N'Gemeinde Obrigheim', N'Die Dateien dieses Datensatzes wurden von der Gemeinde Obrigheim erhoben.')
 SET IDENTITY_INSERT [dbo].[publisher] OFF
+
 
 SET IDENTITY_INSERT [dbo].[user] ON
 INSERT INTO [dbo].[user] ([Id], [role_id], [department_id], [first_name], [last_name], [username], [password], [last_password_change], [create_date], [account_active], [login_attempts], [last_login]) VALUES (1, 1, 1, N'Julia', N'Kessler', N'JKessler', N'098f6bcd4621d373cade4e832627b4f6', NULL, N'2019-12-20 00:00:00', 1, NULL, NULL)
