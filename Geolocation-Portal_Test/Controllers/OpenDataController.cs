@@ -214,30 +214,144 @@ namespace Geolocation_Portal_Test.Controllers
 
             return View();
         }
-
-        [HttpPost]
-        public ActionResult Search()
+        public ActionResult Recorddetails(int? id)
         {
-            var searchtext = Request["search"];
-            
-            IQueryable<record> data = from f in db.record
-                                      where f.record_active == true &&
-                                      (f.description.Contains(searchtext) || f.title.Contains(searchtext))
-                                      select f;
-
-            ViewBag.function = "Suche";
-            if (data != null && data.Count() > 0)
+            if (id == null)
             {
-                ViewBag.message = "Die Suche nach '" + searchtext + "' ergab " + data.Count() + " Treffer";
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            // Datensatz Sichtbarkeit auslesen
+            int record_visibility_role = (int)db.record.Find(id).role_id;
+            int logged_in_user = 4;
+            bool logged_in = false;
+            if (checkSession())
+            {
+                logged_in_user = Convert.ToInt32(Session["UserRole"], new CultureInfo("de-DE"));
+                logged_in = true;
+            }
+
+            // Rollenkonzept:
+            // Datensatz Sichtbarkeit = 4 (Öffentlichkeit) oder Benutzer angemeldet und Rolle berechtigt Datensatz zu sehen
+            if (record_visibility_role > 3 || logged_in == true && record_visibility_role <= logged_in_user)
+            {
+                record record = db.record.Find(id);
+                record.licence = db.licence.Find(record.licence_id);
+                record.publisher = db.publisher.Find(record.publisher_id);
+
+                int downloadcount = 0;
+                int file_size_conversion_count = 0; // 0 = Bytes
+
+                foreach (file f in record.file)
+                {
+                    // Downloadanzahl ermitteln.
+                    int file_downloadcount = (int)f.download_count;
+                    downloadcount = downloadcount + file_downloadcount;
+
+                    // Dateigröße in bessere Darstellung umwandeln.
+                    file_size_conversion_count = 0; // 0 = Bytes
+                    while (f.file_size > 1024)
+                    {
+                        f.file_size = f.file_size / 1024;
+                        file_size_conversion_count++;
+                    }
+
+                    f.file_size = Math.Round((double)f.file_size, 2);
+                }
+
+                // Dateigrößenbezeichnung ermitteln.
+                ViewData["downloadcount"] = downloadcount;
+
+                string file_size_extension = "Bytes";
+                switch (file_size_conversion_count)
+                {
+                    case 0:
+                        file_size_extension = "Bytes";
+                        break;
+                    case 1:
+                        file_size_extension = "KB";
+                        break;
+                    case 2:
+                        file_size_extension = "MB";
+                        break;
+                    case 3:
+                        file_size_extension = "GB";
+                        break;
+                    case 4:
+                        file_size_extension = "PB";
+                        break;
+                    default:
+                        file_size_extension = "nicht festgelegt";
+                        break;
+                }
+
+                ViewData["file_size_extension"] = file_size_extension;
+
+                if (record == null)
+                {
+                    return HttpNotFound();
+                }
+
+                return View(record);
             }
             else
             {
-                ViewBag.message = "Die Suche ergab keinen Treffer";
+                return RedirectToAction("Anmelden", "Benutzer");
+            }
+        }
+
+        public ActionResult Recordentfernung(int? id)
+        {
+            if (!checkSession())
+            {
+                return RedirectToAction("Anmelden", "Benutzer");
             }
 
-            ViewBag.category = (List<category>)db.category.ToList();
-            return View("index", data.ToList());
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            record record = db.record.Find(id);
+
+            if (record == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(record);
         }
+
+        // POST: user/Delete/5
+        [HttpPost, ActionName("Recordentfernung")]
+        [ValidateAntiForgeryToken]
+        public ActionResult RecordentfernungConfirmed(int id)
+        {
+            if (!checkSession())
+            {
+                return RedirectToAction("Anmelden", "Benutzer");
+            }
+
+            record record = db.record.Find(id);
+            db.record.Remove(record);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RecordComment([Bind(Include = "title,text,person_name,bewertung,record_id")] comment comment)
+        {
+            db.comment.Add(comment);
+
+            double avgRating = db.comment.Where(c => c.record_id == comment.record_id).Average(c => c.bewertung);
+
+            db.record.Find(comment.record_id).rating = (int)Math.Round(avgRating);
+
+            db.SaveChangesAsync();
+            return RedirectToAction("Recorddetails", new { id = comment.record_id });
+        }
+
         public ActionResult Kategorie()
         {
             return View();
@@ -327,6 +441,31 @@ namespace Geolocation_Portal_Test.Controllers
             return RedirectToAction("Index");
         }
 
+
+        [HttpPost]
+        public ActionResult Search()
+        {
+            var searchtext = Request["search"];
+
+            IQueryable<record> data = from f in db.record
+                                      where f.record_active == true &&
+                                      (f.description.Contains(searchtext) || f.title.Contains(searchtext))
+                                      select f;
+
+            ViewBag.function = "Suche";
+            if (data != null && data.Count() > 0)
+            {
+                ViewBag.message = "Die Suche nach '" + searchtext + "' ergab " + data.Count() + " Treffer";
+            }
+            else
+            {
+                ViewBag.message = "Die Suche ergab keinen Treffer";
+            }
+
+            ViewBag.category = (List<category>)db.category.ToList();
+            return View("index", data.ToList());
+        }
+
         /**
          * Zeigt einen Datensatz als Diagramm an.
          */
@@ -343,127 +482,7 @@ namespace Geolocation_Portal_Test.Controllers
             return View();
         }
 
-        public ActionResult Recorddetails(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            // Datensatz Sichtbarkeit auslesen
-            int record_visibility_role = (int)db.record.Find(id).role_id;
-            int logged_in_user = 4;
-            bool logged_in = false;
-            if (checkSession())
-            {
-                logged_in_user = Convert.ToInt32(Session["UserRole"], new CultureInfo("de-DE"));
-                logged_in = true;
-            }
-
-            // Rollenkonzept:
-            // Datensatz Sichtbarkeit = 4 (Öffentlichkeit) oder Benutzer angemeldet und Rolle berechtigt Datensatz zu sehen
-            if (record_visibility_role > 3 || logged_in == true && record_visibility_role <= logged_in_user)
-            {
-                record record = db.record.Find(id);
-                record.licence = db.licence.Find(record.licence_id);
-                record.publisher = db.publisher.Find(record.publisher_id);
-
-                int downloadcount = 0;
-                int file_size_conversion_count = 0; // 0 = Bytes
-
-                foreach (file f in record.file)
-                {
-                    // Downloadanzahl ermitteln.
-                    int file_downloadcount = (int)f.download_count;
-                    downloadcount = downloadcount + file_downloadcount;
-
-                    // Dateigröße in bessere Darstellung umwandeln.
-                    file_size_conversion_count = 0; // 0 = Bytes
-                    while (f.file_size > 1024) {
-                        f.file_size = f.file_size / 1024;
-                        file_size_conversion_count++;
-                    }
-
-                    f.file_size = Math.Round((double)f.file_size, 2);
-                }
-
-                // Dateigrößenbezeichnung ermitteln.
-                ViewData["downloadcount"] = downloadcount;
-
-                string file_size_extension = "Bytes";
-                switch (file_size_conversion_count) {
-                    case 0:
-                        file_size_extension = "Bytes";
-                        break;
-                    case 1:
-                        file_size_extension = "KB";
-                        break;
-                    case 2:
-                        file_size_extension = "MB";
-                        break;
-                    case 3:
-                        file_size_extension = "GB";
-                        break;
-                    case 4:
-                        file_size_extension = "PB";
-                        break;
-                    default:
-                        file_size_extension = "nicht festgelegt";
-                        break;
-                }
-
-                ViewData["file_size_extension"] = file_size_extension;
-
-                if (record == null)
-                {
-                    return HttpNotFound();
-                }
-
-                return View(record);
-            }
-            else
-            {
-                return RedirectToAction("Anmelden", "Benutzer");
-            }
-        }
-
-        public ActionResult Recordentfernung(int? id)
-        {
-            if (!checkSession())
-            {
-                return RedirectToAction("Anmelden", "Benutzer");
-            }
-
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            record record = db.record.Find(id);
-
-            if (record == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(record);
-        }
-
-        // POST: user/Delete/5
-        [HttpPost, ActionName("Recordentfernung")]
-        [ValidateAntiForgeryToken]
-        public ActionResult RecordentfernungConfirmed(int id)
-        {
-            if (!checkSession())
-            {
-                return RedirectToAction("Anmelden", "Benutzer");
-            }
-
-            record record = db.record.Find(id);
-            db.record.Remove(record);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+        
 
         /***
          * asdasdad
@@ -565,18 +584,6 @@ namespace Geolocation_Portal_Test.Controllers
             return Redirect(Request.UrlReferrer.ToString());
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult RecordComment([Bind(Include = "title,text,person_name,bewertung,record_id")] comment comment)
-        {
-            db.comment.Add(comment); 
-            
-            double avgRating = db.comment.Where(c => c.record_id == comment.record_id).Average(c => c.bewertung);
-
-            db.record.Find(comment.record_id).rating = (int)Math.Round(avgRating);
-
-            db.SaveChangesAsync();
-            return RedirectToAction("Recorddetails", new { id = comment.record_id});
-        }
+        
     }
 }
