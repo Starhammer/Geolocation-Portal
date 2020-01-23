@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 
 namespace Geolocation_Portal_Test.Controllers
 {
@@ -94,8 +95,10 @@ namespace Geolocation_Portal_Test.Controllers
             ViewBag.publisher_id = new SelectList(db.publisher, "Id", "name");
             ViewBag.licence_id = new SelectList(db.licence, "Id", "name");
             ViewBag.role_id = new SelectList(db.role, "Id", "name");
-            ViewBag.role_description = new SelectList(db.role, "Id", "description");
             ViewBag.location_id = new SelectList(db.location, "Id", "name");
+
+            var licenses = db.licence.ToList();
+            ViewBag.licence_descriptions = licenses;    // Send this list to the view
 
             return View();
         }
@@ -139,7 +142,6 @@ namespace Geolocation_Portal_Test.Controllers
             ViewBag.licence_id = new SelectList(db.licence, "Id", "name", record.licence_id);
             ViewBag.role_id = new SelectList(db.role, "Id", "name");
             ViewBag.location_id = new SelectList(db.location, "Id", "name");
-            ViewBag.licence_description = db.licence.Find(record.licence_id);
 
             return View(record);
         }
