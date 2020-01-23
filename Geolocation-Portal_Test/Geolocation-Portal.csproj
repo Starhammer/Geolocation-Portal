@@ -539,6 +539,8 @@
     <Content Include="Views\recordsTEST\Details.cshtml" />
     <Content Include="Views\recordsTEST\Edit.cshtml" />
     <Content Include="Views\recordsTEST\Index.cshtml" />
+    <Content Include="Views\OpenData\Kategoriebearbeitung.cshtml" />
+    <Content Include="Views\OpenData\Kategoriedetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Testfiles\" />

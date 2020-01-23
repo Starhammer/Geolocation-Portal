@@ -181,7 +181,23 @@ namespace Geolocation_Portal_Test.Controllers
         }
 
         //GET: OpenDate/Category/5
-        public ActionResult Category(int? id)
+        public ActionResult Kategoriedetails(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            category category = db.category.Find(id);
+            if (category == null)
+            {
+                return HttpNotFound();
+            }          
+
+            return View(category);
+        }
+
+        public ActionResult Kategoriebearbeitung(int? id)
         {
             if (id == null)
             {
@@ -194,29 +210,15 @@ namespace Geolocation_Portal_Test.Controllers
                 return HttpNotFound();
             }
 
-            IQueryable<record> data = from f in db.record
-                   where f.record_active == true
-                   && f.category_id == id
-                   select f;
-
-            int logged_in_user = 4;
-            if (checkSession())
-            {
-                logged_in_user = Convert.ToInt32(Session["UserRole"], new CultureInfo("de-DE"));
-            }
-
-            IQueryable<record> data_complete = from f in db.record
-                                      where f.record_active == true
-                                      && f.role_id <= logged_in_user
-                                               select f;
-
-            ViewBag.category = (List<category>)db.category.ToList();
-            ViewBag.function = "Filter";
-            ViewBag.message = "Es werden " + data.Count() + " von " + data_complete.Count() + " Datensätze angezeigt.";
-
-            return View("index", data.ToList());
+            return View(category);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Kategoriebearbeitung([Bind(Include = "")] category category)
+        {
+            return View(category);
+        }
         /**
          * Zeigt einen Datensatz als Diagramm an.
          */
