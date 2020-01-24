@@ -12,8 +12,8 @@ Vorlage für ein Skript nach der Bereitstellung
 SET IDENTITY_INSERT [dbo].[role] ON
 INSERT INTO [dbo].[role] ([Id], [name], [description]) VALUES (1, N'Administrator', N'Diese Rolle hat Zugriff auf alle Funktionen des Portals.')
 INSERT INTO [dbo].[role] ([Id], [name], [description]) VALUES (2, N'Key-User', N'Diese Rolle unterstützt die Administrator-Rolle beim Verwalten von Datensätzen.')
-INSERT INTO [dbo].[role] ([Id], [name], [description]) VALUES (3, N'Internen-User', N'Diese Rolle kann nicht öffentliche Datensätze einsehen.')
-INSERT INTO [dbo].[role] ([Id], [name], [description]) VALUES (4, N'Externen-User', N'Diese Rolle kann alle öffentlichen Datensätze einsehen. Diese Rolle kann sich nicht anmelden.')
+INSERT INTO [dbo].[role] ([Id], [name], [description]) VALUES (3, N'Interner-User', N'Diese Rolle kann nicht öffentliche Datensätze einsehen.')
+INSERT INTO [dbo].[role] ([Id], [name], [description]) VALUES (4, N'Externer-User', N'Diese Rolle kann alle öffentlichen Datensätze einsehen. Diese Rolle kann sich nicht anmelden.')
 SET IDENTITY_INSERT [dbo].[role] OFF
 
 SET IDENTITY_INSERT [dbo].[licence] ON
