@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Geolocation_Portal_Test.Models.category>
+
+@{
+    ViewBag.Title = "Kategorieverwaltung";
+}
+
+<h1>Kategorieverwaltung</h1>
+<hr />
+
+<p>
+    <a href="@Url.Action("Kategorieerstellung", "OpenData")" class="btn btn-primary">Kategorie hinzufügen</a>
+</p>
+<div class="table-responsive">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.parent_id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.icon)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.parent_id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.icon)
+                </td>
+                <td>
+                    @Html.ActionLink("Bearbeiten", "Kategoriebearbeitung", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Kategoriedetails", new { id = item.Id }) |
+                    @Html.ActionLink("Entfernen", "Kategorieentfernung", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

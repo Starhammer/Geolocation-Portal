@@ -28,6 +28,7 @@
             <!-- Rolle: Key-User -->
             <li><a href="@Url.Action("Recorderstellung", "OpenData")" title="Recorderstellung">Erstellen eines Datensatzes</a></li>
             <li><a href="@Url.Action("Recordverwaltung", "OpenData")" title="Recordverwaltung">Datensatzverwaltung</a></li>
+            <li><a href="@Url.Action("Kategorieverwaltung", "OpenData")" title="Kategorieverwaltung">Kategorieverwaltung</a></li>
         }
 
         @if (Session["UserRole"] != null && Convert.ToInt32(Session["UserRole"]) < 2)
@@ -39,6 +40,6 @@
     </ul>
 
     <p>
-        Unser <a href="#" title="User-Guide herunterladen">User-Guide</a> hilft Ihnen beim Kennenlernen und Verwenden der Funktionen.
+        Unser <a href="@Url.Action("UserGuideDownload", "Home")" title="User-Guide herunterladen">User-Guide</a> hilft Ihnen beim Kennenlernen und Verwenden der Funktionen.
     </p>
 }

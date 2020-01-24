@@ -466,6 +466,7 @@
     <Content Include="App_Data\uploads\3\parking.geojson" />
     <Content Include="App_Data\uploads\4\commercial.geojson" />
     <Content Include="App_Data\uploads\1\bildungseinrichtungen.geojson" />
+    <Content Include="App_Data\User-Guide.pdf" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\LIVE.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
@@ -541,9 +542,10 @@
     <Content Include="Views\recordsTEST\Index.cshtml" />
     <Content Include="Views\OpenData\Kategoriebearbeitung.cshtml" />
     <Content Include="Views\OpenData\Kategoriedetails.cshtml" />
-    <Content Include="Views\OpenData\Kategorie.cshtml" />
+    <Content Include="Views\OpenData\Kategorieerstellung.cshtml" />
     <Content Include="Views\OpenData\Kategorieentfernung.cshtml" />
     <Content Include="Views\DiagramData\Index.cshtml" />
+    <Content Include="Views\OpenData\Kategorieverwaltung.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Testfiles\" />

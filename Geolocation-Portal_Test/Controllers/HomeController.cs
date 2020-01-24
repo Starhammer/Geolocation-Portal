@@ -1,6 +1,7 @@
 ﻿using Geolocation_Portal_Test.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -12,18 +13,32 @@ namespace Geolocation_Portal_Test.Controllers
 {
     public class HomeController : Controller
     {
-        private Entities db = new Entities();
+        /// <summary>
+        /// Object of the database tables. Each database table is defined as a model below the entities.
+        /// The entity object allows you to select tupels from the database and return a model of each tupel.
+        /// </summary>
+        private Entities myDatabaseEntities = new Entities();
 
+        /// <summary>
+        /// This action result returns the index view.
+        /// </summary>
+        /// <returns>Returns a view to the browser.</returns>
         public ActionResult Index()
         {
             return View();
         }
 
+        /// <summary>
+        /// This action result returns the verwaltung view. Here every registered user has an 
+        /// overview of the portal functions. However, he only sees the functions that are 
+        /// available for his role.
+        /// </summary>
+        /// <returns>Returns a view to the browser.</returns>
         public ActionResult Verwaltung()
         {
             if (Session["UserRole"] != null)
             {
-                role role = db.role.Find(Convert.ToInt32(Session["UserRole"]));
+                role role = myDatabaseEntities.role.Find(Convert.ToInt32(Session["UserRole"], new CultureInfo("de-DE")));
                 if (role == null)
                 {
                     return HttpNotFound();
@@ -36,27 +51,40 @@ namespace Geolocation_Portal_Test.Controllers
             }
         }
 
+        /// <summary>
+        /// This action result returns the datenschutz view.
+        /// </summary>
+        /// <returns>Returns a view to the browser.</returns>
         public ActionResult Datenschutz()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
+        /// <summary>
+        /// This action result returns the impressum view.
+        /// </summary>
+        /// <returns>Returns a view to the browser.</returns>
         public ActionResult Impressum()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
 
+        /// <summary>
+        /// This action result returns the kontakt view.
+        /// </summary>
+        /// <returns>Returns a view to the browser.</returns>
         public ActionResult Kontakt()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
 
+        /// <summary>
+        /// This action result returns the kontakt view.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="senderemail"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Kontakt(string name, string senderemail, string message)
         {
@@ -98,18 +126,34 @@ namespace Geolocation_Portal_Test.Controllers
             smtpClient.Send(msg);
         }
 
+        /// <summary>
+        /// This action result returns the nutzungsbedingungen view.
+        /// </summary>
+        /// <returns>Returns a view to the browser.</returns>
         public ActionResult Nutzungsbedingungen()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
 
+        /// <summary>
+        /// This action result returns the weiteregemeindeseiten view.
+        /// </summary>
+        /// <returns>Returns a view to the browser.</returns>
         public ActionResult WeitereGemeindeseiten()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
+        }
+
+        /// <summary>
+        /// Enables you to download the User Guide.
+        /// </summary>
+        /// <returns>Return of the User Guide file.</returns>
+        public ActionResult UserGuideDownload()
+        {
+            string path = Server.MapPath("~/App_Data/User-Guide.pdf");
+            string mime = MimeMapping.GetMimeMapping(path);
+
+            return File(path, mime, "User-Guide.pdf");
         }
     }
 }

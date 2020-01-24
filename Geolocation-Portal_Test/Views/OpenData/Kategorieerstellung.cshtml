@@ -4,17 +4,16 @@
     ViewBag.Title = "Kategorie";
 }
 
-<h2>Kategorie</h2>
+<h1>Erstellen einer Kategorie</h1>
+<hr />
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>category</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
+        <div class="form-group row">
             @Html.LabelFor(model => model.parent_id, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.parent_id, new { htmlAttributes = new { @class = "form-control" } })
@@ -22,7 +21,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group row">
             @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
@@ -30,7 +29,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group row">
             @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
@@ -38,7 +37,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group row">
             @Html.LabelFor(model => model.icon, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.icon, new { htmlAttributes = new { @class = "form-control" } })
@@ -46,14 +45,11 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group row">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Kategorie hinzufügen" class="btn btn-primary" />
+                <a href="@Url.Action("Kategorieverwaltung", "OpenData")" class="btn btn-primary">Zurück zur Kategorieverwaltung</a>
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>

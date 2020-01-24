@@ -538,26 +538,53 @@ namespace Geolocation_Portal_Test.Controllers
             return RedirectToAction("Recorddetails", new { id = comment.record_id });
         }
 
-        public ActionResult Kategorie()
+        /// <summary>
+        /// This action result returns the kategorieverwaltung view. The administrator and key users have the possibility 
+        /// to manage the categories from the database.
+        /// </summary>
+        /// <returns>Returns a view to the browser.</returns>
+        public ActionResult Kategorieverwaltung()
+        {
+            return View(myDatabaseEntities.category.ToList());
+        }
+
+        /// <summary>
+        /// This action result returns the kategorieerstellung view. The administrator and key users have the possibility 
+        /// to save a new category in the database via a form.
+        /// </summary>
+        /// <returns>Returns a view to the browser.</returns>
+        public ActionResult Kategorieerstellung()
         {
             return View();
         }
 
+        /// <summary>
+        /// This action result returns the kategorieerstellung view. The administrator and key users have the possibility 
+        /// to save a new category in the database via a form.
+        /// This page saves the changes in the database after clicking Save.
+        /// </summary>
+        /// <param name="category">A category object is required to make its values available for editing.</param>
+        /// <returns>Returns a view to the browser.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Kategorie([Bind(Include = "parent_id,name,description,icon")] category category)
+        public ActionResult Kategorieerstellung([Bind(Include = "parent_id,name,description,icon")] category category)
         {
             if (ModelState.IsValid)
             {
                 myDatabaseEntities.category.Add(category);
                 myDatabaseEntities.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Kategorieverwaltung");
             }
 
             return View(category);
         }
 
-        //GET: OpenDate/Category/5
+        /// <summary>
+        /// This action result returns the kategoriedetails view. Displays the category without allowing 
+        /// the user to accidentally make changes.
+        /// </summary>
+        /// <param name="id">An ID is required to view the details.</param>
+        /// <returns>Returns a view to the browser.</returns>
         public ActionResult Kategoriedetails(int? id)
         {
             if (id == null)
@@ -574,6 +601,11 @@ namespace Geolocation_Portal_Test.Controllers
             return View(category);
         }
 
+        /// <summary>
+        /// This action result returns the kategoriedetails view. Allows you to change a category via a form.
+        /// </summary>
+        /// <param name="id">An ID is required to view the details.</param>
+        /// <returns>Returns a view to the browser.</returns>
         public ActionResult Kategoriebearbeitung(int? id)
         {
             if (id == null)
@@ -590,6 +622,11 @@ namespace Geolocation_Portal_Test.Controllers
             return View(category);
         }
 
+        /// <summary>
+        /// This action result returns the kategoriebearbeitung view. Will be executed after the editing is saved. The changes are saved in the database.
+        /// </summary>
+        /// <param name="category">A category object is required to make its values available for editing.</param>
+        /// <returns>Returns a view to the browser.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Kategoriebearbeitung([Bind(Include = "parent_id,name,description,icon")] category category)
@@ -598,11 +635,16 @@ namespace Geolocation_Portal_Test.Controllers
             {
                 myDatabaseEntities.Entry(category).State = EntityState.Modified;
                 myDatabaseEntities.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Kategorieverwaltung");
             }
             return View(category);
         }
 
+        /// <summary>
+        /// This action result returns the kategorieentfernung view. Shows the category to accept again before deletion.
+        /// </summary>
+        /// <param name="id">An ID is required to delete a category.</param>
+        /// <returns>Returns a view to the browser.</returns>
         public ActionResult Kategorieentfernung(int id)
         {
             if (id == null)
@@ -617,6 +659,11 @@ namespace Geolocation_Portal_Test.Controllers
             return View(category);
         }
 
+        /// <summary>
+        /// This method is executed after the delete button is pressed.
+        /// </summary>
+        /// <param name="id">An ID is required to delete a category.</param>
+        /// <returns>Returns a view to the browser.</returns>
         [HttpPost, ActionName("Kategorieentfernung")]
         [ValidateAntiForgeryToken]
         public ActionResult Kategorieentfernungconfirmed(int id)
@@ -624,12 +671,14 @@ namespace Geolocation_Portal_Test.Controllers
             category category = myDatabaseEntities.category.Find(id);
             myDatabaseEntities.category.Remove(category);
             myDatabaseEntities.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Kategorieverwaltung");
         }
 
-        /***
-         * 
-         */
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns>Returns a view to the browser.</returns>
         private string getFileIcon(string name)
         {
             var extension = Path.GetExtension(name);
