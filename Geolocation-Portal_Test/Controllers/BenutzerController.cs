@@ -166,7 +166,7 @@ namespace Geolocation_Portal_Test.Controllers
             }
 
             ViewBag.role_id = new SelectList(myDatabaseEntities.role, "Id", "name");
-            //ViewBag.department_id = new SelectList(db.department, "Id", "name"); ToDo: If department id table in db exists uncomment row.
+            // ViewBag.department_id = new SelectList(db.department, "Id", "name"); ToDo: If department id table in db exists uncomment row.
 
             return View();
         }
@@ -358,9 +358,23 @@ namespace Geolocation_Portal_Test.Controllers
 
             if (ModelState.IsValid)
             {
-                myDatabaseEntities.role.Add(role);
-                myDatabaseEntities.SaveChanges();
-                return RedirectToAction("Rollenverwaltung");
+                // A role may only exist once in the database.
+                var role_search_data = from roledata in myDatabaseEntities.role
+                                       where roledata.name == role.name
+                                       select roledata;
+
+                var role_search = role_search_data.ToList();
+
+                if (role_search.Count() == 0)
+                {
+                    myDatabaseEntities.role.Add(role);
+                    myDatabaseEntities.SaveChanges();
+                    return RedirectToAction("Rollenverwaltung");
+                }
+                else
+                {
+                    ViewBag.userErrorMessage = "Der Name der Rolle existiert bereits.";
+                }
             }
 
             return View(role);
@@ -403,9 +417,19 @@ namespace Geolocation_Portal_Test.Controllers
 
             if (ModelState.IsValid)
             {
-                myDatabaseEntities.Entry(role).State = EntityState.Modified;
-                myDatabaseEntities.SaveChanges();
-                return RedirectToAction("Rollenverwaltung");
+                // A role may only exist once in the database.
+                var role_search_data = from roledata in myDatabaseEntities.role
+                                       where roledata.name == role.name
+                                       select roledata;
+
+                var role_search = role_search_data.ToList();
+
+                if (role_search.Count() == 0)
+                {
+                    myDatabaseEntities.Entry(role).State = EntityState.Modified;
+                    myDatabaseEntities.SaveChanges();
+                    return RedirectToAction("Rollenverwaltung");
+                }
             }
 
             return View(role);
