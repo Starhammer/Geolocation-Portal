@@ -403,6 +403,10 @@ textarea {
     color: #0056b3 !important;
 }
 
+#filter_settings_categories img {
+    display: inline-block;
+}
+
 /* Extra small devices (portrait phones, less than 576px)
 No media query for `xs` since this is the default in Bootstrap */
 

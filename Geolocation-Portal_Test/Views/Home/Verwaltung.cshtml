@@ -15,11 +15,30 @@
 </p>
 
 <ul>
-    <li><a href="@Url.Action("Profil", "Benutzer")" title="">Profilbearbeitung</a></li>
-    @if (Session["UserRole"] != null && Convert.ToInt32(Session["UserRole"]) == 1)
+    <!-- Rolle: Externer-User -->
+    <li><a href="@Url.Action("Profil", "Benutzer")" title="Profilbearbeitung">Profilbearbeitung</a></li>
+
+    @if (Session["UserRole"] != null && Convert.ToInt32(Session["UserRole"]) < 4)
     {
-        <li><a href="@Url.Action("Benutzerverwaltung", "Benutzer")" title="">Benutzerverwaltung</a></li>
-        <li><a href="@Url.Action("Rollenverwaltung", "Benutzer")" title="">Rollenverwaltung</a></li>
-        <li><a href="@Url.Action("Recordverwaltung", "OpenData")" title="">Datensatzverwaltung</a></li>
+        <!-- Rolle: Interner-User -->
+        <li><a href="@Url.Action("Index", "OpenData")" title="Open-Data">Einsicht in interne Dokumente</a></li>
+    }
+
+    @if (Session["UserRole"] != null && Convert.ToInt32(Session["UserRole"]) < 3)
+    {
+        <!-- Rolle: Key-User -->
+        <li><a href="@Url.Action("Recorderstellung", "OpenData")" title="Recorderstellung">Erstellen eines Datensatzes</a></li>
+        <li><a href="@Url.Action("Recordverwaltung", "OpenData")" title="Recordverwaltung">Datensatzverwaltung</a></li>
+    }
+
+    @if (Session["UserRole"] != null && Convert.ToInt32(Session["UserRole"]) < 2)
+    {
+        <!-- Rolle: Administrator -->
+        <li><a href="@Url.Action("Rollenverwaltung", "Benutzer")" title="Rollenverwaltung">Rollenverwaltung</a></li>
+        <li><a href="@Url.Action("Benutzerverwaltung", "Benutzer")" title="Benutzerverwaltung">Benutzerverwaltung</a></li>
     }
 </ul>
+
+<p>
+    Unser <a href="#" title="User-Guide herunterladen">User-Guide</a> hilft Ihnen beim Kennenlernen und Verwenden der Funktionen.
+</p>

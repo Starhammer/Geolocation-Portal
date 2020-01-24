@@ -4,7 +4,7 @@
     ViewBag.Title = "Record";
 }
 
-@using (Html.BeginForm("Record", "OpenData", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Recorderstellung", "OpenData", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <div class="container">
@@ -38,22 +38,15 @@
                 $('#licence_dropDownList').change(function () {
                     var SelectedValue = $(this).val();
 
-                    @{
-                        var licences = @ViewBag.licence_descriptions;
-                    }
-
-                    @foreach (var c in @licences)
-                    {
-                        // ToDo: Ausgabe der Beschreibung, aber kein Zugriff auf die Eigenschaft description bei c.
-                    }
+                    $('#licence_desc').InnerHtml(@Html.Raw(ViewBag.licence_descriptions[0]));
 
                     console.log(SelectedValue);
                 });
             </script>
 
-            <p class="text-info">
-                Hinweis:<br />
-                @ViewBag.licence_description
+            <h6 class="text-info">Hinweis:</h6>
+            <p id="licence_desc" class="text-info">
+
             </p>
 
             <div class="form-group row">
