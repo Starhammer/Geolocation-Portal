@@ -9,7 +9,7 @@
 
 <div id="toolBar">
     <div>
-        <a class="nolink" href="#" id="" title="Geo-Data-Warenkorb"><i class="fa fa-map-marker"></i><sub>2</sub></a>
+        <a class="nolink" href="#" id="" title="Gesammelte Geo-Datensätze auf einer Karte anzeigen"><i class="fa fa-map-marker"></i><sub><span id="geoDataShoppingCartCount">2</span></sub></a>
         <a class="nolink" href="#" id="search_button" title="Suchen"><i class="fa fa-search"></i></a>
         <a class="nolink" href="#" id="sort_settings_button" title="Sortieren"><i class="fa fa-sort-amount-asc"></i></a>
         <a class="nolink" href="#" id="filter_button" title="Filtern"><i class="fa fa-filter"></i></a>
@@ -188,27 +188,40 @@
     /**
      * Add a Record ID to a map shopping cart to display multiple geographical data on the map at once.
      */
-    function addMapRecordToShoppingCart(btnClicked) {
+    function addMapRecordToShoppingCart(recordID) {
         console.log("addMapRecordToShoppingCart Method called");
 
-        // Check if session variable exists.
-        if (localStorage["MapRecordShoppingCart"] == null) {
-            localStorage["MapRecordShoppingCart"] = "";
+        if (recordID != null) {
+
+            // Check if session variable exists.
+            if (localStorage["MapRecordShoppingCart"] == null) {
+                localStorage["MapRecordShoppingCart"] = "";
+            }
+
+            // Parse session variable value to string.
+            var recordIdList = JSON.parse(localStorage["MapRecordShoppingCart"]);
+            var recordIdList = recordIdList.split(";");
+
+            var recordExists = false;
+
+            for (int i = 0; i < recordIdList; i++) {
+                if (recordID == recordIdList[i]) {
+                    recordExists = false;
+                }
+            }
+
+            // Change the font size of the page.
+            if (recordExists == false) {
+                Session["MapRecordShoppingCart"] += recordID + ";";
+            } else {
+                // Fehlermeldung ausgeben.
+                $("#userInfoMessage").html = "";
+            }
+
+            // Add to shopping-cart
+            $('geoDataShoppingCartCount').html(recordIdList.count());
+
         }
-
-        // Parse session variable value to string.
-        var recordIdList = JSON.parse(localStorage["MapRecordShoppingCart"]);
-
-        // Change the font size of the page.
-        if (isFontLarge == true) {
-            Session["MapRecordShoppingCart"] += data;
-        } else {
-            // Fehlermeldung ausgeben.
-            $("#userInfoMessage").html = "";
-        }
-
-        // Add to shopping-cart
-        $('html').css('font-size', newFontSize);
     }
 
 
