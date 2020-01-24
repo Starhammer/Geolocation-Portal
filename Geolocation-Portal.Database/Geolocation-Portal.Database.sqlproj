@@ -79,8 +79,7 @@
     <RefactorLog Include="Geolocation-Portal.Database.refactorlog" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Geolocation-Portal.Database.publish.xml" />
-    <None Include="Geolocation-Portal_test.Database.publish.xml" />
+    <None Include="Geolocation-Portal_Local.Database.publish.xml" />
     <None Include="Geolocation-Portal_LIVE.Database.publish.xml" />
   </ItemGroup>
   <ItemGroup>
