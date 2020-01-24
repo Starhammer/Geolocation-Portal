@@ -629,7 +629,7 @@ namespace Geolocation_Portal_Test.Controllers
         /// <returns>Returns a view to the browser.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Kategoriebearbeitung([Bind(Include = "parent_id,name,description,icon")] category category)
+        public ActionResult Kategoriebearbeitung([Bind(Include = "Id,parent_id,name,description,icon")] category category)
         {
             if (ModelState.IsValid)
             {
