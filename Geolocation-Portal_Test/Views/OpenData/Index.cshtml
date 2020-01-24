@@ -9,12 +9,28 @@
 
 <div id="toolBar">
     <div>
+        <a class="nolink" href="#" id="" title="Geo-Data-Warenkorb"><i class="fa fa-map-marker"></i><sub>2</sub></a>
         <a class="nolink" href="#" id="search_button" title="Suchen"><i class="fa fa-search"></i></a>
         <a class="nolink" href="#" id="sort_settings_button" title="Sortieren"><i class="fa fa-sort-amount-asc"></i></a>
         <a class="nolink" href="#" id="filter_button" title="Filtern"><i class="fa fa-filter"></i></a>
         @if (Session["UserRole"] != null && Convert.ToInt32(Session["UserRole"]) < 3)
         {
             <a class="nolink" href="@Url.Action("Recorderstellung", "OpenData")" title="Datensatz hinzufügen"><i class="fa fa-plus"></i></a>
+
+            if (Session["ShowAllRecords"] != null && Convert.ToBoolean(Session["ShowAllRecords"]) == false)
+            {
+                Session["ShowAllRecords"] = true;
+                <a id="showAllRecords_button" class="nolink" href="@Url.Action("Index", "OpenData", new { restriction_string = "all_records" })" title="Alle Datensätze anzeigen">
+                    <i class="fa fa-eye"></i>
+                </a>
+            }
+            else
+            {
+                Session["ShowAllRecords"] = false;
+                <a id="showAllRecords_button" class="nolink" href="@Url.Action("Index", "OpenData", new { restriction_string = "all_active_records" })" title="Alle aktiven Datensätze anzeigen">
+                    <i class="fa fa-eye-slash"></i>
+                </a>
+            }
         }
     </div>
 
@@ -70,7 +86,7 @@
     <!-- End of the search function -->
 </div>
 
-<p>
+<p id="userInfoMessage">
     @if (ViewBag.userInfoMessage != null)
     {
         // Output of the number of search results.
@@ -89,7 +105,7 @@
             <div class="card-block">
                 <div class="card-header">
                     <img class="icon" width="20" height="20" src="~/icons/Category/@Html.DisplayFor(modelItem => item.category.icon)" />
-                    <a class="nolink" href="@Url.Action("Recorddetails", "OpenData", new { id = item.Id })" title="Details anzeigen">
+                    <a class="nolink font-weight-bold" href="@Url.Action("Recorddetails", "OpenData", new { id = item.Id })" title="Details anzeigen">
                         @Html.DisplayFor(modelItem => item.title)
                     </a>
 
@@ -135,32 +151,67 @@
                         <a href="@Url.Action("Recorddetails", "OpenData", new { id = item.Id })" title="Details anzeigen">Weiterlesen</a>
                     </div>
                 </div>
-                <div class="card-footer" style="min-height:50px;">
-                    @foreach (var file in item.file)
-                    {
-                        // 
-                        if (item.geo_data == true)
+                    <div class="card-footer" style="min-height:50px;">
+                        @foreach (var file in item.file)
                         {
-                            <a class="nolink float-right ml-2" href="~/GeoData/index/@item.Id" title=""><i class="fa fa-map"></i></a>
-                        }
-                        else if (item.dia_data == true)
-                        {
-                            <span><img class="float-right ml-2" width="25" height="25" src="~/icons/@Html.DisplayFor(modelItem => file.file_icon)-icon.png" /></span>
-                        }
+                            //
+                            if (item.geo_data == true)
+                            {
+                                <span>
+                                    <a class="nolink float-right ml-2" href="~/GeoData/index/@item.Id" title="Vorschau auf der Karte"><i class="fa fa-map"></i></a>
 
-                        <span>
-                            <a href="@Url.Action("Download", "OpenData", new { fileName = file.name, recordId = item.Id})">
-                                <img class="float-left mr-2" width="25" height="25" src="~/icons/@Html.DisplayFor(modelItem => file.file_icon)-icon.png" />
-                            </a>
-                        </span>
+                                    <a class="nolink float-right ml-2" href="javascript:void(0);" onclick="addMapRecordToShoppingCart(@item.Id)" title="Zum Kartenwarenkorb hinzufügen">
+                                        <i class="fa fa-map-marker"></i>
+                                    </a>
+                                </span>
+                            }
+                            else if (item.dia_data == true)
+                            {
+                                <span>
+                                    <a class="nolink float-right ml-2" href="~/DiagramData/index/@item.Id" title="Vorschau als Diagramm"><i class="fa fa-pie-chart"></i></a>
+                                </span>
+                            }
 
-                    }
-                </div>
+                            <span>
+                                <a href="@Url.Action("Download", "OpenData", new { fileName = file.name, recordId = item.Id})">
+                                    <img class="float-left mr-2" width="25" height="25" src="~/icons/@Html.DisplayFor(modelItem => file.file_icon)-icon.png" />
+                                </a>
+                            </span>
+
+                            }
+                    </div>
             </div>
         </div>
     }
 </div> 
-<script>
+<script type="text/javascript">
+    /**
+     * Add a Record ID to a map shopping cart to display multiple geographical data on the map at once.
+     */
+    function addMapRecordToShoppingCart(btnClicked) {
+        console.log("addMapRecordToShoppingCart Method called");
+
+        // Check if session variable exists.
+        if (localStorage["MapRecordShoppingCart"] == null) {
+            localStorage["MapRecordShoppingCart"] = "";
+        }
+
+        // Parse session variable value to string.
+        var recordIdList = JSON.parse(localStorage["MapRecordShoppingCart"]);
+
+        // Change the font size of the page.
+        if (isFontLarge == true) {
+            Session["MapRecordShoppingCart"] += data;
+        } else {
+            // Fehlermeldung ausgeben.
+            $("#userInfoMessage").html = "";
+        }
+
+        // Add to shopping-cart
+        $('html').css('font-size', newFontSize);
+    }
+
+
     /**
      * Toolbar: show and hide setting ranges.
      */

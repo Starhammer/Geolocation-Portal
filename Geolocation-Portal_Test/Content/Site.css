@@ -38,6 +38,10 @@ header {
     display: block;
 }
 
+.col-3 {
+    max-width: 100%;
+}
+
 .col-9 {
     max-width: 100%;
 }
@@ -206,6 +210,10 @@ main > article {
     font-size: 1.8em;
 }
 
+.card-text {
+    margin-top: 1rem;
+}
+
 .record-container {
     display: flex;
     flex-direction: row;
@@ -285,6 +293,10 @@ main > article {
 
 .nolink:hover {
     text-decoration: underline;
+}
+
+.hideLink {
+    display: none;
 }
 
 .rightAlign {
@@ -436,6 +448,10 @@ No media query for `xs` since this is the default in Bootstrap */
 
     .col-9 {
         max-width: 75%;
+    }
+
+    .col-3 {
+        max-width: 25%;
     }
 }
 
