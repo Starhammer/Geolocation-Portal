@@ -14,101 +14,246 @@ namespace Geolocation_Portal_Test.Controllers
 {
     public class OpenDataController : Controller
     {
-        private Entities db = new Entities();
+        /// <summary>
+        /// Object of the database tables. Each database table is defined as a model below the entities.
+        /// The entity object allows you to select tupels from the database and return a model of each tupel.
+        /// </summary>
+        private Entities myDatabaseEntities = new Entities();
 
-        // GET: OpenData
-        public ActionResult Index(string restriction)
+        /// <summary>
+        /// Determines which records should be returned.
+        /// </summary>
+        [Flags]
+        public enum restriction_enum
         {
-            // Datenbankinhalt prüfen.
-            if (db.record == null || db.category == null)
+            all_records,
+            all_active_records,
+            geo_records,
+            dia_records
+        }
+
+        /// <summary>
+        /// This action result returns the index view. On the index page there is an overview of the 
+        /// created data records.
+        /// </summary>
+        /// <param name="restriction">Determines which records should be returned.</param>
+        /// <param name="categoryID">Determines which category records should be returned.</param>
+        /// <returns>Returns a view to the browser.</returns>
+        public ActionResult Index(string restriction_string = "all_active_records", int categoryID = 0, string searchTerm = null)
+        {
+            // ToDo: In future "string restriction_string = "all_records"" should be "restriction_enum restriction = restriction_enum.all_records"
+            // ToDo: Current problem is the use of the enum in the view. As solution the string is converted into an enum.
+            restriction_enum restriction = (restriction_enum)Enum.Parse(typeof(restriction_enum), restriction_string, true);
+
+            // parameter verification cop to avoid errors.
+            if (categoryID == 0)
+            {
+                // 0 is required to avoid filtering by category.
+            }
+
+            if (searchTerm == null)
+            {
+                // null is required to avoid searching.
+                searchTerm = Request["search"];
+            }
+
+            // Check all required database tables for their contents to avoid errors.
+            if (checkDatabaseContent(myDatabaseEntities.record) &&
+                checkDatabaseContent(myDatabaseEntities.category))
+            {
+                // Load the categories to display the filter function. The category filter is implemented using icons defined in the database.
+                ViewBag.category = (List<category>)myDatabaseEntities.category.ToList();
+                // Allows the user to reset the record restriction.
+                ViewBag.resetRestriction = true;
+
+                string userInfoMessage = null;
+
+                // Load the records to return them to the view.
+                // The variable is null at this position because the restriction parameter still needs to be checked.
+                IEnumerable<record> records = null;
+
+                // Check record display authorization using the role ID.
+                int loggedInUserRole = 4;
+                if (Session["UserRole"] != null)
+                {
+                    // Is needed for the Where condition.
+                    loggedInUserRole = Convert.ToInt32(Session["UserRole"], new CultureInfo("de-DE"));
+                }
+
+                if (categoryID == 0)
+                {
+                    if (searchTerm == null)
+                    {
+                        switch (restriction)
+                        {
+                            case (restriction_enum.all_records):
+                                // Read out all data records from the database.
+                                records = from f in myDatabaseEntities.record
+                                          where f.role_id >= loggedInUserRole
+                                          select f;
+                                ViewBag.resetRestriction = false;   // If all data records are already displayed, the reset function should not be displayed.
+                                break;
+                            case (restriction_enum.all_active_records):
+                                // Read out all "active" data records from the database.
+                                records = from f in myDatabaseEntities.record
+                                          where f.role_id >= loggedInUserRole &&
+                                          f.record_active == true
+                                          select f;
+                                ViewBag.resetRestriction = false;   // If "all" data records are already displayed, the reset function should not be displayed.
+                                break;
+                            case (restriction_enum.geo_records):
+                                // Read out all "geo" data records from the database.
+                                records = from f in myDatabaseEntities.record
+                                          where f.role_id >= loggedInUserRole &&
+                                          f.record_active == true &&
+                                          f.geo_data == true
+                                          select f;
+                                break;
+                            case (restriction_enum.dia_records):
+                                // Read out all "diagram" data records from the database.
+                                records = from f in myDatabaseEntities.record
+                                          where f.role_id >= loggedInUserRole &&
+                                          f.record_active == true &&
+                                          f.dia_data == true
+                                          select f;
+                                break;
+                            default:
+                                // do nothing to avoid errors if case is not available.
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        // Read out all data records from the database with a certain search term Compliance.
+                        records = from f in myDatabaseEntities.record
+                                  where f.role_id >= loggedInUserRole &&
+                                  f.record_active == true &&
+                                  (f.title.Contains(searchTerm) || f.description.Contains(searchTerm))
+                                  select f;
+
+                        if (records != null && records.Count() == 0)
+                        {
+                            userInfoMessage = "Die Suche ergab keinen Treffer.";
+                        }
+                        else if (records != null && records.Count() == 1)
+                        {
+                            userInfoMessage = "Die Suche nach '" + searchTerm + "' ergab einen Treffer.";
+                        }
+                        else 
+                        {
+                            userInfoMessage = "Die Suche nach '" + searchTerm + "' zeigt " + records.Count() + " Datensätze an.";
+                        }
+                    }
+                }
+                else
+                {
+                    // Read out all data records from the database with a certain category affiliation.
+                    category category = myDatabaseEntities.category.Find(categoryID);
+                    if (category == null)
+                    {
+                        return HttpNotFound();
+                    }
+
+                    records = from f in myDatabaseEntities.record
+                              where f.role_id >= loggedInUserRole &&
+                              f.record_active == true &&
+                              f.category_id == categoryID
+                              select f;
+                }
+
+                // If user was already filled, it should not be overwritten here by default message.
+                if (userInfoMessage == null)
+                {
+                    if (records.Count() == 0)
+                    {
+                        ViewBag.userInfoMessage = "Es wird kein Datensatz angezeigt. Ändern Sie Ihre Such- oder Filtereinstellungen.";
+                    }
+                    else if (records.Count() > 1)
+                    {
+                        userInfoMessage = "Es werden " + records.Count() + " Datensätze angezeigt.";
+                    }
+                    else
+                    {
+                        userInfoMessage = "Es wird " + records.Count() + " Datensatz angezeigt.";
+                    }
+                }
+
+                ViewBag.userInfoMessage = userInfoMessage;
+                return View(records.ToList());
+            }
+            else
             {
                 return new HttpStatusCodeResult(HttpStatusCode.NoContent);
             }
+        }
 
-            // Laden der Kategorien zur Anzeige der Filterfunktion.
-            ViewBag.category = (List<category>)db.category.ToList();
-
-            // Auslesen aller "aktiven" Datensätze aus der Datenbank.
-            // Wird an dieser Stelle benötigt, um die Gesamtanzahl der Datensätze auszugeben. --> Ansonsten im switch case default Bereich.
-            IQueryable<record> records = from f in db.record
-                                         where f.record_active == true
-                                         select f;
-
-            int records_complete_count = records.Count();
-
-            // Ergebnis einschränken.
-            switch (restriction)
+        /// <summary>
+        /// Checks the contents of the database table to avoid errors.
+        /// </summary>
+        /// <param name="entity">The database table to be checked.</param>
+        /// <returns>Returns false if the content is null.</returns>
+        private bool checkDatabaseContent(object entity)
+        {
+            if (entity == null)
             {
-                // Filtern: Geo Datensätze.
-                case ("geo"):
-                    records = from f in db.record
-                           where f.record_active == true
-                           && f.geo_data == true
-                           select f;
-
-                    ViewBag.message = "Es werden " + records.Count() + " von " + records_complete_count + " Datensätze angezeigt.";
-                    ViewBag.function = "Filter";
-
-                    break;
-                // Filtern: Diagramm Datensätze.
-                case ("diagram"):
-                    records = from f in db.record
-                              where f.record_active == true
-                              && f.dia_data == true
-                              select f;
-
-                    ViewBag.message = "Es werden " + records.Count() + " von " + records_complete_count + " Datensätze angezeigt.";
-                    ViewBag.function = "Filter";
-
-                    break;
-                // Vermeidung von Error Meldungen, wenn case nicht vorhanden ist.
-                default:
-                    // do nothing
-                    break;
+                return false;
             }
+
+            return true;
+        }
+
+        /// <summary>
+        /// This action result returns the recordverwaltung view. On the recordverwaltung page the 
+        /// database content is showing in a table.
+        /// </summary>
+        /// <returns>Returns a view to the browser.</returns>
+        public ActionResult Recordverwaltung()
+        {
+            // Login verification. Function is only accessible for logged in users.
+            if (!checkSession(2))
+            {
+                return RedirectToAction("Anmelden", "Benutzer");
+            }
+
+            // Read out all data records from the database.
+            IEnumerable<record> records = from f in myDatabaseEntities.record
+                                   select f;
 
             return View(records.ToList());
         }
 
-        public ActionResult Recordverwaltung()
+        /// <summary>
+        /// This action result returns the recorderstellung view. On the recorderstellung page shows 
+        /// a form to create a new record on database.
+        /// </summary>
+        /// <returns>Returns a view to the browser.</returns>
+        public ActionResult Recorderstellung()
         {
-            if (!checkSession())
+            // Login verification. Function is only accessible for logged in users.
+            if (!checkSession(2))
             {
                 return RedirectToAction("Anmelden", "Benutzer");
             }
 
-            return View(db.record.ToList());
-        }
+            ViewBag.category_id = new SelectList(myDatabaseEntities.category, "Id", "name");
+            ViewBag.publisher_id = new SelectList(myDatabaseEntities.publisher, "Id", "name");
+            ViewBag.licence_id = new SelectList(myDatabaseEntities.licence, "Id", "name");
+            ViewBag.role_id = new SelectList(myDatabaseEntities.role, "Id", "name");
+            ViewBag.location_id = new SelectList(myDatabaseEntities.location, "Id", "name");
 
-        /**
-         * Öffnet ein Formular mit welchem ein neuer Datensatz hinzugefügt werden kann.
-         */
-        public ActionResult Record()
-        {
-            if (!checkSession())
-            {
-                return RedirectToAction("Anmelden", "Benutzer");
-            }
-
-            ViewBag.Message = "Your application description page.";
-
-            ViewBag.category_id = new SelectList(db.category, "Id", "name");
-            ViewBag.publisher_id = new SelectList(db.publisher, "Id", "name");
-            ViewBag.licence_id = new SelectList(db.licence, "Id", "name");
-            ViewBag.role_id = new SelectList(db.role, "Id", "name");
-            ViewBag.location_id = new SelectList(db.location, "Id", "name");
-
-            var licenses = db.licence.ToList();
-            ViewBag.licence_descriptions = licenses;    // Send this list to the view
+            //var licenses = myDatabaseEntities.licence.ToList();
+            var licenses = new string[3] { "Manual", "Semi", "Auto" };
+            ViewBag.licence_descriptions = licenses;     // Send this list to the view
 
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Record([Bind(Include = "Id,dataset_upload,dataset_modified_date,title,description,category_id,licence_id,publisher_id,rating,role_id,record_active,location_id")] record record, IEnumerable<HttpPostedFileBase> files)
+        public ActionResult Recorderstellung([Bind(Include = "Id,dataset_upload,dataset_modified_date,title,description,category_id,licence_id,publisher_id,rating,role_id,record_active,location_id")] record record, IEnumerable<HttpPostedFileBase> files)
         {
-            if (!checkSession())
+            // Login verification. Function is only accessible for logged in users.
+            if (!checkSession(2))
             {
                 return RedirectToAction("Anmelden", "Benutzer");
             }
@@ -130,26 +275,26 @@ namespace Geolocation_Portal_Test.Controllers
                 record.dataset_upload = DateTime.Now;
                 record.dataset_modified_date = DateTime.Now;
 
-                db.record.Add(record);
-                db.SaveChanges();
+                myDatabaseEntities.record.Add(record);
+                myDatabaseEntities.SaveChanges();
 
                 if (files != null) saveFiles(files, record.Id);
                 
                 return RedirectToAction("Index");
             }
 
-            ViewBag.category_id = new SelectList(db.category, "Id", "name", record.category_id);
-            ViewBag.publisher_id = new SelectList(db.publisher, "Id", "name", record.publisher_id);
-            ViewBag.licence_id = new SelectList(db.licence, "Id", "name", record.licence_id);
-            ViewBag.role_id = new SelectList(db.role, "Id", "name");
-            ViewBag.location_id = new SelectList(db.location, "Id", "name");
+            ViewBag.category_id = new SelectList(myDatabaseEntities.category, "Id", "name", record.category_id);
+            ViewBag.publisher_id = new SelectList(myDatabaseEntities.publisher, "Id", "name", record.publisher_id);
+            ViewBag.licence_id = new SelectList(myDatabaseEntities.licence, "Id", "name", record.licence_id);
+            ViewBag.role_id = new SelectList(myDatabaseEntities.role, "Id", "name");
+            ViewBag.location_id = new SelectList(myDatabaseEntities.location, "Id", "name");
 
             return View(record);
         }
 
         public ActionResult Recordbearbeitung(int? id)
         {
-            if (!checkSession())
+            if (!checkSession(2))
             {
                 return RedirectToAction("Anmelden", "Benutzer");
             }
@@ -222,10 +367,10 @@ namespace Geolocation_Portal_Test.Controllers
             }
 
             // Datensatz Sichtbarkeit auslesen
-            int record_visibility_role = (int)db.record.Find(id).role_id;
+            int record_visibility_role = (int)myDatabaseEntities.record.Find(id).role_id;
             int logged_in_user = 4;
             bool logged_in = false;
-            if (checkSession())
+            if (checkSession(3))
             {
                 logged_in_user = Convert.ToInt32(Session["UserRole"], new CultureInfo("de-DE"));
                 logged_in = true;
@@ -235,9 +380,9 @@ namespace Geolocation_Portal_Test.Controllers
             // Datensatz Sichtbarkeit = 4 (Öffentlichkeit) oder Benutzer angemeldet und Rolle berechtigt Datensatz zu sehen
             if (record_visibility_role > 3 || logged_in == true && record_visibility_role <= logged_in_user)
             {
-                record record = db.record.Find(id);
-                record.licence = db.licence.Find(record.licence_id);
-                record.publisher = db.publisher.Find(record.publisher_id);
+                record record = myDatabaseEntities.record.Find(id);
+                record.licence = myDatabaseEntities.licence.Find(record.licence_id);
+                record.publisher = myDatabaseEntities.publisher.Find(record.publisher_id);
 
                 int downloadcount = 0;
                 int file_size_conversion_count = 0; // 0 = Bytes
@@ -302,7 +447,7 @@ namespace Geolocation_Portal_Test.Controllers
 
         public ActionResult Recordentfernung(int? id)
         {
-            if (!checkSession())
+            if (!checkSession(2))
             {
                 return RedirectToAction("Anmelden", "Benutzer");
             }
@@ -312,7 +457,7 @@ namespace Geolocation_Portal_Test.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            record record = db.record.Find(id);
+            record record = myDatabaseEntities.record.Find(id);
 
             if (record == null)
             {
@@ -327,7 +472,7 @@ namespace Geolocation_Portal_Test.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult RecordentfernungConfirmed(int id)
         {
-            if (!checkSession())
+            if (!checkSession(2))
             {
                 return RedirectToAction("Anmelden", "Benutzer");
             }
@@ -511,7 +656,7 @@ namespace Geolocation_Portal_Test.Controllers
                     file.SaveAs(filePath);
                     
 
-                    db.file.Add(new Models.file
+                    myDatabaseEntities.file.Add(new Models.file
                     {
                         record_id = recordID,
                         name = file.FileName,
@@ -528,19 +673,7 @@ namespace Geolocation_Portal_Test.Controllers
                 }
             }
 
-            db.SaveChanges();
-        }
-
-        private bool checkSession()
-        {
-            if (Session["UserRole"] != null)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            myDatabaseEntities.SaveChanges();
         }
 
         public ActionResult DownLoad(string fileName, int recordId)
@@ -549,10 +682,10 @@ namespace Geolocation_Portal_Test.Controllers
             string mime = MimeMapping.GetMimeMapping(path);
             
 
-            file file = db.file.Where(f => f.name == fileName && f.record_id == recordId).First();
+            file file = myDatabaseEntities.file.Where(f => f.name == fileName && f.record_id == recordId).First();
             if (file != null) { 
                 file.download_count++;
-                db.SaveChanges();
+                myDatabaseEntities.SaveChanges();
             }
 
             return File(path, mime, file.name);
@@ -584,6 +717,25 @@ namespace Geolocation_Portal_Test.Controllers
             return Redirect(Request.UrlReferrer.ToString());
         }
 
-        
+        /// <summary>
+        /// Check the session. A session exists when a user is logged in.
+        /// The required user role is also checked.
+        /// </summary>
+        /// <param name="requiredUserRole">The required user role.</param>
+        /// <returns>Returns true if the user role matches or is lower.</returns>
+        private bool checkSession(int requiredUserRole)
+        {
+            if (Session["UserRole"] != null)
+            {
+                int loggedInUserRole = Convert.ToInt32(Session["UserRole"], new CultureInfo("de-DE"));
+
+                if (loggedInUserRole <= requiredUserRole)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

@@ -517,7 +517,7 @@
     <Content Include="Views\Benutzer\Anmelden.cshtml" />
     <Content Include="Views\Home\SuccessMessage.cshtml" />
     <Content Include="Views\OpenData\_rating.cshtml" />
-    <Content Include="Views\OpenData\Record.cshtml" />
+    <Content Include="Views\OpenData\Recorderstellung.cshtml" />
     <Content Include="Views\OpenData\Diagramm.cshtml" />
     <Content Include="Views\OpenData\createDiagram.cshtml" />
     <Content Include="Views\Home\Verwaltung.cshtml" />
