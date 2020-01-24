@@ -302,19 +302,19 @@ namespace Geolocation_Portal_Test.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            record record = db.record.Find(id);
+            record record = myDatabaseEntities.record.Find(id);
             if (record == null)
             {
                 return HttpNotFound();
             }
 
-            ViewBag.category_id = new SelectList(db.category, "Id", "name", record.category_id);
-            ViewBag.publisher_id = new SelectList(db.publisher, "Id", "name", record.publisher_id);
-            ViewBag.licence_id = new SelectList(db.licence, "Id", "name", record.licence_id);
-            ViewBag.role_id = new SelectList(db.role, "Id", "name", record.role_id);
-            ViewBag.location_id = new SelectList(db.location, "Id", "name", record.location_id);
+            ViewBag.category_id = new SelectList(myDatabaseEntities.category, "Id", "name", record.category_id);
+            ViewBag.publisher_id = new SelectList(myDatabaseEntities.publisher, "Id", "name", record.publisher_id);
+            ViewBag.licence_id = new SelectList(myDatabaseEntities.licence, "Id", "name", record.licence_id);
+            ViewBag.role_id = new SelectList(myDatabaseEntities.role, "Id", "name", record.role_id);
+            ViewBag.location_id = new SelectList(myDatabaseEntities.location, "Id", "name", record.location_id);
             
-            ViewBag.licence_descriptions = db.licence.ToList();    // Send this list to the view
+            ViewBag.licence_descriptions = myDatabaseEntities.licence.ToList();    // Send this list to the view
 
             return View(record);
         }
@@ -325,7 +325,7 @@ namespace Geolocation_Portal_Test.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(record).State = EntityState.Modified;
+                myDatabaseEntities.Entry(record).State = EntityState.Modified;
 
                 var datType = Request["dataTyp"];
 
@@ -343,22 +343,23 @@ namespace Geolocation_Portal_Test.Controllers
 
                 if (files != null) saveFiles(files, record.Id);
 
-                db.SaveChanges();
+                myDatabaseEntities.SaveChanges();
                 return RedirectToAction("Index");
             }
             
 
-                ViewBag.category_id = new SelectList(db.category, "Id", "name");
-            ViewBag.publisher_id = new SelectList(db.publisher, "Id", "name");
-            ViewBag.licence_id = new SelectList(db.licence, "Id", "name");
-            ViewBag.role_id = new SelectList(db.role, "Id", "name");
-            ViewBag.location_id = new SelectList(db.location, "Id", "name");
+                ViewBag.category_id = new SelectList(myDatabaseEntities.category, "Id", "name");
+            ViewBag.publisher_id = new SelectList(myDatabaseEntities.publisher, "Id", "name");
+            ViewBag.licence_id = new SelectList(myDatabaseEntities.licence, "Id", "name");
+            ViewBag.role_id = new SelectList(myDatabaseEntities.role, "Id", "name");
+            ViewBag.location_id = new SelectList(myDatabaseEntities.location, "Id", "name");
 
-            var licenses = db.licence.ToList();
+            var licenses = myDatabaseEntities.licence.ToList();
             ViewBag.licence_descriptions = licenses;    // Send this list to the view
 
             return View();
         }
+        
         public ActionResult Recorddetails(int? id)
         {
             if (id == null)
@@ -477,9 +478,9 @@ namespace Geolocation_Portal_Test.Controllers
                 return RedirectToAction("Anmelden", "Benutzer");
             }
 
-            record record = db.record.Find(id);
-            db.record.Remove(record);
-            db.SaveChanges();
+            record record = myDatabaseEntities.record.Find(id);
+            myDatabaseEntities.record.Remove(record);
+            myDatabaseEntities.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -487,13 +488,13 @@ namespace Geolocation_Portal_Test.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult RecordComment([Bind(Include = "title,text,person_name,bewertung,record_id")] comment comment)
         {
-            db.comment.Add(comment);
+            myDatabaseEntities.comment.Add(comment);
 
-            double avgRating = db.comment.Where(c => c.record_id == comment.record_id).Average(c => c.bewertung);
+            double avgRating = myDatabaseEntities.comment.Where(c => c.record_id == comment.record_id).Average(c => c.bewertung);
 
-            db.record.Find(comment.record_id).rating = (int)Math.Round(avgRating);
+            myDatabaseEntities.record.Find(comment.record_id).rating = (int)Math.Round(avgRating);
 
-            db.SaveChangesAsync();
+            myDatabaseEntities.SaveChangesAsync();
             return RedirectToAction("Recorddetails", new { id = comment.record_id });
         }
 
@@ -508,8 +509,8 @@ namespace Geolocation_Portal_Test.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.category.Add(category);
-                db.SaveChanges();
+                myDatabaseEntities.category.Add(category);
+                myDatabaseEntities.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -524,7 +525,7 @@ namespace Geolocation_Portal_Test.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            category category = db.category.Find(id);
+            category category = myDatabaseEntities.category.Find(id);
             if (category == null)
             {
                 return HttpNotFound();
@@ -540,7 +541,7 @@ namespace Geolocation_Portal_Test.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            category category = db.category.Find(id);
+            category category = myDatabaseEntities.category.Find(id);
             if (category == null)
             {
                 return HttpNotFound();
@@ -555,8 +556,8 @@ namespace Geolocation_Portal_Test.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(category).State = EntityState.Modified;
-                db.SaveChanges();
+                myDatabaseEntities.Entry(category).State = EntityState.Modified;
+                myDatabaseEntities.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(category);
@@ -568,7 +569,7 @@ namespace Geolocation_Portal_Test.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            category category = db.category.Find(id);
+            category category = myDatabaseEntities.category.Find(id);
             if (category == null)
             {
                 return HttpNotFound();
@@ -580,35 +581,10 @@ namespace Geolocation_Portal_Test.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Kategorieentfernungconfirmed(int id)
         {
-            category category = db.category.Find(id);
-            db.category.Remove(category);
-            db.SaveChanges();
+            category category = myDatabaseEntities.category.Find(id);
+            myDatabaseEntities.category.Remove(category);
+            myDatabaseEntities.SaveChanges();
             return RedirectToAction("Index");
-        }
-
-
-        [HttpPost]
-        public ActionResult Search()
-        {
-            var searchtext = Request["search"];
-
-            IQueryable<record> data = from f in db.record
-                                      where f.record_active == true &&
-                                      (f.description.Contains(searchtext) || f.title.Contains(searchtext))
-                                      select f;
-
-            ViewBag.function = "Suche";
-            if (data != null && data.Count() > 0)
-            {
-                ViewBag.message = "Die Suche nach '" + searchtext + "' ergab " + data.Count() + " Treffer";
-            }
-            else
-            {
-                ViewBag.message = "Die Suche ergab keinen Treffer";
-            }
-
-            ViewBag.category = (List<category>)db.category.ToList();
-            return View("index", data.ToList());
         }
 
         /**
@@ -627,10 +603,8 @@ namespace Geolocation_Portal_Test.Controllers
             return View();
         }
 
-        
-
         /***
-         * asdasdad
+         * 
          */
         private string getFileIcon(string name)
         {
@@ -698,7 +672,7 @@ namespace Geolocation_Portal_Test.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            file file = db.file.Find(id);
+            file file = myDatabaseEntities.file.Find(id);
 
             if (file == null)
             {
@@ -710,8 +684,8 @@ namespace Geolocation_Portal_Test.Controllers
 
             int record_id = file.record_id;
 
-            db.file.Remove(file);
-            db.SaveChanges();
+            myDatabaseEntities.file.Remove(file);
+            myDatabaseEntities.SaveChanges();
 
             //return RedirectToAction("Recordbearbeitung", new { id = record_id } );
             return Redirect(Request.UrlReferrer.ToString());
