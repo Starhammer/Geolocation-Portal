@@ -32,6 +32,12 @@ namespace Geolocation_Portal_Test
             );
 
             routes.MapRoute(
+                name: "DiagramData",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "DiagramData", action = "Index", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "FAQ",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "FAQ", action = "Index", id = UrlParameter.Optional }

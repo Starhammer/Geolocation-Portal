@@ -193,6 +193,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BenutzerController.cs" />
     <Compile Include="Controllers\DataController.cs" />
+    <Compile Include="Controllers\DiagramDataController.cs" />
     <Compile Include="Controllers\FAQController.cs" />
     <Compile Include="Controllers\GeoDataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -518,8 +519,7 @@
     <Content Include="Views\Home\SuccessMessage.cshtml" />
     <Content Include="Views\OpenData\_rating.cshtml" />
     <Content Include="Views\OpenData\Recorderstellung.cshtml" />
-    <Content Include="Views\OpenData\Diagramm.cshtml" />
-    <Content Include="Views\OpenData\createDiagram.cshtml" />
+    <Content Include="Views\DiagramData\createDiagram.cshtml" />
     <Content Include="Views\Home\Verwaltung.cshtml" />
     <Content Include="Views\Benutzer\Benutzerverwaltung.cshtml" />
     <Content Include="Views\OpenData\Recordverwaltung.cshtml" />
@@ -543,6 +543,7 @@
     <Content Include="Views\OpenData\Kategoriedetails.cshtml" />
     <Content Include="Views\OpenData\Kategorie.cshtml" />
     <Content Include="Views\OpenData\Kategorieentfernung.cshtml" />
+    <Content Include="Views\DiagramData\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Testfiles\" />

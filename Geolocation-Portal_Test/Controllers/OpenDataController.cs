@@ -29,7 +29,11 @@ namespace Geolocation_Portal_Test.Controllers
             all_records,
             all_active_records,
             geo_records,
-            dia_records
+            dia_records,
+            sort_alpha_asc,
+            sort_alpha_desc,
+            sort_date_asc,
+            sort_date_desc
         }
 
         /// <summary>
@@ -116,6 +120,42 @@ namespace Geolocation_Portal_Test.Controllers
                                           f.record_active == true &&
                                           f.dia_data == true
                                           select f;
+                                break;
+                            case (restriction_enum.sort_alpha_asc):
+                                // Sort all records from the database.
+                                records = from f in myDatabaseEntities.record
+                                          where f.role_id >= loggedInUserRole &&
+                                          f.record_active == true
+                                          orderby f.title
+                                          select f;
+                                ViewBag.resetRestriction = false;   // If all data records are already displayed, the reset function should not be displayed.
+                                break;
+                            case (restriction_enum.sort_alpha_desc):
+                                // Read out all "diagram" data records from the database.
+                                records = from f in myDatabaseEntities.record
+                                          where f.role_id >= loggedInUserRole &&
+                                          f.record_active == true
+                                          orderby f.title descending
+                                          select f;
+                                ViewBag.resetRestriction = false;   // If all data records are already displayed, the reset function should not be displayed.
+                                break;
+                            case (restriction_enum.sort_date_asc):
+                                // Read out all "diagram" data records from the database.
+                                records = from f in myDatabaseEntities.record
+                                          where f.role_id >= loggedInUserRole &&
+                                          f.record_active == true
+                                          orderby f.dataset_modified_date
+                                          select f;
+                                ViewBag.resetRestriction = false;   // If all data records are already displayed, the reset function should not be displayed.
+                                break;
+                            case (restriction_enum.sort_date_desc):
+                                // Read out all "diagram" data records from the database.
+                                records = from f in myDatabaseEntities.record
+                                          where f.role_id >= loggedInUserRole &&
+                                          f.record_active == true
+                                          orderby f.dataset_modified_date descending
+                                          select f;
+                                ViewBag.resetRestriction = false;   // If all data records are already displayed, the reset function should not be displayed.
                                 break;
                             default:
                                 // do nothing to avoid errors if case is not available.
@@ -585,22 +625,6 @@ namespace Geolocation_Portal_Test.Controllers
             myDatabaseEntities.category.Remove(category);
             myDatabaseEntities.SaveChanges();
             return RedirectToAction("Index");
-        }
-
-        /**
-         * Zeigt einen Datensatz als Diagramm an.
-         */
-        public ActionResult Diagramm()
-        {
-            return View();
-        }
-
-        /**
-         * Erstellt aus einer Datei ein Diagramm.
-         */
-        public ActionResult createDiagram()
-        {
-            return View();
         }
 
         /***

@@ -108,6 +108,10 @@ img {
     display: block;
 }
 
+.icon {
+    display: inline-block;
+}
+
 .thumbnail {
     position: relative;
     display: inline-block;
@@ -255,11 +259,14 @@ main > article {
 }
 
 .navbar-toggler {
-    font-size: 30px;
+    font-size: 25px;
+    padding: 0;
+    padding-left: 8px;
+    padding-right: 8px;
 }
 
 .form-inline {
-    font-size: 38px;
+    font-size: 29px;
 }
 
 .mobileContentOnly {
@@ -410,6 +417,17 @@ textarea {
 /* Extra small devices (portrait phones, less than 576px)
 No media query for `xs` since this is the default in Bootstrap */
 
+@media (min-width: 360px) {
+    .form-inline {
+        font-size: 38px;
+    }
+
+    .navbar-toggler {
+        font-size: 30px;
+        padding: 0.25rem 0.75rem;
+    }
+}
+
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
     .row {
@@ -459,6 +477,10 @@ No media query for `xs` since this is the default in Bootstrap */
     .map-container {
         display: flex;
         flex-direction: row;
+    }
+
+    #MyHeader nav {
+        padding: 10px;
     }
 
 /* Extra large devices (large desktops, 1200px and up) */

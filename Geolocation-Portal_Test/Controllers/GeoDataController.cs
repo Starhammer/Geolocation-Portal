@@ -11,7 +11,8 @@ namespace Geolocation_Portal_Test.Controllers
         // GET: GeoData
         public ActionResult Index(int? id)
         {
-            if (id != null){
+            if (id != null)
+            {
                 ViewBag.FileId = id;
             }
             

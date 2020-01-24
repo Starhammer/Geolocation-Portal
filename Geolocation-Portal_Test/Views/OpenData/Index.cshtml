@@ -10,7 +10,7 @@
 <div id="toolBar">
     <div>
         <a class="nolink" href="#" id="search_button" title="Suchen"><i class="fa fa-search"></i></a>
-        <a class="nolink" href="#" title="Sortieren"><i class="fa fa-sort-amount-asc"></i></a>
+        <a class="nolink" href="#" id="sort_settings_button" title="Sortieren"><i class="fa fa-sort-amount-asc"></i></a>
         <a class="nolink" href="#" id="filter_button" title="Filtern"><i class="fa fa-filter"></i></a>
         @if (Session["UserRole"] != null && Convert.ToInt32(Session["UserRole"]) < 3)
         {
@@ -18,7 +18,7 @@
         }
     </div>
 
-    <!-- Beginn der Filterfunktion -->
+    <!-- Start of the filter function -->
     <div id="filter_settings" style="display: none; text-align: left;">
         <ul class="list-inline" style="margin: 0;">
             <li class="list-inline-item"><a class="nolink" href="#" id="filter_settings_category_button" title="Nach Kateogiren filtern">Kategorien</a></li>
@@ -48,8 +48,18 @@
             <li class="list-inline-item"><a class="nolink" href="#">.geojson</a></li>
         </ul>
     </div>
-    <!-- Ende der Filterfunktion -->
-    <!-- Beginn der Suchfunktion -->
+    <!-- End of the filter function -->
+    <!-- Start of the sort function -->
+    <div id="sort_settings" style="display: none; text-align: left;">
+        <ul class="list-inline" style="margin: 0;">
+            <li class="list-inline-item"><a class="nolink" href="@Url.Action("Index", "OpenData", new { restriction_string = "sort_alpha_asc" })" title="Nach Kateogiren filtern"><i class="fa fa-sort-alpha-asc"></i></a></li>
+            <li class="list-inline-item"><a class="nolink" href="@Url.Action("Index", "OpenData", new { restriction_string = "sort_alpha_desc" })" title="Nach Geo-Datensätzen filtern"><i class="fa fa-sort-alpha-desc"></i></a></li>
+            <li class="list-inline-item"><a class="nolink" href="@Url.Action("Index", "OpenData", new { restriction_string = "sort_date_asc" })" title="Nach Diagramm-Datensätzen filtern"><i class="fa fa-arrow-down"></i><i class="fa fa-calendar"></i></a></li>
+            <li class="list-inline-item"><a class="nolink" href="@Url.Action("Index", "OpenData", new { restriction_string = "sort_date_desc" })" title="Nach Diagramm-Datensätzen filtern"><i class="fa fa-arrow-up"></i><i class="fa fa-calendar"></i></a></li>
+        </ul>
+    </div>
+    <!-- End of the sort function -->
+    <!-- Start of the search function -->
     <div id="search" style="display: none;">
         @using (Html.BeginForm("Index", "OpenData", FormMethod.Post, htmlAttributes: new { @class = "n-column-wrapper" }))
         {
@@ -57,12 +67,13 @@
             <button class="btn btn-primary float-right" style="width: 200px; margin-left: 5px;" type="submit" name="submit">Suchen</button>
         }
     </div>
-    <!-- Ende der Suchfunktion -->
+    <!-- End of the search function -->
 </div>
 
 <p>
     @if (ViewBag.userInfoMessage != null)
     {
+        // Output of the number of search results.
         @ViewBag.userInfoMessage
         if (ViewBag.resetRestriction)
         {
@@ -84,6 +95,7 @@
 
                         @if (Session["UserRole"] != null && Convert.ToInt32(Session["UserRole"]) < 3)
                         {
+                            // Role concept: Administrator (id = 1) and key user (id = 2) may edit and delete data records.
                             <div class="fa-pull-right">
                                 <a class="nolink" href="@Url.Action("Recordbearbeitung", "OpenData", new { id = item.Id })" title="Datensatz bearbeiten"><i class="fa fa-edit"></i></a>
                                 <a class="nolink" href="@Url.Action("Recordentfernung", "OpenData", new { id = item.Id })" title="Datensatz löschen"><i class="fa fa-trash"></i></a>
@@ -104,8 +116,8 @@
                         <p class="card-text">
                             @if (@Html.DisplayFor(modelItem => item.description).ToString().Length > 100)
                             {
-                                // Auf der Übersichtsseite sollen die Beschreibungen nur maximal 100 Zeichen lang sein.
-                                // Um Umlaute nach der ToString() Methode beizubehalten, muss der String encodiert werden.
+                                // On the overview page, the descriptions should be no longer than 100 characters.
+                                // To retain umlauts after the ToString() method, the string must be encoded.
                                 string record_description = item.description.ToString();
                                 byte[] utf8_bytes = System.Text.Encoding.UTF8.GetBytes(record_description);
                                 var description_substring = System.Text.Encoding.UTF8.GetString(utf8_bytes);
@@ -126,6 +138,7 @@
                 <div class="card-footer" style="min-height:50px;">
                     @foreach (var file in item.file)
                     {
+                        // 
                         if (item.geo_data == true)
                         {
                             <a class="nolink float-right ml-2" href="~/GeoData/index/@item.Id" title=""><i class="fa fa-map"></i></a>
@@ -134,74 +147,73 @@
                         {
                             <span><img class="float-right ml-2" width="25" height="25" src="~/icons/@Html.DisplayFor(modelItem => file.file_icon)-icon.png" /></span>
                         }
-                        else
-                        {
-                            <span>
-                                <a href="@Url.Action("Download", "OpenData", new { fileName = file.name, recordId = item.Id})">
-                                    <img class="float-left mr-2" width="25" height="25" src="~/icons/@Html.DisplayFor(modelItem => file.file_icon)-icon.png" />
-                                </a>
-                                    
-                            </span>
-                        }
+
+                        <span>
+                            <a href="@Url.Action("Download", "OpenData", new { fileName = file.name, recordId = item.Id})">
+                                <img class="float-left mr-2" width="25" height="25" src="~/icons/@Html.DisplayFor(modelItem => file.file_icon)-icon.png" />
+                            </a>
+                        </span>
 
                     }
                 </div>
-                <!-- auskommentiert da ansonsten keine weiteren Links auf der card verwendet werden können
-                <a href="#" class="stretched-link"></a> -->
             </div>
         </div>
     }
 </div> 
 <script>
+    /**
+     * Toolbar: show and hide setting ranges.
+     */
+    jQuery(document).ready(function(){
+        jQuery("#filter_button").click(function() {
+            if ($("#filter_settings_category_button").hasClass("myactive")) {
+                jQuery("#filter_settings_categories").slideToggle("slow");
+            }
 
-/*
- * Toolbar Einstellungsbereiche ein- und ausblenden.
- * */
-jQuery(document).ready(function(){
-    jQuery("#filter_button").click(function() {
-        if ($("#filter_settings_category_button").hasClass("myactive")) {
+            if ($("#filter_settings_upload_date_button").hasClass("myactive")) {
+                jQuery("#filter_settings_upload_date").slideToggle("slow");
+            }
+
+            if ($("#filter_settings_file_type_button").hasClass("myactive")) {
+                jQuery("#filter_settings_file_type").slideToggle("slow");
+            }
+
+            jQuery("#filter_settings").slideToggle("slow");
+
+            changeActiveState("#filter_button");
+        });
+
+        jQuery("#filter_settings_category_button").click(function() {
             jQuery("#filter_settings_categories").slideToggle("slow");
-        }
 
-        if ($("#filter_settings_upload_date_button").hasClass("myactive")) {
+            changeActiveState("#filter_settings_category_button");
+        });
+
+        jQuery("#filter_settings_upload_date_button").click(function () {
             jQuery("#filter_settings_upload_date").slideToggle("slow");
-        }
 
-        if ($("#filter_settings_file_type_button").hasClass("myactive")) {
+            changeActiveState("#filter_settings_upload_date_button");
+        });
+
+        jQuery("#filter_settings_file_type_button").click(function () {
             jQuery("#filter_settings_file_type").slideToggle("slow");
-        }
 
-        jQuery("#filter_settings").slideToggle("slow");
+            changeActiveState("#filter_settings_file_type_button");
+        });
 
-        changeActiveState("#filter_button");
-    });
-
-    jQuery("#filter_settings_category_button").click(function() {
-        jQuery("#filter_settings_categories").slideToggle("slow");
-
-        changeActiveState("#filter_settings_category_button");
-    });
-
-    jQuery("#filter_settings_upload_date_button").click(function () {
-        jQuery("#filter_settings_upload_date").slideToggle("slow");
-
-        changeActiveState("#filter_settings_upload_date_button");
-    });
-
-    jQuery("#filter_settings_file_type_button").click(function () {
-        jQuery("#filter_settings_file_type").slideToggle("slow");
-
-        changeActiveState("#filter_settings_file_type_button");
-    });
-
+        jQuery("#sort_settings_button").click(function () {
+            jQuery("#sort_settings").slideToggle("slow");
+        })
     
-    jQuery("#search_button").click(function () {
-        jQuery("#search").slideToggle("slow");
+        jQuery("#search_button").click(function () {
+            jQuery("#search").slideToggle("slow");
+        });
     });
-});
 
     /**
-     * Diese Methode klappt die Einstellungsboxen wieder ein, wenn ein Eltern-Element eingeklappt wird.
+     * This method collapses the settings boxes again when a parent element is collapsed, by adding or deleting a class.
+     * 
+     * param: button_id = the id of the button to add or remove the class.
      */
     function changeActiveState(button_id) {
         if ($(button_id).hasClass("myactive")) {
