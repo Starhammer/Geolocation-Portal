@@ -110,7 +110,9 @@
                     </table>
                 </div>
                 <div class="col">
-                    Dateien und Quellen *
+                    <b>Dateien und Quellen:</b>
+                    <br/>
+                    Wählen Sie nun einige Dateien aus, welche Sie zu diesem Datensatz veröffentlichen möchten. Denken Sie daran, dass es sich inhaltlich nur um eine Datei handeln sollte. Sie können Ihre Datei aber mit unterschiedlichen Dateiendungen hochladen, um den Besuchern ihre Datei besser zur Verfügung zu stellen.
                 </div>
                 <div class="col">
                     @Html.TextBox("files", "", htmlAttributes: new { @type = "file", @multiple = "true" })
@@ -149,7 +151,6 @@
             <button type="submit" class="btn btn-primary">Datensatz hochladen</button>
             <br />
             <br />
-            * Die hochgeladenen Dateien sollen trotz verschiedener Dateiformate inhaltlich identisch sein.
 
         </form>
     </div>
