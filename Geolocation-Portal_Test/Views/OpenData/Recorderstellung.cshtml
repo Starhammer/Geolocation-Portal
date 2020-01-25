@@ -96,30 +96,30 @@
                     @Html.ValidationMessageFor(model => model.publisher_id, "", new { @class = "text-danger" })
                 </div>
             </div>
+            <br/>
             <div class="row">
-                <div class="table-responsive">
-                    <table class="table" id="uploadTable" style="visibility:hidden;">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Größe</th>
-                            </tr>
-                        </thead>
-                        <tbody id="uploadTable_body"></tbody>
-                    </table>
-                </div>
                 <div class="col">
                     <b>Dateien und Quellen:</b>
-                    <br/>
+                    <br />
                     Wählen Sie nun einige Dateien aus, welche Sie zu diesem Datensatz veröffentlichen möchten. Denken Sie daran, dass es sich inhaltlich nur um eine Datei handeln sollte. Sie können Ihre Datei aber mit unterschiedlichen Dateiendungen hochladen, um den Besuchern ihre Datei besser zur Verfügung zu stellen.
                 </div>
                 <div class="col">
                     @Html.TextBox("files", "", htmlAttributes: new { @type = "file", @multiple = "true" })
                 </div>
-
             </div>
-            <br />
+            <br/>
+            <div class="table-responsive">
+                <table class="table" id="uploadTable" style="visibility:hidden;">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Größe</th>
+                        </tr>
+                    </thead>
+                    <tbody id="uploadTable_body"></tbody>
+                </table>
+            </div>
 
             <!-- ToDo: Hier soll eine Tabelle erstellt werden, in welcher die Dateien zwischengespeichert werden. Jede Zeile soll einen Mülleimer zum Entfernen der Datei haben. -->
             <!-- Default checked -->
