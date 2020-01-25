@@ -106,105 +106,108 @@
             <br />
             <div class="row">
                 <div class="col">
-                    Dateien und Quellen *
-                </div>
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Dateiname</th>
-                                <th>Speichergröße</th>
-                                <th>Veröffentlichungsdatum</th>
-                                <th>Downloadanzahl</th>
-                                <th>Herunterladen</th>
-                                <th>Löschen</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var file in Model.file)
-                            {
-                                <tr>
-                                    <td>
-                                        <a href="@Url.Action("Download", "OpenData", new { fileName = file.name, recordId = Model.Id })" title="Herunterladen">
-                                            @file.name
-                                        </a>
-                                    </td>
-                                    <td>@file.file_size.ToString() @ViewData["file_size_extension"]</td>
-                                    <td>@file.file_upload_date</td>
-                                    <td>@file.download_count</td>
-                                    <td>
-                                        <a href="@Url.Action("Download", "OpenData", new { fileName = file.name, recordId = Model.Id })" title="Herunterladen">
-                                            <img class="float-left mr-2" width="25" height="25" src="~/icons/@Html.DisplayFor(modelItem => file.file_icon)-icon.png" />
-                                        </a>
-
-                                        @{
-                                            var filetype = file.name.Split('.');
-
-                                            if (Model.geo_data)
-                                            {
-                                                if (filetype[filetype.Count() - 1] == "geojson")
-                                                {
-                                                    int geofileId = file.Id;
-                                                    <a href="~/GeoData/index/@geofileId.ToString()" title="Vorschau"><i class="fa fa-map"></i></a>
-                                                }
-                                            }
-                                            else if (Model.dia_data)
-                                            {
-                                                if (filetype[filetype.Count() - 1] == "xml")
-                                                {
-                                                    int diafileId = file.Id;
-                                                    <a href="~/GeoData/index/@diafileId.ToString()" title="Vorschau"><i class="fa fa-pie-chart"></i></a>
-                                                }
-                                            }
-                                        }
-                                    </td>
-                                    <td>
-                                        <a class="nolink" href="@Url.Action("Dateientfernung", "OpenData", new { id = file.Id })" title="Datei löschen"><i class="fa fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col">
-                    @Html.TextBox("files", "", htmlAttributes: new { @type = "file", @multiple = "true" })
-
+                    <b>Dateien und Quellen:</b>
+                    <br />
+                    Wählen Sie nun einige Dateien aus, welche Sie zu diesem Datensatz veröffentlichen möchten. Denken Sie daran, dass es sich inhaltlich nur um eine Datei handeln sollte. Sie können Ihre Datei aber mit unterschiedlichen Dateiendungen hochladen, um den Besuchern ihre Datei besser zur Verfügung zu stellen.
                 </div>
             </div>
-                <br />
+            <br />
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Dateiname</th>
+                            <th>Speichergröße</th>
+                            <th>Veröffentlichungsdatum</th>
+                            <th>Downloadanzahl</th>
+                            <th>Herunterladen</th>
+                            <th>Löschen</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var file in Model.file)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="@Url.Action("Download", "OpenData", new { fileName = file.name, recordId = Model.Id })" title="Herunterladen">
+                                        @file.name
+                                    </a>
+                                </td>
+                                <td>@file.file_size.ToString() @ViewData["file_size_extension"]</td>
+                                <td>@file.file_upload_date</td>
+                                <td>@file.download_count</td>
+                                <td>
+                                    <a href="@Url.Action("Download", "OpenData", new { fileName = file.name, recordId = Model.Id })" title="Herunterladen">
+                                        <img class="float-left mr-2" width="25" height="25" src="~/icons/@Html.DisplayFor(modelItem => file.file_icon)-icon.png" />
+                                    </a>
 
-                <!-- ToDo: Hier soll eine Tabelle erstellt werden, in welcher die Dateien zwischengespeichert werden. Jede Zeile soll einen Mülleimer zum Entfernen der Datei haben. -->
-                <!-- Default checked -->
-                <div class="custom-control custom-radio">
-                    <input type="radio" class="custom-control-input" id="radioNormal" name="dataTyp" value="normal" @if (!Model.geo_data && !Model.dia_data) { <text> checked </text> }>
-                    <label class="custom-control-label" for="radioNormal">Dieser Datensatz beinhaltet keine geografischen oder visualisierende Daten</label>
-                </div>
-                <br />
-                <!-- Default unchecked -->
-                <div class="custom-control custom-radio">
-                    <input type="radio" class="custom-control-input" id="radioGeoFile" name="dataTyp" value="geoData" @if (Model.geo_data) { <text> checked </text> }>
-                    <label class="custom-control-label" for="radioGeoFile">Dieser Datensatz beinhaltet geografische Daten</label>
-                </div>
-                <br />
-                <div class="custom-control custom-radio">
-                    <input type="radio" class="custom-control-input" id="radioDiagram" name="dataTyp" value="diaData" @if (Model.dia_data) { <text> checked </text> }>
-                    <label class="custom-control-label" for="radioDiagram">Dieser Datensatz beinhaltet visualisierende Daten</label>
-                </div>
-                <br />
-                <div class="form-group row">
-                    <div class="col-3">
-                        @Html.LabelFor(model => model.record_active, htmlAttributes: new { @class = "" })
-                    </div>
-                    <div class="col-9">
-                        @Html.EditorFor(model => model.record_active)
-                        @Html.ValidationMessageFor(model => model.record_active, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary">Datensatz hochladen</button>
-                <br />
-                <br />
-                * Die hochgeladenen Dateien sollen trotz verschiedenen Dateiformate inhaltlich identisch sein.
+                                    @{
+                                        var filetype = file.name.Split('.');
 
-</form>
+                                        if (Model.geo_data)
+                                        {
+                                            if (filetype[filetype.Count() - 1] == "geojson")
+                                            {
+                                                int geofileId = file.Id;
+                                                <a href="~/GeoData/index/@geofileId.ToString()" title="Vorschau"><i class="fa fa-map"></i></a>
+                                            }
+                                        }
+                                        else if (Model.dia_data)
+                                        {
+                                            if (filetype[filetype.Count() - 1] == "xml")
+                                            {
+                                                int diafileId = file.Id;
+                                                <a href="~/GeoData/index/@diafileId.ToString()" title="Vorschau"><i class="fa fa-pie-chart"></i></a>
+                                            }
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    <a class="nolink" href="@Url.Action("Dateientfernung", "OpenData", new { id = file.Id })" title="Datei löschen"><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="col">
+                @Html.TextBox("files", "", htmlAttributes: new { @type = "file", @multiple = "true" })
+
+            </div>
+
+            <br />
+
+            <!-- ToDo: Hier soll eine Tabelle erstellt werden, in welcher die Dateien zwischengespeichert werden. Jede Zeile soll einen Mülleimer zum Entfernen der Datei haben. -->
+            <!-- Default checked -->
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="radioNormal" name="dataTyp" value="normal" @if (!Model.geo_data && !Model.dia_data) { <text> checked </text> }>
+                <label class="custom-control-label" for="radioNormal">Dieser Datensatz beinhaltet keine geografischen oder visualisierende Daten</label>
+            </div>
+            <br />
+            <!-- Default unchecked -->
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="radioGeoFile" name="dataTyp" value="geoData" @if (Model.geo_data) { <text> checked </text> }>
+                <label class="custom-control-label" for="radioGeoFile">Dieser Datensatz beinhaltet geografische Daten</label>
+            </div>
+            <br />
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="radioDiagram" name="dataTyp" value="diaData" @if (Model.dia_data) { <text> checked </text> }>
+                <label class="custom-control-label" for="radioDiagram">Dieser Datensatz beinhaltet visualisierende Daten</label>
+            </div>
+            <br />
+            <div class="form-group row">
+                <div class="col-3">
+                    @Html.LabelFor(model => model.record_active, htmlAttributes: new { @class = "" })
+                </div>
+                <div class="col-9">
+                    @Html.EditorFor(model => model.record_active)
+                    @Html.ValidationMessageFor(model => model.record_active, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Datensatz hochladen</button>
+            <br />
+            <br />
+
+        </form>
     </div>
 }
