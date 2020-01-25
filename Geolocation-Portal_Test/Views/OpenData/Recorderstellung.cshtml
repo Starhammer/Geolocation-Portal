@@ -144,7 +144,7 @@
                     @Html.LabelFor(model => model.record_active, htmlAttributes: new { @class = "" })
                 </div>
                 <div class="col-9">
-                    @Html.EditorFor(model => model.record_active)
+                    @Html.CheckBoxFor(model => model.record_active, new { @checked = "checked" })
                     @Html.ValidationMessageFor(model => model.record_active, "", new { @class = "text-danger" })
                 </div>
             </div>
