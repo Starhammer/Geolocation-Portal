@@ -278,7 +278,7 @@ namespace Geolocation_Portal_Test.Controllers
             ViewBag.category_id = new SelectList(myDatabaseEntities.category, "Id", "name");
             ViewBag.publisher_id = new SelectList(myDatabaseEntities.publisher, "Id", "name");
             ViewBag.licence_id = new SelectList(myDatabaseEntities.licence, "Id", "name");
-            ViewBag.role_id = new SelectList(myDatabaseEntities.role, "Id", "name");
+            ViewBag.role_id = new SelectList(myDatabaseEntities.role, "Id", "name",4);
             ViewBag.location_id = new SelectList(myDatabaseEntities.location, "Id", "name");
 
             //var licenses = myDatabaseEntities.licence.ToList();
