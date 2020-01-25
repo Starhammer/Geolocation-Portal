@@ -52,6 +52,7 @@ namespace Geolocation_Portal_Test.Controllers
                     Session["UserID"] = obj.Id.ToString();
                     Session["UserName"] = obj.username.ToString();
                     Session["UserRole"] = obj.role_id.ToString();
+                    Session["UserFullName"] = obj.first_name.ToString()+" "+ obj.last_name.ToString();
                     return RedirectToAction("WelcomePage");
                 }
                 else
