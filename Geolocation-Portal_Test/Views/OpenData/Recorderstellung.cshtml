@@ -96,15 +96,26 @@
                     @Html.ValidationMessageFor(model => model.publisher_id, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <br />
             <div class="row">
+                <div class="table-responsive">
+                    <table class="table" id="uploadTable" style="visibility:hidden;">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Größe</th>
+                            </tr>
+                        </thead>
+                        <tbody id="uploadTable_body"></tbody>
+                    </table>
+                </div>
                 <div class="col">
                     Dateien und Quellen *
                 </div>
                 <div class="col">
                     @Html.TextBox("files", "", htmlAttributes: new { @type = "file", @multiple = "true" })
-
                 </div>
+
             </div>
             <br />
 
@@ -143,3 +154,33 @@
         </form>
     </div>
 }
+
+<script type="text/javascript">
+    var validateFileUpload = function () {
+        document.getElementById("uploadTable").style.visibility = "visible";
+
+        var filelist = document.getElementById("files").files || [];
+        console.log(filelist);
+        for (var i = 0; i < filelist.length; i++) {
+            var file_name = filelist[i].name;
+            var file_size = filelist[i].size
+
+            
+            var table = document.getElementById("uploadTable_body"),
+                row = document.createElement("tr"),
+                col1 = document.createElement("td"),
+                col2 = document.createElement("td");
+                col3 = document.createElement("td");
+
+                col1.appendChild(document.createTextNode(i + 1));
+                col2.appendChild(document.createTextNode(file_name));
+            col3.appendChild(document.createTextNode(file_size));
+                row.appendChild(col1);
+            row.appendChild(col2);
+            row.appendChild(col3);
+                table.appendChild(row);
+            
+        }
+    }
+    document.getElementById("files").onchange = validateFileUpload;
+</script>
