@@ -9,7 +9,7 @@
 
 <div id="toolBar">
     <div>
-        <a class="nolink" href="#" id="" title="Gesammelte Geo-Datensätze auf einer Karte anzeigen"><i class="fa fa-map-marker"></i><sub><span id="geoDataShoppingCartCount">2</span></sub></a>
+        <a class="nolink" href="~/GeoData/index" id="" title="Gesammelte Geo-Datensätze auf einer Karte anzeigen"><i class="fa fa-map-marker"></i><sub><span id="geoDataShoppingCartCount">2</span></sub></a>
         <a class="nolink" href="#" id="search_button" title="Suchen"><i class="fa fa-search"></i></a>
         <a class="nolink" href="#" id="sort_settings_button" title="Sortieren"><i class="fa fa-sort-amount-asc"></i></a>
         <a class="nolink" href="#" id="filter_button" title="Filtern"><i class="fa fa-filter"></i></a>
@@ -17,20 +17,13 @@
         {
             <a class="nolink" href="@Url.Action("Recorderstellung", "OpenData")" title="Datensatz hinzufügen"><i class="fa fa-plus"></i></a>
 
-            if (Session["ShowAllRecords"] != null && Convert.ToBoolean(Session["ShowAllRecords"]) == false)
-            {
-                Session["ShowAllRecords"] = true;
-                <a id="showAllRecords_button" class="nolink" href="@Url.Action("Index", "OpenData", new { restriction_string = "all_records" })" title="Alle Datensätze anzeigen">
-                    <i class="fa fa-eye"></i>
-                </a>
-            }
-            else
-            {
-                Session["ShowAllRecords"] = false;
-                <a id="showAllRecords_button" class="nolink" href="@Url.Action("Index", "OpenData", new { restriction_string = "all_active_records" })" title="Alle aktiven Datensätze anzeigen">
-                    <i class="fa fa-eye-slash"></i>
-                </a>
-            }
+            <a id="showAllRecords_button" class="nolink hideLink" href="@Url.Action("Index", "OpenData", new { restriction_string = "all_records" })" title="Alle Datensätze anzeigen">
+                <i class="fa fa-eye"></i>
+            </a>
+
+            <a id="showActivatedRecords_button" class="nolink hideLink" href="@Url.Action("Index", "OpenData", new { restriction_string = "all_active_records" })" title="Alle aktiven Datensätze anzeigen">
+                <i class="fa fa-eye-slash"></i>
+            </a>
         }
     </div>
 
@@ -125,7 +118,7 @@
                                     <i class="fa fa-calendar"></i>
                                     @Html.DisplayFor(modelItem => item.dataset_modified_date.ToString().Split(new char[] { ' ' })[0])
                                 </span>
-                                <span><i class="fa fa-download"></i> @item.file.Sum(f=>f.download_count)</span>
+                                <span><i class="fa fa-download"></i> @item.file.Sum(f => f.download_count)</span>
                                 @Html.Partial("_rating", item.rating)
                             </div>
                         </div>
@@ -141,11 +134,11 @@
 
                             @description_substring
                             <span>...</span>
-                        }
-                        else
-                        {
+                            }
+                            else
+                            {
                             @Html.DisplayFor(modelItem => item.description)
-                        }
+                            }
                     </p>
                     <div class="text-right">
                         <a href="@Url.Action("Recorddetails", "OpenData", new { id = item.Id })" title="Details anzeigen">Weiterlesen</a>
@@ -173,62 +166,64 @@
                             }
 
                             <span>
-                                <a href="@Url.Action("Download", "OpenData", new { fileName = file.name, recordId = item.Id})">
+                                <a href="@Url.Action("Download", "OpenData", new { fileName = file.name, recordId = item.Id })">
                                     <img class="float-left mr-2" width="25" height="25" src="~/icons/@Html.DisplayFor(modelItem => file.file_icon)-icon.png" />
                                 </a>
                             </span>
 
-                            }
+                        }
                     </div>
             </div>
         </div>
     }
 </div> 
 <script type="text/javascript">
+
     /**
-     * Add a Record ID to a map shopping cart to display multiple geographical data on the map at once.
+     * Contains all jQuery functions, because they refer to an ID. If the document is not fully loaded, the ID cannot be found and an error occurs.
      */
-    function addMapRecordToShoppingCart(recordID) {
-        console.log("addMapRecordToShoppingCart Method called");
-
-        if (recordID != null) {
-
-            // Check if session variable exists.
-            if (localStorage["MapRecordShoppingCart"] == null) {
-                localStorage["MapRecordShoppingCart"] = "";
+    jQuery(document).ready(function () {
+        // Displays either the "Show all records" or "Show all active records" icon.
+        if (localStorage["showAllRecords"] != null && JSON.parse(localStorage["showAllRecords"]) == true) {
+            if ($("#showAllRecords_button").hasClass("hideLink")) {
+                $("#showAllRecords_button").removeClass("hideLink");
             }
-
-            // Parse session variable value to string.
-            var recordIdList = JSON.parse(localStorage["MapRecordShoppingCart"]);
-            var recordIdList = recordIdList.split(";");
-
-            var recordExists = false;
-
-            for (int i = 0; i < recordIdList; i++) {
-                if (recordID == recordIdList[i]) {
-                    recordExists = false;
-                }
+        } else {
+            if ($("#showActivatedRecords_button").hasClass("hideLink")) {
+                $("#showActivatedRecords_button").removeClass("hideLink");
             }
-
-            // Change the font size of the page.
-            if (recordExists == false) {
-                Session["MapRecordShoppingCart"] += recordID + ";";
-            } else {
-                // Fehlermeldung ausgeben.
-                $("#userInfoMessage").html = "";
-            }
-
-            // Add to shopping-cart
-            $('geoDataShoppingCartCount').html(recordIdList.count());
-
         }
-    }
 
+        /**
+         * When the page is loaded for the first time, the required local memory variables must be created.
+         */
+        jQuery(window).on("load", function () {
+            if (localStorage["showAllRecords"] == null) {
+                localStorage["showAllRecords"] = true;
+            }
+        });
 
-    /**
-     * Toolbar: show and hide setting ranges.
-     */
-    jQuery(document).ready(function(){
+        /**
+         * When the user clicks on the "ShowAllRecords" button, the local memory variable must be changed.
+         */
+        jQuery("#showAllRecords_button").click(function () {
+            if (JSON.parse(localStorage["showAllRecords"]) != null) {
+                localStorage["showAllRecords"] = false;
+            }
+        });
+
+        /**
+         * When the user clicks on the "ShowActivatedRecords" button, the local memory variable must be changed.
+         */
+        jQuery("#showActivatedRecords_button").click(function () {
+            if (JSON.parse(localStorage["showAllRecords"]) != null) {
+                localStorage["showAllRecords"] = true;
+            }
+        });
+
+        /**
+         * When the user clicks on the Filter button, the filter settings are displayed or hidden. When hiding, all sub-settings must also be hidden.
+         */
         jQuery("#filter_button").click(function() {
             if ($("#filter_settings_category_button").hasClass("myactive")) {
                 jQuery("#filter_settings_categories").slideToggle("slow");
@@ -247,30 +242,49 @@
             changeActiveState("#filter_button");
         });
 
+        /**
+         * When the user clicks on Category Filtering in the filter settings, the category filter settings are shown or hidden.
+         */
         jQuery("#filter_settings_category_button").click(function() {
             jQuery("#filter_settings_categories").slideToggle("slow");
 
             changeActiveState("#filter_settings_category_button");
         });
 
+        /**
+         * When the user clicks on Upload Date Filtering in the filter settings, the upload date filter settings are shown or hidden.
+         */
         jQuery("#filter_settings_upload_date_button").click(function () {
             jQuery("#filter_settings_upload_date").slideToggle("slow");
 
             changeActiveState("#filter_settings_upload_date_button");
         });
 
+        /**
+         * When the user clicks on File Type Filtering in the filter settings, the file type filter settings are shown or hidden.
+         */
         jQuery("#filter_settings_file_type_button").click(function () {
             jQuery("#filter_settings_file_type").slideToggle("slow");
 
             changeActiveState("#filter_settings_file_type_button");
         });
 
+        /**
+         * When the user clicks on Sort in the toolbar settings, the sort settings are shown or hidden.
+         */
         jQuery("#sort_settings_button").click(function () {
             jQuery("#sort_settings").slideToggle("slow");
+
+            changeActiveState("#sort_settings_button");
         })
-    
+
+        /**
+         * When the user clicks on Search in the toolbar settings, the search settings are shown or hidden.
+         */
         jQuery("#search_button").click(function () {
             jQuery("#search").slideToggle("slow");
+
+            changeActiveState("#search_button");
         });
     });
 
@@ -284,6 +298,55 @@
             $(button_id).removeClass("myactive");
         } else {
             $(button_id).addClass("myactive");
+        }
+    }
+
+    /**
+     * Add a Record ID to a map shopping cart to display multiple geographical data on the map at once.
+     */
+    function addMapRecordToShoppingCart(recordID) {
+        console.log("addMapRecordToShoppingCart Method called");
+
+        if (recordID != null) {
+            console.log("Record ID = " + recordID);
+
+            // Check if session variable exists.
+            if (localStorage["MapRecordShoppingCart"] == null) {
+                console.log("MapRecordShoppingCart was null and is now empty");
+                localStorage["MapRecordShoppingCart"] = '{ "id":"1", "id":"2" }';
+            }
+
+            // Parse session variable value to string.
+            var jsonRecordList = JSON.parse(localStorage["MapRecordShoppingCart"]);
+            console.log(jsonRecordList.id);
+            var recordExists = false;
+
+            for (var key in jsonRecordList) {
+                if (jsonRecordList.hasOwnProperty(key)) {
+                    console.log(key + " -> " + jsonRecordList[key]);
+
+                    var id = jsonRecordList[key];
+                    if (id == recordID) {
+                        recordExists = true;
+                        break;
+                    }
+                }
+            }
+
+            // Add new id to the shopping cart.
+            if (recordExists == false) {
+                jsonString = '"id":"' + recordID + '"';
+                jsonRecordList.push(jsonString);
+                localStorage["MapRecordShoppingCart"] = JSON.parse(jsonRecordList);
+            } else {
+                delete jsonRecordList[recordID];
+            }
+
+            // Add to shopping-cart
+            $('geoDataShoppingCartCount').html(jsonRecordList.length);
+
+        } else {
+            console.error("id of record is null");
         }
     }
 </script>
