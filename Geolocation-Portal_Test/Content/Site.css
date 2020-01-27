@@ -257,16 +257,22 @@ main > article {
     padding: 10px;
     margin-bottom: 10px;
     font-size: 1.8em;
+    line-height: normal;
 }
 
-.card-header,
-.card-footer {
+#toolBar > div {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.record-overview-header,
+.record-overview-footer {
     max-height: 50px;
     height: 50px;
     min-height: 50px;
 }
 
-.card-body {
+.record-overview-body {
     max-height: 230px;
     height: 230px;
     min-height: 230px;
@@ -332,6 +338,19 @@ main > article {
 .navbar-brand {
     flex-grow: 1;
     margin-right: 0;
+}
+
+.navbar-nav {
+    line-height: 40px;
+    font-size: 20px;
+    font-weight: 200;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.navbar-nav li {
+    background-color: gray;
+    margin: 5px;
 }
 
 .navbar-toggler {
@@ -533,6 +552,19 @@ No media query for `xs` since this is the default in Bootstrap */
 
     .col-3 {
         max-width: 25%;
+    }
+
+    .navbar-nav {
+        line-height: 40px;
+        font-size: 20px;
+        font-weight: 200;
+        margin-top: 10px;
+        margin-bottom: 0;
+    }
+
+    .navbar-nav li {
+        background-color: transparent;
+        margin: 5px;
     }
 }
 

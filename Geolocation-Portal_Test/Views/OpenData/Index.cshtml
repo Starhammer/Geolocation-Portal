@@ -27,6 +27,16 @@
         }
     </div>
 
+    <!-- Start of the search function -->
+    <div id="search" style="display: none;">
+        @using (Html.BeginForm("Index", "OpenData", FormMethod.Post, htmlAttributes: new { @class = "n-column-wrapper" }))
+        {
+            <input class="float-right form-control" type="search" placeholder="Suchbegriff..." aria-label="Search" name="search" required="required" pattern="[A-Za-z0-9]{1,20}" />
+            <button class="btn btn-primary float-right" style="width: 200px; margin-left: 5px;" type="submit" name="submit">Suchen</button>
+        }
+    </div>
+    <!-- End of the search function -->
+
     <!-- Start of the filter function -->
     <div id="filter_settings" style="display: none; text-align: left;">
         <ul class="list-inline" style="margin: 0;">
@@ -58,6 +68,7 @@
         </ul>
     </div>
     <!-- End of the filter function -->
+
     <!-- Start of the sort function -->
     <div id="sort_settings" style="display: none; text-align: left;">
         <ul class="list-inline" style="margin: 0;">
@@ -68,15 +79,6 @@
         </ul>
     </div>
     <!-- End of the sort function -->
-    <!-- Start of the search function -->
-    <div id="search" style="display: none;">
-        @using (Html.BeginForm("Index", "OpenData", FormMethod.Post, htmlAttributes: new { @class = "n-column-wrapper" }))
-        {
-            <input class="float-right form-control" type="search" placeholder="Suchbegriff..." aria-label="Search" name="search" required="required" pattern="[A-Za-z0-9]{1,20}" />
-            <button class="btn btn-primary float-right" style="width: 200px; margin-left: 5px;" type="submit" name="submit">Suchen</button>
-        }
-    </div>
-    <!-- End of the search function -->
 </div>
 
 <p id="userInfoMessage">
@@ -96,7 +98,7 @@
     {
         <div class="card bg-light mb-3" style="max-width: 40rem;">
             <div class="card-block">
-                <div class="card-header">
+                <div class="card-header record-overview-header">
                     <img class="icon" width="20" height="20" src="~/icons/Category/@Html.DisplayFor(modelItem => item.category.icon)" />
                     <a class="nolink font-weight-bold" href="@Url.Action("Recorddetails", "OpenData", new { id = item.Id })" title="Details anzeigen">
                         @if (@Html.DisplayFor(modelItem => item.title).ToString().Length > 30)
@@ -126,7 +128,7 @@
                             </div>
                         }
                 </div>
-                <div class="card-body">
+                <div class="card-body record-overview-body">
                     <div class="card-subtitle">
                         <div class="d-flex justify-content-between">
                             <span>
@@ -159,7 +161,7 @@
                         <a href="@Url.Action("Recorddetails", "OpenData", new { id = item.Id })" title="Details anzeigen">Weiterlesen</a>
                     </div>
                 </div>
-                <div class="card-footer" style="min-height:50px;">
+                <div class="card-footer record-overview-footer" style="min-height:50px;">
                     @foreach (var file in item.file)
                     {
                         //
