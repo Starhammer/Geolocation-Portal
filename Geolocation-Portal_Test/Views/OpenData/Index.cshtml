@@ -99,7 +99,22 @@
                 <div class="card-header">
                     <img class="icon" width="20" height="20" src="~/icons/Category/@Html.DisplayFor(modelItem => item.category.icon)" />
                     <a class="nolink font-weight-bold" href="@Url.Action("Recorddetails", "OpenData", new { id = item.Id })" title="Details anzeigen">
-                        @Html.DisplayFor(modelItem => item.title)
+                        @if (@Html.DisplayFor(modelItem => item.title).ToString().Length > 30)
+                        {
+                            // On the overview page, the descriptions should be no longer than 20 characters.
+                            // To retain umlauts after the ToString() method, the string must be encoded.
+                            string record_title = item.title.ToString();
+                            byte[] utf8_bytes = System.Text.Encoding.UTF8.GetBytes(record_title);
+                            var title_substring = System.Text.Encoding.UTF8.GetString(utf8_bytes);
+                            title_substring = title_substring.ToString().Substring(0, 29);
+
+                            @title_substring
+                            <span>...</span>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelItem => item.title)
+                        }
                     </a>
 
                         @if (Session["UserRole"] != null && Convert.ToInt32(Session["UserRole"]) < 3)
@@ -110,69 +125,69 @@
                                 <a class="nolink" href="@Url.Action("Recordentfernung", "OpenData", new { id = item.Id })" title="Datensatz löschen"><i class="fa fa-trash"></i></a>
                             </div>
                         }
-                    </div>
-                    <div class="card-body">
-                        <div class="card-subtitle">
-                            <div class="d-flex justify-content-between">
-                                <span>
-                                    <i class="fa fa-calendar"></i>
-                                    @Html.DisplayFor(modelItem => item.dataset_modified_date.ToString().Split(new char[] { ' ' })[0])
-                                </span>
-                                <span><i class="fa fa-download"></i> @item.file.Sum(f => f.download_count)</span>
-                                @Html.Partial("_rating", item.rating)
-                            </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-subtitle">
+                        <div class="d-flex justify-content-between">
+                            <span>
+                                <i class="fa fa-calendar"></i>
+                                @Html.DisplayFor(modelItem => item.dataset_modified_date.ToString().Split(new char[] { ' ' })[0])
+                            </span>
+                            <span><i class="fa fa-download"></i> @item.file.Sum(f => f.download_count)</span>
+                            @Html.Partial("_rating", item.rating)
                         </div>
-                        <p class="card-text">
-                            @if (@Html.DisplayFor(modelItem => item.description).ToString().Length > 100)
-                            {
-                                // On the overview page, the descriptions should be no longer than 100 characters.
-                                // To retain umlauts after the ToString() method, the string must be encoded.
-                                string record_description = item.description.ToString();
-                                byte[] utf8_bytes = System.Text.Encoding.UTF8.GetBytes(record_description);
-                                var description_substring = System.Text.Encoding.UTF8.GetString(utf8_bytes);
-                                description_substring = description_substring.ToString().Substring(0, 100);
+                    </div>
+                    <p class="card-text">
+                        @if (@Html.DisplayFor(modelItem => item.description).ToString().Length > 100)
+                        {
+                            // On the overview page, the descriptions should be no longer than 100 characters.
+                            // To retain umlauts after the ToString() method, the string must be encoded.
+                            string record_description = item.description.ToString();
+                            byte[] utf8_bytes = System.Text.Encoding.UTF8.GetBytes(record_description);
+                            var description_substring = System.Text.Encoding.UTF8.GetString(utf8_bytes);
+                            description_substring = description_substring.ToString().Substring(0, 99);
 
-                            @description_substring
-                            <span>...</span>
-                            }
-                            else
-                            {
-                            @Html.DisplayFor(modelItem => item.description)
-                            }
+                        @description_substring
+                        <span>...</span>
+                        }
+                        else
+                        {
+                        @Html.DisplayFor(modelItem => item.description)
+                        }
                     </p>
                     <div class="text-right">
                         <a href="@Url.Action("Recorddetails", "OpenData", new { id = item.Id })" title="Details anzeigen">Weiterlesen</a>
                     </div>
                 </div>
-                    <div class="card-footer" style="min-height:50px;">
-                        @foreach (var file in item.file)
+                <div class="card-footer" style="min-height:50px;">
+                    @foreach (var file in item.file)
+                    {
+                        //
+                        if (item.geo_data == true)
                         {
-                            //
-                            if (item.geo_data == true)
-                            {
-                                <span>
-                                    <a class="nolink float-right ml-2" href="~/GeoData/index/@item.Id" title="Vorschau auf der Karte"><i class="fa fa-map"></i></a>
-
-                                    <a class="nolink float-right ml-2" href="javascript:void(0);" onclick="addMapRecordToShoppingCart(@item.Id)" title="Zum Kartenwarenkorb hinzufügen">
-                                        <i class="fa fa-map-marker"></i>
-                                    </a>
-                                </span>
-                            }
-                            else if (item.dia_data == true)
-                            {
-                                <span>
-                                    <a class="nolink float-right ml-2" href="~/DiagramData/index/@item.Id" title="Vorschau als Diagramm"><i class="fa fa-pie-chart"></i></a>
-                                </span>
-                            }
-
                             <span>
-                                <a href="@Url.Action("Download", "OpenData", new { fileName = file.name, recordId = item.Id })">
-                                    <img class="float-left mr-2" width="25" height="25" src="~/icons/@Html.DisplayFor(modelItem => file.file_icon)-icon.png" />
+                                <a class="nolink float-right ml-2" href="~/GeoData/index/@item.Id" title="Vorschau auf der Karte"><i class="fa fa-map"></i></a>
+
+                                <a class="nolink float-right ml-2" href="javascript:void(0);" onclick="addMapRecordToShoppingCart(@item.Id)" title="Zum Kartenwarenkorb hinzufügen">
+                                    <i class="fa fa-map-marker"></i>
                                 </a>
                             </span>
-
                         }
-                    </div>
+                        else if (item.dia_data == true)
+                        {
+                            <span>
+                                <a class="nolink float-right ml-2" href="~/DiagramData/index/@item.Id" title="Vorschau als Diagramm"><i class="fa fa-pie-chart"></i></a>
+                            </span>
+                        }
+
+                        <span>
+                            <a href="@Url.Action("Download", "OpenData", new { fileName = file.name, recordId = item.Id })">
+                                <img class="float-left mr-2" width="25" height="25" src="~/icons/@Html.DisplayFor(modelItem => file.file_icon)-icon.png" />
+                            </a>
+                        </span>
+
+                    }
+                </div>
             </div>
         </div>
     }

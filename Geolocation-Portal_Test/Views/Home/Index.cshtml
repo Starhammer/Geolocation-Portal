@@ -3,11 +3,12 @@
 }
 
     <div>
-        <h1>Willkommen im Open Data Portal der Großen Kreisstadt Mosbach!</h1>
+        <h1>Open Data Portal</h1>
+        <h4>Willkommen bei der Großen Kreisstadt Mosbach!</h4>
         <hr />
 
         <!-- Tutorial: Overlay responsive erstellen https://stackoverflow.com/questions/43333495/text-over-image-responsive/43333543 -->
-        <div id="box-search">
+        <div id="video-container" class="desktopContentOnly">
             <div class="thumbnail">
                 <video id="welcomevideo" controls autoplay loop muted>
                     <source src="~/Content/Videos/rathaus_1920px.mp4" type="video/mp4" media="all and (min-width:768px)">
@@ -31,7 +32,7 @@
                         "Wie haben sich die Mietpreise in den letzten Jahren verändert?"
                     ];
 
-                    var sec = 14;
+                    var sec = 12;
                     var i = 0;
                     function updateDiv() {
                         console.log(document.getElementById('oval-thought').innerHTML);
@@ -53,14 +54,14 @@
     <div class="row">
         <div class="col-md-4">
             <h3>Was ist ein Open Data Portal?</h3>
-            <p>
+            <p class="text-justify">
                 Das Open Data Portal ist der zentrale Einstiegspunkt zu allen öffentlichen Daten (engl. Open-Data) 
                 der Großen Kreisstadt Mosbach. Open-Data sind hierdurch für jeden jederzeit verfügbar und transparent.
             </p>
         </div>
         <div class="col-md-4">
             <h3>Was sind Open Data?</h3>
-            <p>
+            <p class="text-justify">
                 Unter Open Data sind alle Daten zu verstehen, die der Öffentlichkeit frei zur Verfügung gestellt werden. 
                 Hierbei handelt es sich um jegliche Daten, die von allgemeinem Interesse sind, wie zum Beispiel Haushalts- 
                 oder Verkehrsdaten der Großen Kreisstadt Mosbach. Open Data sind primär und stellen Rohdaten dar. 
@@ -70,7 +71,7 @@
         </div>
         <div class="col-md-4">
             <h3>Für wen sind Open Data interessant?</h3>
-            <p>
+            <p class="text-justify">
                 Alle Open Data sind von allgemeinem Interesse. Daher sind diese sowohl für interessierte Bürger, 
                 ehrenamtlich Tätige, Entwickler und Unternehmen aber auch für Mitarbeiter der Großen Kreisstadt Mosbach, 
                 andere Gemeinden und für die Bundesrepublik Deutschland von Interesse.
@@ -78,7 +79,7 @@
         </div>
         <div class="col-md-4">
             <h3>Wie kann ich Open Data verwenden?</h3>
-            <p>
+            <p class="text-justify">
                 Open Data können prinzipiell durch jedermann für jegliche Zwecke weiterverarbeitet und 
                 weiterverbreitet werden. Open Data werden kostenlos, standardisiert und maschinenlesbar zur 
                 Verfügung gestellt.
@@ -86,7 +87,7 @@
         </div>
         <div class="col-md-4">
             <h3>Welchen Nutzen habe ich von Open Data?</h3>
-            <p>
+            <p class="text-justify">
                 Mithilfe von Open Data können Sie sich z.B. über Freizeitangebote der Großen Kreisstadt Mosbach 
                 informieren und diese Informationen z.B. in eine eigene Anwendung integrieren oder zur Erstellung 
                 einer Grafik weiterverwenden. Durch Open Data wird Transparenz geschaffen und Sie können sich 
@@ -99,6 +100,6 @@
             <p>
                 In unserem FAQ finden Sie Antworten auf häufig gestellte Fragen.
             </p>
-            <p><a class="btn btn-default" href="@Url.Action("Index", "FAQ")">Weiter zu den FAQs &raquo;</a></p>
+            <p><a class="btn btn-primary" href="@Url.Action("Index", "FAQ")">Weiter zu den FAQs &raquo;</a></p>
         </div>
     </div>

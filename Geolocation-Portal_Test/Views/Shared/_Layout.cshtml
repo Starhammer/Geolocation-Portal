@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>Geo-Portal Mosbach</title>
     <link href="~/Content/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,700|Prata" rel="stylesheet">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
@@ -20,23 +21,23 @@
 
                 <div class="align-middle m1-auto order-lg-last" style="flex-grow: 0;">
                     <form class="form-inline mt-md-0">
-                        <input class="desktopContentOnly form-control mr-sm-2" type="search" placeholder="Suchbegriff..." aria-label="Search">
-                        <a class="nolink mr-sm-2 padding-left-10" href="#" title="Suche starten">
+                        <input class="no-headline-font-family desktopContentOnly form-control mr-sm-2" type="search" placeholder="Suchbegriff..." aria-label="Search">
+                        <a class="mr-sm-2 menu-icon padding-left-10" href="#" title="Suche starten">
                             <i class="fa fa-search"></i>
                         </a>
                         @if (Session["UserName"] == null)
                         {
-                            <a class="nolink mr-sm-2 padding-left-10" href="@Url.Action("Anmelden", "Benutzer")" title="Login">
+                            <a class="mr-sm-2 menu-icon padding-left-10" href="@Url.Action("Anmelden", "Benutzer")" title="Login">
                                 <i class="fa fa-sign-in"></i>
                             </a>
                         }
                         else
                         {
-                            <a class="nolink mr-sm-2 padding-left-10" href="@Url.Action("Abmelden", "Benutzer")" title="Logout">
+                            <a class="mr-sm-2 menu-icon padding-left-10" href="@Url.Action("Abmelden", "Benutzer")" title="Logout">
                                 <i class="fa fa-sign-out"></i>
                             </a>
 
-                            <a class="nolink mr-sm-2 padding-left-10" href="@Url.Action("Verwaltung", "Home")" title="Administrative Einstellungen">
+                            <a class="mr-sm-2 menu-icon padding-left-10" href="@Url.Action("Verwaltung", "Home")" title="Administrative Einstellungen">
                                 <i class="fa fa-cog"></i>
                             </a>
                         }
@@ -52,28 +53,28 @@
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="p-2 text-dark" href="@Url.Action("Index", "Home")">Home <span class="sr-only">(current)</span></a>
+                            <a class="p-2 menu-link" href="@Url.Action("Index", "Home")">Home <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="p-2 text-dark" href="@Url.Action("Index", "OpenData")">Open-Data</a>
+                            <a class="p-2 menu-link" href="@Url.Action("Index", "OpenData")">Open-Data</a>
                         </li>
                         <li class="nav-item">
-                            <a class="p-2 text-dark" href="@Url.Action("Index", "FAQ")">FAQ</a>
+                            <a class="p-2 menu-link" href="@Url.Action("Index", "FAQ")">FAQ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="p-2 text-dark mobileContentOnly" href="@Url.Action("Kontakt", "Home")">Kontakt</a>
+                            <a class="p-2 menu-link mobileContentOnly" href="@Url.Action("Kontakt", "Home")">Kontakt</a>
                         </li>
                         <li class="nav-item">
-                            <a class="p-2 text-dark mobileContentOnly" href="@Url.Action("Impressum", "Home")">Impressum</a>
+                            <a class="p-2 menu-link mobileContentOnly" href="@Url.Action("Impressum", "Home")">Impressum</a>
                         </li>
                         <li class="nav-item">
-                            <a class="p-2 text-dark mobileContentOnly" href="@Url.Action("Datenschutz", "Home")">Datenschutz</a>
+                            <a class="p-2 menu-link mobileContentOnly" href="@Url.Action("Datenschutz", "Home")">Datenschutz</a>
                         </li>
                         <li class="nav-item">
-                            <a class="p-2 text-dark mobileContentOnly" href="@Url.Action("Nutzungsbedingungen", "Home")">Nutzungsbedingungen</a>
+                            <a class="p-2 menu-link mobileContentOnly" href="@Url.Action("Nutzungsbedingungen", "Home")">Nutzungsbedingungen</a>
                         </li>
                         <li class="nav-item">
-                            <a class="p-2 text-dark mobileContentOnly" href="@Url.Action("WeitereGemeindeseiten", "Home")">Weitere Gemeindeseiten</a>
+                            <a class="p-2 menu-link mobileContentOnly" href="@Url.Action("WeitereGemeindeseiten", "Home")">Weitere Gemeindeseiten</a>
                         </li>
                     </ul>
                 </div>
@@ -106,8 +107,7 @@
             </div>
 
             <div id="backtotop">
-                <a class="nolink" href="#top" title="Nach oben scrollen"><i class="fa fa-arrow-circle-up"></i></a>
-                <p>Nach oben</p>
+                <a class="menu-icon" href="#top" title="Nach oben scrollen"><i class="fa fa-arrow-circle-up"></i><p>Nach oben</p></a>
             </div>
 
             <div id="socialmedia">
@@ -196,15 +196,20 @@
                 if (isColorThemeChanged == true) {
                     var colorSchema1 = "#f1f1f1";
                     var colorSchema2 = "#ffffff";
+                    var colorSchema2Text = "#000000";
+                    var colorSchema3Text = "#777777";
                     var colorSchema3 = "#f1f1f1";
                 } else {
-                    var colorSchema1 = "#e8e8e8";
-                    var colorSchema2 = "#d7efff";
-                    var colorSchema3 = "#d7efff";
+                    var colorSchema1 = "#a5a5a5";
+                    var colorSchema2 = "#12304a";
+                    var colorSchema2Text = "#ffffff";
+                    var colorSchema3Text = "#777777";
+                    var colorSchema3 = "#12304a";
                 }
 
                 // Change color of the header elements
                 $("#MyHeader").css('background-color', colorSchema3);
+                $("#MyHeader a").css('color', colorSchema2Text);
 
                 // Change color of the open-data page
                 if ($("#toolBar").length) {
@@ -216,10 +221,23 @@
 
                 // Change color of the footer elemens
                 $("#page-settings").css('background-color', colorSchema1);
+
                 $("#socialmedia").css('background-color', colorSchema2);
+                $("#socialmedia").css('color', colorSchema2Text);
+                $("#socialmedia a").css('color', colorSchema2Text);
                 $("#backtotop").css('background-color', colorSchema2);
+                $("#backtotop").css('color', colorSchema2Text);
+                $("#backtotop a").css('color', colorSchema2Text);
                 $("#footer-nav").css('background-color', colorSchema2);
+                $("#footer-nav").css('color', colorSchema2Text);
+                $("#footer-nav a").css('color', colorSchema2Text);
                 $("#copyright").css('background-color', colorSchema2);
+                $("#copyright").css('color', colorSchema2Text);
+                $("#copyright p").css('color', colorSchema2Text);
+
+                $(".menu-icon").hover(function(e) { 
+                    $(this).css("color",e.type === "mouseenter"?colorSchema3Text:colorSchema2Text) 
+                })
             }
         </script>
 
