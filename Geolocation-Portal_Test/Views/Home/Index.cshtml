@@ -35,10 +35,8 @@
                     var sec = 12;
                     var i = 0;
                     function updateDiv() {
-                        console.log(document.getElementById('oval-thought').innerHTML);
-                        document.getElementById('oval-thought').innerHTML = questions[i];
+                        $('#oval-thought p').html(questions[i]);
                         i = i + 1;
-                        console.log(i);
 
                         if (i > 2) {
                             i = 0;
