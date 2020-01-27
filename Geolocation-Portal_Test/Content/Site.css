@@ -67,6 +67,7 @@ header {
 
 .row {
     display: block;
+    margin: 0;
 }
 
 .col-3 {
@@ -288,6 +289,16 @@ main > article {
     flex-direction: column;
 }
 
+.card {
+    border-color: #12304a;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.card-body {
+    background-color: white;
+}
+
 .card-subtitle, .text-right {
 }
 
@@ -319,6 +330,7 @@ main > article {
     padding-left: 5px;
     margin-right: auto;
     margin-left: auto;
+    word-wrap: break-word;
 }
 
 .image {

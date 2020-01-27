@@ -55,6 +55,7 @@ namespace Geolocation_Portal_Test.Controllers
                 // 0 is required to avoid filtering by category.
             }
 
+            // parameter verification cop to avoid errors.
             if (searchTerm == null)
             {
                 // null is required to avoid searching.
@@ -76,7 +77,7 @@ namespace Geolocation_Portal_Test.Controllers
                 // The variable is null at this position because the restriction parameter still needs to be checked.
                 IEnumerable<record> records = null;
 
-                // Check record display authorization using the role ID.
+                // Check record display authorization using the role ID. Role concept 4 = extern user.
                 int loggedInUserRole = 4;
                 if (Session["UserRole"] != null)
                 {
@@ -230,10 +231,11 @@ namespace Geolocation_Portal_Test.Controllers
         /// <summary>
         /// Checks the contents of the database table to avoid errors.
         /// </summary>
-        /// <param name="entity">The database table to be checked.</param>
+        /// <param name="entity">A database table object to check the content.</param>
         /// <returns>Returns false if the content is null.</returns>
         private bool checkDatabaseContent(object entity)
         {
+            // parameter verification cop to avoid errors.
             if (entity == null)
             {
                 return false;
@@ -288,10 +290,22 @@ namespace Geolocation_Portal_Test.Controllers
             return View();
         }
 
+        /// <summary>
+        /// This action result returns the recorderstellung view. This action result is called after the user submits the Add Record form.
+        /// </summary>
+        /// <param name="record">The record object that is to be stored in the database.</param>
+        /// <param name="files">A list with information about the files that the user has attached to the record.</param>
+        /// <returns>Returns a view to the browser.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Recorderstellung([Bind(Include = "Id,dataset_upload,dataset_modified_date,title,description,category_id,licence_id,publisher_id,rating,role_id,record_active,location_id")] record record, IEnumerable<HttpPostedFileBase> files)
         {
+            // parameter verification cop to avoid errors.
+            if (record == null || files == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             // Login verification. Function is only accessible for logged in users.
             if (!checkSession(2))
             {
@@ -332,16 +346,24 @@ namespace Geolocation_Portal_Test.Controllers
             return View(record);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult Recordbearbeitung(int? id)
         {
-            if (!checkSession(2))
-            {
-                return RedirectToAction("Anmelden", "Benutzer");
-            }
+            // parameter verification cop to avoid errors.
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            if (!checkSession(2))
+            {
+                return RedirectToAction("Anmelden", "Benutzer");
+            }
+
             record record = myDatabaseEntities.record.Find(id);
             if (record == null)
             {
@@ -359,10 +381,22 @@ namespace Geolocation_Portal_Test.Controllers
             return View(record);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="record"></param>
+        /// <param name="files"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Recordbearbeitung([Bind(Include = "Id,dataset_upload,dataset_modified_date,title,description,category_id,licence_id,publisher_id,rating,role_id,record_active,location_id")] record record, IEnumerable<HttpPostedFileBase> files)
         {
+            // parameter verification cop to avoid errors.
+            if (record == null || files == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             if (ModelState.IsValid)
             {
                 myDatabaseEntities.Entry(record).State = EntityState.Modified;
@@ -388,7 +422,7 @@ namespace Geolocation_Portal_Test.Controllers
             }
             
 
-                ViewBag.category_id = new SelectList(myDatabaseEntities.category, "Id", "name");
+            ViewBag.category_id = new SelectList(myDatabaseEntities.category, "Id", "name");
             ViewBag.publisher_id = new SelectList(myDatabaseEntities.publisher, "Id", "name");
             ViewBag.licence_id = new SelectList(myDatabaseEntities.licence, "Id", "name");
             ViewBag.role_id = new SelectList(myDatabaseEntities.role, "Id", "name");
@@ -399,7 +433,13 @@ namespace Geolocation_Portal_Test.Controllers
 
             return View();
         }
-        
+
+        /// <summary>
+        /// This action result returns the recorddetails view. Displays the record without allowing 
+        /// the user to accidentally make changes.
+        /// </summary>
+        /// <param name="id">An ID is required to view the details.</param>
+        /// <returns>Returns a view to the browser.</returns>
         public ActionResult Recorddetails(int? id)
         {
             if (id == null)
@@ -723,12 +763,21 @@ namespace Geolocation_Portal_Test.Controllers
             myDatabaseEntities.SaveChanges();
         }
 
+        /// <summary>
+        /// Allows you to download files from the server. The number of file downloads is counted up and stored in the database.
+        /// </summary>
+        /// <param name="fileName">A filename is required to find the file in the download path.</param>
+        /// <param name="recordId">An ID of the record is required to find the download path.</param>
+        /// <returns>Returns a view to the browser.</returns>
         public ActionResult DownLoad(string fileName, int recordId)
-        {            
+        {
+            if (fileName == null || recordId == null) {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             string path = Server.MapPath("~/App_Data/uploads/"+ recordId + "/"+ fileName);
             string mime = MimeMapping.GetMimeMapping(path);
             
-
             file file = myDatabaseEntities.file.Where(f => f.name == fileName && f.record_id == recordId).First();
             if (file != null) { 
                 file.download_count++;
@@ -738,6 +787,11 @@ namespace Geolocation_Portal_Test.Controllers
             return File(path, mime, file.name);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult Dateientfernung(int id)
         {
             if (id == null)
