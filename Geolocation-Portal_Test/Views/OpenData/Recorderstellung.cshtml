@@ -104,7 +104,7 @@
                     Wählen Sie nun einige Dateien aus, welche Sie zu diesem Datensatz veröffentlichen möchten. Denken Sie daran, dass es sich inhaltlich nur um eine Datei handeln sollte. Sie können Ihre Datei aber mit unterschiedlichen Dateiendungen hochladen, um den Besuchern ihre Datei besser zur Verfügung zu stellen.
                 </div>
                 <div class="col">
-                    @Html.TextBox("files", "", htmlAttributes: new { @type = "file", @multiple = "true" })
+                    <input type="file" id="files" name="files" multiple required />
                 </div>
             </div>
             <br/>
