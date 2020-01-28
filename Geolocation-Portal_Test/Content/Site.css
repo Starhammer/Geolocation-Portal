@@ -56,6 +56,7 @@ header {
 .row {
     display: block;
     margin: 0;
+    margin-top: 5px;
 }
 
 .col-3 {
@@ -361,7 +362,7 @@ main > article {
     font-size: 29px;
 }
 
-.form-control {
+textarea {
     margin-top: 5px;
 }
 
@@ -519,12 +520,46 @@ textarea {
     color: #0056b3 !important;
 }
 
+#myFormStyle .form-group div {
+    padding: 0;
+}
+
+#myFormStyle label {
+    font-weight: bold;
+}
+
+#myFormStyle label::after {
+    content: ':';
+}
+
+.custom-control label::after {
+    content: ''!important;
+}
+
+input[type="checkbox"] {
+    width: 30px;
+    height: 30px;
+}
+
+.text-info {
+    color: #f1b200 !important;
+    font-weight: bold;
+}
+
+.text-info + p {
+    font-style: italic;
+}
+
 #filter_settings_categories img {
     display: inline-block;
 }
 
 .card-columns {
     column-count: 1;
+}
+
+.full-width {
+    width: 100%;
 }
 
 /* Extra small devices (portrait phones, less than 576px)
