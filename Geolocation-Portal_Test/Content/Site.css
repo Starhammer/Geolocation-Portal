@@ -16,19 +16,7 @@ body {
     padding: 0;
     font-size: 1rem;
     line-height: 1.8em;
-}
-
-body, .no-headline-font-family {
-    font-family: 'Lato', sans-serif;
-    font-weight: 300;
-}
-
-h1, h2, h3, h4, h5, h6, header {
-    font-family: 'Prata', serif;
-}
-
-a {
-    color: #12304a;
+    font-family: "Calibri";
 }
 
 a:hover {
@@ -128,14 +116,6 @@ header {
     100% {
         left: -1000%;
     }
-}
-
-#oval-thought,
-#oval-thought::before,
-#oval-thought::after {
-    border-color: white;
-    border-style: solid;
-    border-width: 1px;
 }
 
 #oval-thought::before {
@@ -289,12 +269,6 @@ main > article {
     flex-direction: column;
 }
 
-.card {
-    border-color: #12304a;
-    border-style: solid;
-    border-width: 1px;
-}
-
 .card-body {
     background-color: white;
 }
@@ -366,10 +340,13 @@ main > article {
     font-weight: 200;
     margin-top: 10px;
     margin-bottom: 10px;
+    border-top: solid;
+    border-color: white;
+    border-width: thin;
 }
 
 .navbar-nav li {
-    background-color: gray;
+    /*background-color: gray;*/
     margin: 5px;
 }
 
@@ -606,8 +583,17 @@ No media query for `xs` since this is the default in Bootstrap */
     .card-columns {
         column-count: 3;
     }
+
+    header nav {
+        padding: 10px;
+    }
+
     .navbar-brand {
         flex-grow: 0;
+    }
+
+    .navbar-nav {
+        border-top: none;
     }
 
     .mobileContentOnly {
@@ -644,10 +630,7 @@ No media query for `xs` since this is the default in Bootstrap */
         display: flex;
         flex-direction: row;
     }
-
-    header nav {
-        padding: 10px;
-    }
+}
 
 /* Extra large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {

@@ -21,7 +21,7 @@
 
                 <div class="align-middle m1-auto order-lg-last" style="flex-grow: 0;">
                     <form class="form-inline mt-md-0">
-                        <input class="no-headline-font-family desktopContentOnly form-control mr-sm-2" type="search" placeholder="Suchbegriff..." aria-label="Search">
+                        <input class="desktopContentOnly form-control mr-sm-2" type="search" placeholder="Suchbegriff..." aria-label="Search">
                         <a class="mr-sm-2 menu-icon padding-left-10" href="#" title="Suche starten">
                             <i class="fa fa-search"></i>
                         </a>
@@ -234,6 +234,7 @@
                 $("#copyright").css('background-color', colorSchema2);
                 $("#copyright").css('color', colorSchema2Text);
                 $("#copyright p").css('color', colorSchema2Text);
+                $(".menu-link").css('color', colorSchema2Text);
 
                 $(".menu-icon").hover(function(e) { 
                     $(this).css("color",e.type === "mouseenter"?colorSchema3Text:colorSchema2Text) 
