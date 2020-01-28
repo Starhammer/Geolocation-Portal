@@ -361,6 +361,10 @@ main > article {
     font-size: 29px;
 }
 
+.form-control {
+    margin-top: 5px;
+}
+
 .mobileContentOnly {
     display: initial;
 }

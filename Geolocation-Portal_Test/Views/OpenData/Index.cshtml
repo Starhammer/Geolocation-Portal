@@ -202,12 +202,12 @@
     jQuery(document).ready(function () {
         // Displays either the "Show all records" or "Show all active records" icon.
         if (localStorage["showAllRecords"] != null && JSON.parse(localStorage["showAllRecords"]) == true) {
-            if ($("#showAllRecords_button").hasClass("hideLink")) {
-                $("#showAllRecords_button").removeClass("hideLink");
-            }
-        } else {
             if ($("#showActivatedRecords_button").hasClass("hideLink")) {
                 $("#showActivatedRecords_button").removeClass("hideLink");
+            }
+        } else {
+            if ($("#showAllRecords_button").hasClass("hideLink")) {
+                $("#showAllRecords_button").removeClass("hideLink");
             }
         }
 
@@ -216,7 +216,7 @@
          */
         jQuery(window).on("load", function () {
             if (localStorage["showAllRecords"] == null) {
-                localStorage["showAllRecords"] = true;
+                localStorage["showAllRecords"] = false;
             }
         });
 
@@ -225,7 +225,7 @@
          */
         jQuery("#showAllRecords_button").click(function () {
             if (JSON.parse(localStorage["showAllRecords"]) != null) {
-                localStorage["showAllRecords"] = false;
+                localStorage["showAllRecords"] = true;
             }
         });
 
@@ -234,7 +234,7 @@
          */
         jQuery("#showActivatedRecords_button").click(function () {
             if (JSON.parse(localStorage["showAllRecords"]) != null) {
-                localStorage["showAllRecords"] = true;
+                localStorage["showAllRecords"] = false;
             }
         });
 
