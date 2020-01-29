@@ -21,31 +21,30 @@ namespace Geolocation_Portal_Test.Controllers.API
     using System.Web.Http.OData.Extensions;
     using Geolocation_Portal_Test.Models;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    builder.EntitySet<file>("file");
+    builder.EntitySet<location>("locations");
     builder.EntitySet<record>("record"); 
-    builder.EntitySet<searchtag>("searchtag"); 
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
-    public class fileController : ODataController
+    public class locationsController : ODataController
     {
         private Entities db = new Entities();
 
-        // GET: odata/file
+        // GET: odata/locations
         [EnableQuery]
-        public IQueryable<file> Getfile()
+        public IQueryable<location> Getlocations()
         {
-            return db.file;
+            return db.location;
         }
 
-        // GET: odata/file(5)
+        // GET: odata/locations(5)
         [EnableQuery]
-        public SingleResult<file> Getfile([FromODataUri] int key)
+        public SingleResult<location> Getlocation([FromODataUri] int key)
         {
-            return SingleResult.Create(db.file.Where(file => file.Id == key));
+            return SingleResult.Create(db.location.Where(location => location.Id == key));
         }
 
-        // PUT: odata/file(5)
-        public IHttpActionResult Put([FromODataUri] int key, Delta<file> patch)
+        // PUT: odata/locations(5)
+        public IHttpActionResult Put([FromODataUri] int key, Delta<location> patch)
         {
             Validate(patch.GetEntity());
 
@@ -54,13 +53,13 @@ namespace Geolocation_Portal_Test.Controllers.API
                 return BadRequest(ModelState);
             }
 
-            file file = db.file.Find(key);
-            if (file == null)
+            location location = db.location.Find(key);
+            if (location == null)
             {
                 return NotFound();
             }
 
-            patch.Put(file);
+            patch.Put(location);
 
             try
             {
@@ -68,7 +67,7 @@ namespace Geolocation_Portal_Test.Controllers.API
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!fileExists(key))
+                if (!locationExists(key))
                 {
                     return NotFound();
                 }
@@ -78,26 +77,26 @@ namespace Geolocation_Portal_Test.Controllers.API
                 }
             }
 
-            return Updated(file);
+            return Updated(location);
         }
 
-        // POST: odata/file
-        public IHttpActionResult Post(file file)
+        // POST: odata/locations
+        public IHttpActionResult Post(location location)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.file.Add(file);
+            db.location.Add(location);
             db.SaveChanges();
 
-            return Created(file);
+            return Created(location);
         }
 
-        // PATCH: odata/file(5)
+        // PATCH: odata/locations(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public IHttpActionResult Patch([FromODataUri] int key, Delta<file> patch)
+        public IHttpActionResult Patch([FromODataUri] int key, Delta<location> patch)
         {
             Validate(patch.GetEntity());
 
@@ -106,13 +105,13 @@ namespace Geolocation_Portal_Test.Controllers.API
                 return BadRequest(ModelState);
             }
 
-            file file = db.file.Find(key);
-            if (file == null)
+            location location = db.location.Find(key);
+            if (location == null)
             {
                 return NotFound();
             }
 
-            patch.Patch(file);
+            patch.Patch(location);
 
             try
             {
@@ -120,7 +119,7 @@ namespace Geolocation_Portal_Test.Controllers.API
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!fileExists(key))
+                if (!locationExists(key))
                 {
                     return NotFound();
                 }
@@ -130,36 +129,29 @@ namespace Geolocation_Portal_Test.Controllers.API
                 }
             }
 
-            return Updated(file);
+            return Updated(location);
         }
 
-        // DELETE: odata/file(5)
+        // DELETE: odata/locations(5)
         public IHttpActionResult Delete([FromODataUri] int key)
         {
-            file file = db.file.Find(key);
-            if (file == null)
+            location location = db.location.Find(key);
+            if (location == null)
             {
                 return NotFound();
             }
 
-            db.file.Remove(file);
+            db.location.Remove(location);
             db.SaveChanges();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // GET: odata/file(5)/record
+        // GET: odata/locations(5)/record
         [EnableQuery]
-        public SingleResult<record> Getrecord([FromODataUri] int key)
+        public IQueryable<record> Getrecord([FromODataUri] int key)
         {
-            return SingleResult.Create(db.file.Where(m => m.Id == key).Select(m => m.record));
-        }
-
-        // GET: odata/file(5)/searchtag
-        [EnableQuery]
-        public SingleResult<searchtag> Getsearchtag([FromODataUri] int key)
-        {
-            return SingleResult.Create(db.file.Where(m => m.Id == key).Select(m => m.searchtag));
+            return db.location.Where(m => m.Id == key).SelectMany(m => m.record);
         }
 
         protected override void Dispose(bool disposing)
@@ -171,9 +163,9 @@ namespace Geolocation_Portal_Test.Controllers.API
             base.Dispose(disposing);
         }
 
-        private bool fileExists(int key)
+        private bool locationExists(int key)
         {
-            return db.file.Count(e => e.Id == key) > 0;
+            return db.location.Count(e => e.Id == key) > 0;
         }
     }
 }

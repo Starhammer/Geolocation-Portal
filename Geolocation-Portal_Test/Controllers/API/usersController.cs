@@ -21,30 +21,30 @@ namespace Geolocation_Portal_Test.Controllers.API
     using System.Web.Http.OData.Extensions;
     using Geolocation_Portal_Test.Models;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    builder.EntitySet<publisher>("publisher");
-    builder.EntitySet<record>("record"); 
+    builder.EntitySet<user>("users");
+    builder.EntitySet<role>("role"); 
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
-    public class publisherController : ODataController
+    public class usersController : ODataController
     {
         private Entities db = new Entities();
 
-        // GET: odata/publisher
+        // GET: odata/users
         [EnableQuery]
-        public IQueryable<publisher> Getpublisher()
+        public IQueryable<user> Getusers()
         {
-            return db.publisher;
+            return db.user;
         }
 
-        // GET: odata/publisher(5)
+        // GET: odata/users(5)
         [EnableQuery]
-        public SingleResult<publisher> Getpublisher([FromODataUri] int key)
+        public SingleResult<user> Getuser([FromODataUri] int key)
         {
-            return SingleResult.Create(db.publisher.Where(publisher => publisher.Id == key));
+            return SingleResult.Create(db.user.Where(user => user.Id == key));
         }
 
-        // PUT: odata/publisher(5)
-        public IHttpActionResult Put([FromODataUri] int key, Delta<publisher> patch)
+        // PUT: odata/users(5)
+        public IHttpActionResult Put([FromODataUri] int key, Delta<user> patch)
         {
             Validate(patch.GetEntity());
 
@@ -53,13 +53,13 @@ namespace Geolocation_Portal_Test.Controllers.API
                 return BadRequest(ModelState);
             }
 
-            publisher publisher = db.publisher.Find(key);
-            if (publisher == null)
+            user user = db.user.Find(key);
+            if (user == null)
             {
                 return NotFound();
             }
 
-            patch.Put(publisher);
+            patch.Put(user);
 
             try
             {
@@ -67,7 +67,7 @@ namespace Geolocation_Portal_Test.Controllers.API
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!publisherExists(key))
+                if (!userExists(key))
                 {
                     return NotFound();
                 }
@@ -77,26 +77,26 @@ namespace Geolocation_Portal_Test.Controllers.API
                 }
             }
 
-            return Updated(publisher);
+            return Updated(user);
         }
 
-        // POST: odata/publisher
-        public IHttpActionResult Post(publisher publisher)
+        // POST: odata/users
+        public IHttpActionResult Post(user user)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.publisher.Add(publisher);
+            db.user.Add(user);
             db.SaveChanges();
 
-            return Created(publisher);
+            return Created(user);
         }
 
-        // PATCH: odata/publisher(5)
+        // PATCH: odata/users(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public IHttpActionResult Patch([FromODataUri] int key, Delta<publisher> patch)
+        public IHttpActionResult Patch([FromODataUri] int key, Delta<user> patch)
         {
             Validate(patch.GetEntity());
 
@@ -105,13 +105,13 @@ namespace Geolocation_Portal_Test.Controllers.API
                 return BadRequest(ModelState);
             }
 
-            publisher publisher = db.publisher.Find(key);
-            if (publisher == null)
+            user user = db.user.Find(key);
+            if (user == null)
             {
                 return NotFound();
             }
 
-            patch.Patch(publisher);
+            patch.Patch(user);
 
             try
             {
@@ -119,7 +119,7 @@ namespace Geolocation_Portal_Test.Controllers.API
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!publisherExists(key))
+                if (!userExists(key))
                 {
                     return NotFound();
                 }
@@ -129,29 +129,29 @@ namespace Geolocation_Portal_Test.Controllers.API
                 }
             }
 
-            return Updated(publisher);
+            return Updated(user);
         }
 
-        // DELETE: odata/publisher(5)
+        // DELETE: odata/users(5)
         public IHttpActionResult Delete([FromODataUri] int key)
         {
-            publisher publisher = db.publisher.Find(key);
-            if (publisher == null)
+            user user = db.user.Find(key);
+            if (user == null)
             {
                 return NotFound();
             }
 
-            db.publisher.Remove(publisher);
+            db.user.Remove(user);
             db.SaveChanges();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // GET: odata/publisher(5)/record
+        // GET: odata/users(5)/role
         [EnableQuery]
-        public IQueryable<record> Getrecord([FromODataUri] int key)
+        public SingleResult<role> Getrole([FromODataUri] int key)
         {
-            return db.publisher.Where(m => m.Id == key).SelectMany(m => m.record);
+            return SingleResult.Create(db.user.Where(m => m.Id == key).Select(m => m.role));
         }
 
         protected override void Dispose(bool disposing)
@@ -163,9 +163,9 @@ namespace Geolocation_Portal_Test.Controllers.API
             base.Dispose(disposing);
         }
 
-        private bool publisherExists(int key)
+        private bool userExists(int key)
         {
-            return db.publisher.Count(e => e.Id == key) > 0;
+            return db.user.Count(e => e.Id == key) > 0;
         }
     }
 }

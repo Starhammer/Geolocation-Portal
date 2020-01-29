@@ -21,30 +21,30 @@ namespace Geolocation_Portal_Test.Controllers.API
     using System.Web.Http.OData.Extensions;
     using Geolocation_Portal_Test.Models;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    builder.EntitySet<comment>("comment");
+    builder.EntitySet<category>("categories");
     builder.EntitySet<record>("record"); 
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
-    public class commentController : ODataController
+    public class categoriesController : ODataController
     {
         private Entities db = new Entities();
 
-        // GET: odata/comment
+        // GET: odata/categories
         [EnableQuery]
-        public IQueryable<comment> Getcomment()
+        public IQueryable<category> Getcategories()
         {
-            return db.comment;
+            return db.category;
         }
 
-        // GET: odata/comment(5)
+        // GET: odata/categories(5)
         [EnableQuery]
-        public SingleResult<comment> Getcomment([FromODataUri] int key)
+        public SingleResult<category> Getcategory([FromODataUri] int key)
         {
-            return SingleResult.Create(db.comment.Where(comment => comment.Id == key));
+            return SingleResult.Create(db.category.Where(category => category.Id == key));
         }
 
-        // PUT: odata/comment(5)
-        public IHttpActionResult Put([FromODataUri] int key, Delta<comment> patch)
+        // PUT: odata/categories(5)
+        public IHttpActionResult Put([FromODataUri] int key, Delta<category> patch)
         {
             Validate(patch.GetEntity());
 
@@ -53,13 +53,13 @@ namespace Geolocation_Portal_Test.Controllers.API
                 return BadRequest(ModelState);
             }
 
-            comment comment = db.comment.Find(key);
-            if (comment == null)
+            category category = db.category.Find(key);
+            if (category == null)
             {
                 return NotFound();
             }
 
-            patch.Put(comment);
+            patch.Put(category);
 
             try
             {
@@ -67,7 +67,7 @@ namespace Geolocation_Portal_Test.Controllers.API
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!commentExists(key))
+                if (!categoryExists(key))
                 {
                     return NotFound();
                 }
@@ -77,26 +77,26 @@ namespace Geolocation_Portal_Test.Controllers.API
                 }
             }
 
-            return Updated(comment);
+            return Updated(category);
         }
 
-        // POST: odata/comment
-        public IHttpActionResult Post(comment comment)
+        // POST: odata/categories
+        public IHttpActionResult Post(category category)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.comment.Add(comment);
+            db.category.Add(category);
             db.SaveChanges();
 
-            return Created(comment);
+            return Created(category);
         }
 
-        // PATCH: odata/comment(5)
+        // PATCH: odata/categories(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public IHttpActionResult Patch([FromODataUri] int key, Delta<comment> patch)
+        public IHttpActionResult Patch([FromODataUri] int key, Delta<category> patch)
         {
             Validate(patch.GetEntity());
 
@@ -105,13 +105,13 @@ namespace Geolocation_Portal_Test.Controllers.API
                 return BadRequest(ModelState);
             }
 
-            comment comment = db.comment.Find(key);
-            if (comment == null)
+            category category = db.category.Find(key);
+            if (category == null)
             {
                 return NotFound();
             }
 
-            patch.Patch(comment);
+            patch.Patch(category);
 
             try
             {
@@ -119,7 +119,7 @@ namespace Geolocation_Portal_Test.Controllers.API
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!commentExists(key))
+                if (!categoryExists(key))
                 {
                     return NotFound();
                 }
@@ -129,29 +129,29 @@ namespace Geolocation_Portal_Test.Controllers.API
                 }
             }
 
-            return Updated(comment);
+            return Updated(category);
         }
 
-        // DELETE: odata/comment(5)
+        // DELETE: odata/categories(5)
         public IHttpActionResult Delete([FromODataUri] int key)
         {
-            comment comment = db.comment.Find(key);
-            if (comment == null)
+            category category = db.category.Find(key);
+            if (category == null)
             {
                 return NotFound();
             }
 
-            db.comment.Remove(comment);
+            db.category.Remove(category);
             db.SaveChanges();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // GET: odata/comment(5)/record
+        // GET: odata/categories(5)/record
         [EnableQuery]
-        public SingleResult<record> Getrecord([FromODataUri] int key)
+        public IQueryable<record> Getrecord([FromODataUri] int key)
         {
-            return SingleResult.Create(db.comment.Where(m => m.Id == key).Select(m => m.record));
+            return db.category.Where(m => m.Id == key).SelectMany(m => m.record);
         }
 
         protected override void Dispose(bool disposing)
@@ -163,9 +163,9 @@ namespace Geolocation_Portal_Test.Controllers.API
             base.Dispose(disposing);
         }
 
-        private bool commentExists(int key)
+        private bool categoryExists(int key)
         {
-            return db.comment.Count(e => e.Id == key) > 0;
+            return db.category.Count(e => e.Id == key) > 0;
         }
     }
 }

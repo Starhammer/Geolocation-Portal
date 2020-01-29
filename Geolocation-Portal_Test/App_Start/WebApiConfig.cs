@@ -27,15 +27,16 @@ namespace Geolocation_Portal_Test
             );*/
 
             ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-            builder.EntitySet<record>("record");
-            builder.EntitySet<category>("category");
-            builder.EntitySet<file>("file");
-            builder.EntitySet<location>("location");
-            builder.EntitySet<publisher>("publisher");
-            builder.EntitySet<licence>("licence");
-            builder.EntitySet<comment>("comment");
-            builder.EntitySet<user>("user");
+            builder.EntitySet<record>("records");
+            builder.EntitySet<category>("categories");
+            builder.EntitySet<file>("files");
+            builder.EntitySet<location>("locations");
+            builder.EntitySet<publisher>("publishers");
+            builder.EntitySet<licence>("licences");
+            builder.EntitySet<comment>("comments");
+            builder.EntitySet<user>("users");
             builder.EntitySet<role>("role");
+            builder.EntitySet<searchtag>("searchtags");
             config.Routes.MapODataServiceRoute("odata", "api", builder.GetEdmModel());
         }
     }

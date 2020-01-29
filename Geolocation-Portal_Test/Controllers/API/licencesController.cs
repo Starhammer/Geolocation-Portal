@@ -21,29 +21,29 @@ namespace Geolocation_Portal_Test.Controllers.API
     using System.Web.Http.OData.Extensions;
     using Geolocation_Portal_Test.Models;
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    builder.EntitySet<licence>("licence");
+    builder.EntitySet<licence>("licences");
     builder.EntitySet<record>("record"); 
     config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
     */
-    public class licenceController : ODataController
+    public class licencesController : ODataController
     {
         private Entities db = new Entities();
 
-        // GET: odata/licence
+        // GET: odata/licences
         [EnableQuery]
-        public IQueryable<licence> Getlicence()
+        public IQueryable<licence> Getlicences()
         {
             return db.licence;
         }
 
-        // GET: odata/licence(5)
+        // GET: odata/licences(5)
         [EnableQuery]
         public SingleResult<licence> Getlicence([FromODataUri] int key)
         {
             return SingleResult.Create(db.licence.Where(licence => licence.Id == key));
         }
 
-        // PUT: odata/licence(5)
+        // PUT: odata/licences(5)
         public IHttpActionResult Put([FromODataUri] int key, Delta<licence> patch)
         {
             Validate(patch.GetEntity());
@@ -80,7 +80,7 @@ namespace Geolocation_Portal_Test.Controllers.API
             return Updated(licence);
         }
 
-        // POST: odata/licence
+        // POST: odata/licences
         public IHttpActionResult Post(licence licence)
         {
             if (!ModelState.IsValid)
@@ -94,7 +94,7 @@ namespace Geolocation_Portal_Test.Controllers.API
             return Created(licence);
         }
 
-        // PATCH: odata/licence(5)
+        // PATCH: odata/licences(5)
         [AcceptVerbs("PATCH", "MERGE")]
         public IHttpActionResult Patch([FromODataUri] int key, Delta<licence> patch)
         {
@@ -132,7 +132,7 @@ namespace Geolocation_Portal_Test.Controllers.API
             return Updated(licence);
         }
 
-        // DELETE: odata/licence(5)
+        // DELETE: odata/licences(5)
         public IHttpActionResult Delete([FromODataUri] int key)
         {
             licence licence = db.licence.Find(key);
@@ -147,7 +147,7 @@ namespace Geolocation_Portal_Test.Controllers.API
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // GET: odata/licence(5)/record
+        // GET: odata/licences(5)/record
         [EnableQuery]
         public IQueryable<record> Getrecord([FromODataUri] int key)
         {
