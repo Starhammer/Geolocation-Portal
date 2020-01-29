@@ -361,14 +361,36 @@ namespace Geolocation_Portal_Test.Controllers
             ViewBag.role_id = new SelectList(myDatabaseEntities.role, "Id", "name");
             ViewBag.location_id = new SelectList(myDatabaseEntities.location, "Id", "name");
 
+            var licenceItems = new SelectList(myDatabaseEntities.licence, "Id", "description");
+
+            List<string> licence_descriptions = new List<string>();
+
+            foreach (var licenceItem in licenceItems.ToList())
+            {
+                licence_descriptions.Add(licenceItem.Text);
+            }
+
+            ViewData["licence_description_list"] = licence_descriptions.ToArray();
+
+            var roleItems = new SelectList(myDatabaseEntities.role, "Id", "description");
+
+            List<string> role_descriptions = new List<string>();
+
+            foreach (var roleItem in roleItems.ToList())
+            {
+                role_descriptions.Add(roleItem.Text);
+            }
+
+            ViewData["role_description_list"] = role_descriptions.ToArray();
+
             return View(record);
         }
 
         /// <summary>
-        /// 
+        /// This action result returns the recordbearbeitung view. This method allows the subsequent editing of a record.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">An ID is required to load an existing record from the database for editing.</param>
+        /// <returns>Returns a view to the browser.</returns>
         public ActionResult Recordbearbeitung(int? id)
         {
             // parameter verification cop to avoid errors.
@@ -393,18 +415,38 @@ namespace Geolocation_Portal_Test.Controllers
             ViewBag.licence_id = new SelectList(myDatabaseEntities.licence, "Id", "name", record.licence_id);
             ViewBag.role_id = new SelectList(myDatabaseEntities.role, "Id", "name", record.role_id);
             ViewBag.location_id = new SelectList(myDatabaseEntities.location, "Id", "name", record.location_id);
-            
-            ViewBag.licence_descriptions = myDatabaseEntities.licence.ToList();    // Send this list to the view
+
+            var licenceItems = new SelectList(myDatabaseEntities.licence, "Id", "description");
+
+            List<string> licence_descriptions = new List<string>();
+
+            foreach (var licenceItem in licenceItems.ToList())
+            {
+                licence_descriptions.Add(licenceItem.Text);
+            }
+
+            ViewData["licence_description_list"] = licence_descriptions.ToArray();
+
+            var roleItems = new SelectList(myDatabaseEntities.role, "Id", "description");
+
+            List<string> role_descriptions = new List<string>();
+
+            foreach (var roleItem in roleItems.ToList())
+            {
+                role_descriptions.Add(roleItem.Text);
+            }
+
+            ViewData["role_description_list"] = role_descriptions.ToArray();
 
             return View(record);
         }
 
         /// <summary>
-        /// 
+        /// This action result returns the recordbearbeitung view. This method saves the changes to the record in the database.
         /// </summary>
-        /// <param name="record"></param>
-        /// <param name="files"></param>
-        /// <returns></returns>
+        /// <param name="record">The record to be saved.</param>
+        /// <param name="files">The files that are attached to the record.</param>
+        /// <returns>Returns a view to the browser.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Recordbearbeitung([Bind(Include = "Id,dataset_upload,dataset_modified_date,title,description,category_id,licence_id,publisher_id,rating,role_id,record_active,location_id")] record record, IEnumerable<HttpPostedFileBase> files)
@@ -446,8 +488,27 @@ namespace Geolocation_Portal_Test.Controllers
             ViewBag.role_id = new SelectList(myDatabaseEntities.role, "Id", "name");
             ViewBag.location_id = new SelectList(myDatabaseEntities.location, "Id", "name");
 
-            var licenses = myDatabaseEntities.licence.ToList();
-            ViewBag.licence_descriptions = licenses;    // Send this list to the view
+            var licenceItems = new SelectList(myDatabaseEntities.licence, "Id", "description");
+
+            List<string> licence_descriptions = new List<string>();
+
+            foreach (var licenceItem in licenceItems.ToList())
+            {
+                licence_descriptions.Add(licenceItem.Text);
+            }
+
+            ViewData["licence_description_list"] = licence_descriptions.ToArray();
+
+            var roleItems = new SelectList(myDatabaseEntities.role, "Id", "description");
+
+            List<string> role_descriptions = new List<string>();
+
+            foreach (var roleItem in roleItems.ToList())
+            {
+                role_descriptions.Add(roleItem.Text);
+            }
+
+            ViewData["role_description_list"] = role_descriptions.ToArray();
 
             return View();
         }
@@ -544,6 +605,12 @@ namespace Geolocation_Portal_Test.Controllers
             }
         }
 
+        /// <summary>
+        /// This action result returns the recordentfernung view. This method displays a record that the 
+        /// user wants to delete. However, the user must confirm the deletion again.
+        /// </summary>
+        /// <param name="id">The ID of the data file to be deleted</param>
+        /// <returns>Returns a view to the browser.</returns>
         public ActionResult Recordentfernung(int? id)
         {
             if (!checkSession(2))
@@ -566,7 +633,11 @@ namespace Geolocation_Portal_Test.Controllers
             return View(record);
         }
 
-        // POST: user/Delete/5
+        /// <summary>
+        /// This action result returns the recordentfernung view. This method deletes a record from the database.
+        /// </summary>
+        /// <param name="id">The ID of the data file to be deleted</param>
+        /// <returns>Returns a view to the browser.</returns>
         [HttpPost, ActionName("Recordentfernung")]
         [ValidateAntiForgeryToken]
         public ActionResult RecordentfernungConfirmed(int id)
@@ -579,9 +650,15 @@ namespace Geolocation_Portal_Test.Controllers
             record record = myDatabaseEntities.record.Find(id);
             myDatabaseEntities.record.Remove(record);
             myDatabaseEntities.SaveChanges();
+
             return RedirectToAction("Index");
         }
 
+        /// <summary>
+        /// This action result returns the record comment view. This method allows you to save a comment to a record.
+        /// </summary>
+        /// <param name="comment">The comment to be stored in the database.</param>
+        /// <returns>Returns a view to the browser.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult RecordComment([Bind(Include = "title,text,person_name,bewertung,record_id")] comment comment)
@@ -733,16 +810,11 @@ namespace Geolocation_Portal_Test.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Stores the records associated with the record on the server. For each file, a reference is stored 
+        /// in the database so that the files can be found again later.
         /// </summary>
-        /// <param name="name"></param>
-        /// <returns>Returns a view to the browser.</returns>
-        private string getFileIcon(string name)
-        {
-            var extension = Path.GetExtension(name);
-            return extension.Remove(0, 1);
-        }
-
+        /// <param name="files">A list of files that belong to a record.</param>
+        /// <param name="recordID">The ID of the record to which the files belong.</param>
         private void saveFiles(IEnumerable<HttpPostedFileBase> files, int recordID)
         {
             foreach (var file in files)
@@ -760,7 +832,6 @@ namespace Geolocation_Portal_Test.Controllers
 
                     file.SaveAs(filePath);
                     
-
                     myDatabaseEntities.file.Add(new Models.file
                     {
                         record_id = recordID,
@@ -770,7 +841,6 @@ namespace Geolocation_Portal_Test.Controllers
                         file_size = file.ContentLength,
                         file_icon = getFileIcon(fileName)                      
                     });
-
                 }
                 else
                 {
@@ -779,6 +849,17 @@ namespace Geolocation_Portal_Test.Controllers
             }
 
             myDatabaseEntities.SaveChanges();
+        }
+
+        /// <summary>
+        /// This method determines the file extension of any file.
+        /// </summary>
+        /// <param name="fileName">The file name from which the file extension should be found out.</param>
+        /// <returns>Returns the file extension of a file.</returns>
+        private string getFileIcon(string fileName)
+        {
+            var extension = Path.GetExtension(fileName);
+            return extension.Remove(0, 1);
         }
 
         /// <summary>
@@ -806,13 +887,13 @@ namespace Geolocation_Portal_Test.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Removes a file from the server directory and deletes the reference in the database. The file no longer exists.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">The file ID to find the file metadata in the database.</param>
+        /// <returns>Returns a view to the browser.</returns>
         public ActionResult Dateientfernung(int id)
         {
-            if (id == null)
+            if (id < 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -832,7 +913,6 @@ namespace Geolocation_Portal_Test.Controllers
             myDatabaseEntities.file.Remove(file);
             myDatabaseEntities.SaveChanges();
 
-            //return RedirectToAction("Recordbearbeitung", new { id = record_id } );
             return Redirect(Request.UrlReferrer.ToString());
         }
 
@@ -844,6 +924,11 @@ namespace Geolocation_Portal_Test.Controllers
         /// <returns>Returns true if the user role matches or is lower.</returns>
         private bool checkSession(int requiredUserRole)
         {
+            if (requiredUserRole == null)
+            {
+                return false;
+            }
+
             if (Session["UserRole"] != null)
             {
                 int loggedInUserRole = Convert.ToInt32(Session["UserRole"], new CultureInfo("de-DE"));

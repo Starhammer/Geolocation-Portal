@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
@@ -28,9 +29,10 @@ namespace Geolocation_Portal_Test.Controllers
         }
 
         /// <summary>
-        /// This action result returns the anmelden view.
+        /// This action result returns the anmelden view. After the user has entered his login data and pressed 
+        /// the login button, the system checks whether the user exists in the user database.
         /// </summary>
-        /// <param name="objUser"></param>
+        /// <param name="objUser">The user object, which consists of the user name and password entered in the login screen.</param>
         /// <returns>Returns a view to the browser.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -86,9 +88,15 @@ namespace Geolocation_Portal_Test.Controllers
             return sb.ToString();
         }
 
+        /// <summary>
+        /// This action result returns the welcome page view. After the login process the 
+        /// user is redirected to a welcome page. There the user gets some information 
+        /// about his or her options on the portal.
+        /// </summary>
+        /// <returns>Returns a view to the browser.</returns>
         public ActionResult WelcomePage()
         {
-            if (!checkSession())
+            if (!checkSession(3))
             {
                 return RedirectToAction("Anmelden");
             }
@@ -102,30 +110,64 @@ namespace Geolocation_Portal_Test.Controllers
             return View(role);
         }
 
+        /// <summary>
+        /// This action result returns the abmelden view. When the user initiates the 
+        /// logout process, the current session is destroyed.
+        /// </summary>
+        /// <returns>Returns a view to the browser.</returns>
         public ActionResult Abmelden()
         {
-            if (!checkSession())
+            if (!checkSession(3))
             {
                 return RedirectToAction("Anmelden");
             }
 
             Session.Clear();
+
             return View();
         }
 
+        /// <summary>
+        /// This action result returns the profil view. Every logged in user can view his profile data.
+        /// This method returns the user data.
+        /// </summary>
+        /// <returns>Returns a view to the browser.</returns>
         public ActionResult Profil()
         {
-            if (!checkSession())
+            if (!checkSession(3))
             {
                 return RedirectToAction("Anmelden");
             }
 
+            int userID = Convert.ToInt32(Session["UserID"], new CultureInfo("de-DE"));
+            user loggedInUser = myDatabaseEntities.user.Find(userID);
+
+            ViewBag.id = loggedInUser.Id;
+            ViewBag.role_id = loggedInUser.role_id;
+            ViewBag.role = loggedInUser.role.name;
+            ViewBag.role_description = loggedInUser.role.description;
+            ViewBag.first_name = loggedInUser.first_name;
+            ViewBag.last_name = loggedInUser.last_name;
+            ViewBag.last_login = loggedInUser.last_login;
+            ViewBag.last_passwort_change = loggedInUser.last_password_change;
+            ViewBag.account_active = loggedInUser.account_active;
+            ViewBag.create_date = loggedInUser.create_date;
+            ViewBag.department_id = loggedInUser.department_id;
+            ViewBag.login_attempts = loggedInUser.login_attempts;
+            ViewBag.password = loggedInUser.password;
+            ViewBag.username = loggedInUser.username;
+
             return View();
         }
 
+        /// <summary>
+        /// This action result returns the benutzerverwaltung view. This method 
+        /// allows you to manage all registered users.
+        /// </summary>
+        /// <returns>Returns a view to the browser.</returns>
         public ActionResult Benutzerverwaltung()
         {
-            if (!checkSession())
+            if (!checkSession(2))
             {
                 return RedirectToAction("Anmelden");
             }
@@ -133,10 +175,15 @@ namespace Geolocation_Portal_Test.Controllers
             return View(myDatabaseEntities.user.ToList());
         }
 
-        // GET: user/Details/5
+        /// <summary>
+        /// This action result returns the benutzerdetails view. This method shows the 
+        /// details of a user. No changes can be made on the mask.
+        /// </summary>
+        /// <param name="id">An ID is required to search the user inside the database.</param>
+        /// <returns>Returns a view to the browser.</returns>
         public ActionResult Benutzerdetails(int? id)
         {
-            if (!checkSession())
+            if (!checkSession(2))
             {
                 return RedirectToAction("Anmelden");
             }
@@ -159,9 +206,14 @@ namespace Geolocation_Portal_Test.Controllers
             return View(user);
         }
 
+        /// <summary>
+        /// This action result returns the benutzererstellung view. This method provides 
+        /// the roles and departments from the database.
+        /// </summary>
+        /// <returns>Returns a view to the browser.</returns>
         public ActionResult Benutzererstellung()
         {
-            if (!checkSession())
+            if (!checkSession(2))
             {
                 return RedirectToAction("Anmelden");
             }
@@ -172,14 +224,16 @@ namespace Geolocation_Portal_Test.Controllers
             return View();
         }
 
-        // POST: user/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// This action result returns the benutzererstellung view. A user is added to the database.
+        /// </summary>
+        /// <param name="user">A user object with the data from the form.</param>
+        /// <returns>Returns a view to the browser.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Benutzererstellung([Bind(Include = "Id,role_id,department_id,first_name,last_name,username,password,last_password_change,create_date,account_active,login_attempts,last_login")] user user)
         {
-            if (!checkSession())
+            if (!checkSession(2))
             {
                 return RedirectToAction("Anmelden");
             }
@@ -212,10 +266,15 @@ namespace Geolocation_Portal_Test.Controllers
             return View(user);
         }
 
-        // GET: user/Edit/5
+        /// <summary>
+        /// This action result returns the benutzerbearbeitung view. This method provides 
+        /// the roles and departments from the database.
+        /// </summary>
+        /// <param name="id">An ID is required to search the user inside the database.</param>
+        /// <returns>Returns a view to the browser.</returns>
         public ActionResult Benutzerbearbeitung(int? id)
         {
-            if (!checkSession())
+            if (!checkSession(2))
             {
                 return RedirectToAction("Anmelden");
             }
@@ -238,14 +297,18 @@ namespace Geolocation_Portal_Test.Controllers
             return View(user);
         }
 
-        // POST: user/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// This action result returns the benutzerbearbeitung view. This method provides 
+        /// the roles and departments from the database. After the user has been edited, the 
+        /// new data is now stored in the database.
+        /// </summary>
+        /// <param name="user">A user object with the data from the form.</param>
+        /// <returns>Returns a view to the browser.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Benutzerbearbeitung([Bind(Include = "Id,role_id,department_id,first_name,last_name,username,password,last_password_change,create_date,account_active,login_attempts,last_login")] user user)
         {
-            if (!checkSession())
+            if (!checkSession(2))
             {
                 return RedirectToAction("Anmelden");
             }
@@ -262,10 +325,15 @@ namespace Geolocation_Portal_Test.Controllers
             return View(user);
         }
 
-        // GET: user/Delete/5
+        /// <summary>
+        /// This action result returns the benutzerentfernung view. Searches for the user to be 
+        /// removed in the database and displays it. The user must then confirm the deletion process again.
+        /// </summary>
+        /// <param name="id">An ID is required to delete the user from the database.</param>
+        /// <returns>Returns a view to the browser.</returns>
         public ActionResult Benutzerentfernung(int? id)
         {
-            if (!checkSession())
+            if (!checkSession(2))
             {
                 return RedirectToAction("Anmelden");
             }
@@ -288,12 +356,17 @@ namespace Geolocation_Portal_Test.Controllers
             return View(user);
         }
 
-        // POST: user/Delete/5
+        /// <summary>
+        /// This action result returns the benutzerentfernung view. As soon as the user 
+        /// confirms the deletion, the user is removed from the database.
+        /// </summary>
+        /// <param name="id">An ID is required to delete the user from the database.</param>
+        /// <returns>Returns a view to the browser.</returns>
         [HttpPost, ActionName("Benutzerentfernung")]
         [ValidateAntiForgeryToken]
         public ActionResult BenutzerentfernungConfirmed(int id)
         {
-            if (!checkSession())
+            if (!checkSession(2))
             {
                 return RedirectToAction("Anmelden");
             }
@@ -301,21 +374,33 @@ namespace Geolocation_Portal_Test.Controllers
             user user = myDatabaseEntities.user.Find(id);
             myDatabaseEntities.user.Remove(user);
             myDatabaseEntities.SaveChanges();
+
             return RedirectToAction("Benutzerverwaltung");
         }
 
+        /// <summary>
+        /// This action result returns the rollenverwaltung view. Returns an overview of 
+        /// all roles from the database.
+        /// </summary>
+        /// <returns>Returns a view to the browser.</returns>
         public ActionResult Rollenverwaltung()
         {
-            if (!checkSession())
+            if (!checkSession(2))
             {
                 return RedirectToAction("Anmelden");
             }
 
             return View(myDatabaseEntities.role.ToList());
-        }// GET: user/Details/5
+        }
+
+        /// <summary>
+        /// This action result returns the rollendetails view. Recovers the details of a role.
+        /// </summary>
+        /// <param name="id">An ID is required to find the role in the database.</param>
+        /// <returns>Returns a view to the browser.</returns>
         public ActionResult Rollendetails(int? id)
         {
-            if (!checkSession())
+            if (!checkSession(2))
             {
                 return RedirectToAction("Anmelden");
             }
@@ -335,9 +420,13 @@ namespace Geolocation_Portal_Test.Controllers
             return View(role);
         }
 
+        /// <summary>
+        /// This action result returns the rollenerstellung view. Allows you to add a role to the database.
+        /// </summary>
+        /// <returns>Returns a view to the browser.</returns>
         public ActionResult Rollenerstellung()
         {
-            if (!checkSession())
+            if (!checkSession(2))
             {
                 return RedirectToAction("Anmelden");
             }
@@ -345,14 +434,16 @@ namespace Geolocation_Portal_Test.Controllers
             return View();
         }
 
-        // POST: user/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// This action result returns the rollenerstellung view. Saves the role in the database.
+        /// </summary>
+        /// <param name="role">A role object with the data from the input form.</param>
+        /// <returns>Returns a view to the browser.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Rollenerstellung([Bind(Include = "Id,name,description")] role role)
         {
-            if (!checkSession())
+            if (!checkSession(2))
             {
                 return RedirectToAction("Anmelden");
             }
@@ -381,10 +472,15 @@ namespace Geolocation_Portal_Test.Controllers
             return View(role);
         }
 
-        // GET: user/Edit/5
+        /// <summary>
+        /// This action result returns the rollenbearbeitung view. Returns information about 
+        /// the role to be edit the role.
+        /// </summary>
+        /// <param name="id">An ID is required to find the role in the database.</param>
+        /// <returns>Returns a view to the browser.</returns>
         public ActionResult Rollenbearbeitung(int? id)
         {
-            if (!checkSession())
+            if (!checkSession(2))
             {
                 return RedirectToAction("Anmelden");
             }
@@ -404,14 +500,17 @@ namespace Geolocation_Portal_Test.Controllers
             return View(role);
         }
 
-        // POST: user/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// This action result returns the rollenbearbeitung view. Once processing is complete, 
+        /// the data is now updated in the database.
+        /// </summary>
+        /// <param name="role">A role object with the data from the input form.</param>
+        /// <returns>Returns a view to the browser.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Rollenbearbeitung([Bind(Include = "Id,name,description")] role role)
         {
-            if (!checkSession())
+            if (!checkSession(2))
             {
                 return RedirectToAction("Anmelden");
             }
@@ -436,10 +535,15 @@ namespace Geolocation_Portal_Test.Controllers
             return View(role);
         }
 
-        // GET: user/Delete/5
+        /// <summary>
+        /// This action result returns the rollenentfernung view. Provides the role data from 
+        /// the database. The user must then confirm the deletion of the role again.
+        /// </summary>
+        /// <param name="id">An ID is needed to find the role to be deleted in the database.</param>
+        /// <returns>Returns a view to the browser.</returns>
         public ActionResult Rollenentfernung(int? id)
         {
-            if (!checkSession())
+            if (!checkSession(2))
             {
                 return RedirectToAction("Anmelden");
             }
@@ -459,12 +563,17 @@ namespace Geolocation_Portal_Test.Controllers
             return View(role);
         }
 
-        // POST: user/Delete/5
+        /// <summary>
+        /// This action result returns the rollenentfernung view. After the user has 
+        /// confirmed the deletion, the role is removed from the database.
+        /// </summary>
+        /// <param name="id">An ID is needed to find the role to be deleted in the database.</param>
+        /// <returns>Returns a view to the browser.</returns>
         [HttpPost, ActionName("Rollenentfernung")]
         [ValidateAntiForgeryToken]
         public ActionResult RollenentfernungConfirmed(int id)
         {
-            if (!checkSession())
+            if (!checkSession(2))
             {
                 return RedirectToAction("Anmelden");
             }
@@ -475,6 +584,10 @@ namespace Geolocation_Portal_Test.Controllers
             return RedirectToAction("Rollenverwaltung");
         }
 
+        /// <summary>
+        /// Terminates the connection to the database by destroying the entity object.
+        /// </summary>
+        /// <param name="disposing">Connection is only destroyed if true.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -485,16 +598,30 @@ namespace Geolocation_Portal_Test.Controllers
             base.Dispose(disposing);
         }
 
-        private bool checkSession()
+        /// <summary>
+        /// Check the session. A session exists when a user is logged in.
+        /// The required user role is also checked.
+        /// </summary>
+        /// <param name="requiredUserRole">The required user role.</param>
+        /// <returns>Returns true if the user role matches or is lower.</returns>
+        private bool checkSession(int requiredUserRole)
         {
-            if (Session["UserRole"] != null)
-            {
-                return true;
-            }
-            else
+            if (requiredUserRole == null)
             {
                 return false;
             }
+
+            if (Session["UserRole"] != null)
+            {
+                int loggedInUserRole = Convert.ToInt32(Session["UserRole"], new CultureInfo("de-DE"));
+
+                if (loggedInUserRole <= requiredUserRole)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

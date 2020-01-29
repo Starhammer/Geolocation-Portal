@@ -4,81 +4,34 @@
     ViewBag.Title = "Recordbearbeitung";
 }
 
-@using (Html.BeginForm("Recordbearbeitung", "OpenData", FormMethod.Post, new { enctype = "multipart/form-data" }))
+<h1>Datensatz bearbeiten</h1>
+<hr />
+
+@using (Html.BeginForm("Recordbearbeitung", "OpenData", FormMethod.Post, new { enctype = "multipart/form-data", id = "myFormStyle" }))
 {
     @Html.AntiForgeryToken()
     <div class="container">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <form>
-            <h1>Datensatz bearbeiten</h1>
-            <hr />
-
             <div class="form-group row">
-                @Html.LabelFor(model => model.title, htmlAttributes: new { @class = "col-3" })
+                <div class="col-3">
+                    @Html.LabelFor(model => model.title)
+                </div>
                 <div class="col-9">
                     @Html.EditorFor(model => model.title, new { htmlAttributes = new { @class = "form-control mw-100" } })
                     @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="form-group row">
-                <div class="col-3">
-                    @Html.LabelFor(model => model.licence_id, htmlAttributes: new { @class = "" })
-                </div>
-                <div class="col-9">
-                    @Html.DropDownList("licence_id", null, htmlAttributes: new { @class = "form-control mw-100", @id = "licence_dropDownList" })
-                    @Html.ValidationMessageFor(model => model.licence_id, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <script>
-                function dropDownListElementChanged() {
-
-                }
-
-                $('#licence_dropDownList').change(function () {
-                    var SelectedValue = $(this).val();
-
-                    @{
-                        var licences = @ViewBag.licence_descriptions;
-                    }
-
-                    @foreach (var c in @licences)
-                    {
-                        // ToDo: Ausgabe der Beschreibung, aber kein Zugriff auf die Eigenschaft description bei c.
-                    }
-
-                    console.log(SelectedValue);
-                });
-            </script>
-
-            <p class="text-info">
-                Hinweis:<br />
-                @ViewBag.licence_description
-            </p>
-
-            <div class="form-group row">
-                <div class="col-3">
-                    @Html.LabelFor(model => model.role_id, htmlAttributes: new { @class = "" })
-                </div>
-                <div class="col-9">
-                    @Html.DropDownList("role_id", null, htmlAttributes: new { @class = "form-control mw-100" })
-                    @Html.ValidationMessageFor(model => model.role_id, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <p class="text-info">
-                Hinweis:<br />
-                @Html.Display("role_description")
-            </p>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "" })
+                @Html.LabelFor(model => model.description)
                 @Html.TextAreaFor(model => model.description, htmlAttributes: new { @rows = "10", @class = "form-control mw-100", @maxlength = "3000" })
                 @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
             </div>
+
             <div class="form-group row">
                 <div class="col-3">
-                    @Html.LabelFor(model => model.category_id, htmlAttributes: new { @class = "" })
+                    @Html.LabelFor(model => model.category_id)
                 </div>
                 <div class="col-9">
                     @Html.DropDownList("category_id", null, htmlAttributes: new { @class = "form-control mw-100" })
@@ -87,7 +40,7 @@
             </div>
             <div class="form-group row">
                 <div class="col-3">
-                    @Html.LabelFor(model => model.location_id, htmlAttributes: new { @class = "" })
+                    @Html.LabelFor(model => model.location_id)
                 </div>
                 <div class="col-9">
                     @Html.DropDownList("location_id", null, htmlAttributes: new { @class = "form-control mw-100" })
@@ -96,22 +49,85 @@
             </div>
             <div class="form-group row">
                 <div class="col-3">
-                    @Html.LabelFor(model => model.publisher_id, htmlAttributes: new { @class = "" })
+                    @Html.LabelFor(model => model.publisher_id)
                 </div>
                 <div class="col-9">
                     @Html.DropDownList("publisher_id", null, htmlAttributes: new { @class = "form-control mw-100" })
                     @Html.ValidationMessageFor(model => model.publisher_id, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <br />
-            <div class="row">
-                <div class="col">
-                    <b>Dateien und Quellen:</b>
-                    <br />
-                    Wählen Sie nun einige Dateien aus, welche Sie zu diesem Datensatz veröffentlichen möchten. Denken Sie daran, dass es sich inhaltlich nur um eine Datei handeln sollte. Sie können Ihre Datei aber mit unterschiedlichen Dateiendungen hochladen, um den Besuchern ihre Datei besser zur Verfügung zu stellen.
+
+            <div class="form-group row">
+                <div class="col-3">
+                    @Html.LabelFor(model => model.licence_id)
+                </div>
+                <div class="col-9">
+                    @Html.DropDownList("licence_id", null, htmlAttributes: new { @class = "form-control mw-100", @id = "licence_dropDownList" })
+                    @Html.ValidationMessageFor(model => model.licence_id, "", new { @class = "text-danger" })
                 </div>
             </div>
+
             <br />
+            <h6 class="text-info">Hinweis:</h6>
+            <p id="licence_desc"></p>
+            <br />
+
+            <div class="form-group row">
+                <div class="col-3">
+                    @Html.LabelFor(model => model.role_id)
+                </div>
+                <div class="col-9">
+                    @Html.DropDownList("role_id", null, htmlAttributes: new { @class = "form-control mw-100", @id = "role_dropDownList" })
+                    @Html.ValidationMessageFor(model => model.role_id, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <br />
+            <h6 class="text-info">Hinweis:</h6>
+            <p id="role_desc"></p>
+            <br />
+
+            <div class="form-group row">
+                <div class="col-3">
+                    @Html.LabelFor(model => model.record_active)
+                </div>
+                <div class="col-9">
+                    @Html.EditorFor(model => model.record_active)
+                    @Html.ValidationMessageFor(model => model.record_active, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <br />
+
+            <!-- Default checked -->
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="radioNormal" name="dataTyp" value="normal" @if (!Model.geo_data && !Model.dia_data) { <text> checked </text> }>
+                <label class="custom-control-label" for="radioNormal">Dieser Datensatz beinhaltet keine geografischen oder visualisierende Daten</label>
+            </div>
+            <br />
+            <!-- Default unchecked -->
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="radioGeoFile" name="dataTyp" value="geoData" @if (Model.geo_data) { <text> checked </text> }>
+                <label class="custom-control-label" for="radioGeoFile">Dieser Datensatz beinhaltet geografische Daten</label>
+            </div>
+            <br />
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="radioDiagram" name="dataTyp" value="diaData" @if (Model.dia_data) { <text> checked </text> }>
+                <label class="custom-control-label" for="radioDiagram">Dieser Datensatz beinhaltet visualisierende Daten</label>
+            </div>
+
+            <br />
+
+            <label>Dateien und Quellen:</label>
+            <h6 class="text-info">Hinweis:</h6>
+            <p>
+                Wählen Sie nun einige Dateien aus, welche Sie zu diesem Datensatz veröffentlichen möchten. Denken Sie daran,
+                dass es sich inhaltlich nur um eine Datei handeln sollte. Sie können Ihre Datei aber mit unterschiedlichen
+                Dateiendungen hochladen, um den Besuchern ihre Datei besser zur Verfügung zu stellen.
+            </p>
+
+            <input class="btn btn-secondary full-width" type="file" id="files" name="files" multiple required />
+
             <div class="table-responsive">
                 <table class="table">
                     <thead>
@@ -170,44 +186,29 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col">
-                @Html.TextBox("files", "", htmlAttributes: new { @type = "file", @multiple = "true" })
 
-            </div>
-
-            <br />
-
-            <!-- ToDo: Hier soll eine Tabelle erstellt werden, in welcher die Dateien zwischengespeichert werden. Jede Zeile soll einen Mülleimer zum Entfernen der Datei haben. -->
-            <!-- Default checked -->
-            <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" id="radioNormal" name="dataTyp" value="normal" @if (!Model.geo_data && !Model.dia_data) { <text> checked </text> }>
-                <label class="custom-control-label" for="radioNormal">Dieser Datensatz beinhaltet keine geografischen oder visualisierende Daten</label>
-            </div>
-            <br />
-            <!-- Default unchecked -->
-            <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" id="radioGeoFile" name="dataTyp" value="geoData" @if (Model.geo_data) { <text> checked </text> }>
-                <label class="custom-control-label" for="radioGeoFile">Dieser Datensatz beinhaltet geografische Daten</label>
-            </div>
-            <br />
-            <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" id="radioDiagram" name="dataTyp" value="diaData" @if (Model.dia_data) { <text> checked </text> }>
-                <label class="custom-control-label" for="radioDiagram">Dieser Datensatz beinhaltet visualisierende Daten</label>
-            </div>
-            <br />
-            <div class="form-group row">
-                <div class="col-3">
-                    @Html.LabelFor(model => model.record_active, htmlAttributes: new { @class = "" })
-                </div>
-                <div class="col-9">
-                    @Html.EditorFor(model => model.record_active)
-                    @Html.ValidationMessageFor(model => model.record_active, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Datensatz hochladen</button>
-            <br />
-            <br />
-
+            <br /><br />
+            <button type="submit" class="btn btn-primary">Datensatz speichern</button>
         </form>
     </div>
 }
+
+<script type="text/javascript">
+
+    $('#licence_dropDownList').change(function () {
+        var SelectedValue = $(this).val();
+
+        var stringArray = @Html.Raw(Json.Encode(ViewData["licence_description_list"]));
+        $("#licence_desc").html(stringArray[SelectedValue-1]);
+    });
+
+    $('#role_dropDownList').change(function () {
+        var SelectedValue = $(this).val();
+
+        var stringArray = @Html.Raw(Json.Encode(ViewData["role_description_list"]));
+        $("#role_desc").html(stringArray[SelectedValue-1]);
+    });
+
+    $("#licence_dropDownList").trigger("change");
+    $("#role_dropDownList").trigger("change");
+</script>

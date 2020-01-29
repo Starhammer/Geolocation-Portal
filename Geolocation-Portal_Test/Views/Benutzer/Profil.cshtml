@@ -3,10 +3,139 @@
     ViewBag.Title = "Profil";
 }
 
-@if (Session["UserName"] != null)
-{
-    <h1>Profil</h1>
-    <hr />
+<h1>Profil</h1>
+<hr />
 
-    <p>Benutzername: @Session["UserName"].ToString()</p>
-}
+<div>
+    <div class="two-column-wrapper">
+        <div>
+            ID:
+        </div>
+        <div>
+            @ViewBag.id
+        </div>
+    </div>
+
+    <div class="two-column-wrapper">
+        <div>
+            Benutzername:
+        </div>
+        <div>
+            @ViewBag.username
+        </div>
+    </div>
+
+    <div class="two-column-wrapper">
+        <div>
+            Passwort:
+        </div>
+        <div>
+            @ViewBag.password
+        </div>
+    </div>
+
+    <br />
+
+    <div class="two-column-wrapper">
+        <div>
+            Vorname:
+        </div>
+        <div>
+            @ViewBag.first_name
+        </div>
+    </div>
+
+    <div class="two-column-wrapper">
+        <div>
+            Nachname:
+        </div>
+        <div>
+            @ViewBag.last_name
+        </div>
+    </div>
+
+    <br />
+
+    <div class="two-column-wrapper">
+        <div>
+            Rollen ID:
+        </div>
+        <div>
+            @ViewBag.role_id
+        </div>
+    </div>
+
+    <div class="two-column-wrapper">
+        <div>
+            Rolle:
+        </div>
+        <div>
+            @ViewBag.role
+        </div>
+    </div>
+
+    <div class="two-column-wrapper">
+        <div>
+            Rollenbeschreibung:
+        </div>
+        <div>
+            @ViewBag.role_description
+        </div>
+    </div>
+
+    <br />
+
+    <div class="two-column-wrapper">
+        <div>
+            Letztes Anmeldedatum:
+        </div>
+        <div>
+            @ViewBag.last_login
+        </div>
+    </div>
+
+    <div class="two-column-wrapper">
+        <div>
+            Letztes Passwortänderungsdatum:
+        </div>
+        <div>
+            @ViewBag.last_passwort_change
+        </div>
+    </div>
+
+    <div class="two-column-wrapper">
+        <div>
+            Accountaktivierung:
+        </div>
+        <div>
+            @ViewBag.account_active
+        </div>
+    </div>
+
+    <div class="two-column-wrapper">
+        <div>
+            Erstelldatum:
+        </div>
+        <div>
+            @ViewBag.create_date
+        </div>
+    </div>
+
+    <div class="two-column-wrapper">
+        <div>
+            Arbeitsstätten ID:
+        </div>
+        <div>
+            @ViewBag.department_id
+        </div>
+    </div>
+
+    <div class="two-column-wrapper">
+        <div>
+            Anmeldeversuche:
+        </div>
+        <div>
+            @ViewBag.login_attempts
+        </div>
+    </div>
+</div>

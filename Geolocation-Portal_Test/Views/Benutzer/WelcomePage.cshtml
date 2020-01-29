@@ -4,42 +4,39 @@
     ViewBag.Title = "LoginTest";
 }
 
-@if (Session["UserName"] != null)
-{
-    <h1>Login erfolgreich</h1>
-    <hr />
+<h1>Login erfolgreich</h1>
+<hr />
 
-    <h2>Willkommen <b>@Session["UserFullName"].ToString()</b>!</h2>
+<h2>Willkommen <b>@Session["UserFullName"].ToString()</b>!</h2>
 
-    <p>Als "@Html.DisplayFor(model => model.name)" haben Sie auf dem Open Data Geo Location Portal der Großen Kreisstadt Mosbach auf folgende Funktionen Zugriff:</p>
+<p>Als "@Html.DisplayFor(model => model.name)" haben Sie auf dem Open Data Geo Location Portal der Großen Kreisstadt Mosbach auf folgende Funktionen Zugriff:</p>
 
-    <ul>
-        <!-- Rolle: Externer-User -->
-        <li><a href="@Url.Action("Profil", "Benutzer")" title="Profilbearbeitung">Profilbearbeitung</a></li>
+<ul>
+    <!-- Rolle: Externer-User -->
+    <li><a href="@Url.Action("Profil", "Benutzer")" title="Profilbearbeitung">Profilbearbeitung</a></li>
 
-        @if (Session["UserRole"] != null && Convert.ToInt32(Session["UserRole"]) < 4)
-        {
-            <!-- Rolle: Interner-User -->
-            <li><a href="@Url.Action("Index", "OpenData")" title="Open-Data">Einsicht in interne Dokumente</a></li>
-        }
+    @if (Session["UserRole"] != null && Convert.ToInt32(Session["UserRole"]) < 4)
+    {
+        <!-- Rolle: Interner-User -->
+        <li><a href="@Url.Action("Index", "OpenData")" title="Open-Data">Einsicht in interne Dokumente</a></li>
+    }
 
-        @if (Session["UserRole"] != null && Convert.ToInt32(Session["UserRole"]) < 3)
-        {
-            <!-- Rolle: Key-User -->
-            <li><a href="@Url.Action("Recorderstellung", "OpenData")" title="Recorderstellung">Erstellen eines Datensatzes</a></li>
-            <li><a href="@Url.Action("Recordverwaltung", "OpenData")" title="Recordverwaltung">Datensatzverwaltung</a></li>
-            <li><a href="@Url.Action("Kategorieverwaltung", "OpenData")" title="Kategorieverwaltung">Kategorieverwaltung</a></li>
-        }
+    @if (Session["UserRole"] != null && Convert.ToInt32(Session["UserRole"]) < 3)
+    {
+        <!-- Rolle: Key-User -->
+        <li><a href="@Url.Action("Recorderstellung", "OpenData")" title="Recorderstellung">Erstellen eines Datensatzes</a></li>
+        <li><a href="@Url.Action("Recordverwaltung", "OpenData")" title="Recordverwaltung">Datensatzverwaltung</a></li>
+        <li><a href="@Url.Action("Kategorieverwaltung", "OpenData")" title="Kategorieverwaltung">Kategorieverwaltung</a></li>
+    }
 
-        @if (Session["UserRole"] != null && Convert.ToInt32(Session["UserRole"]) < 2)
-        {
-            <!-- Rolle: Administrator -->
-            <li><a href="@Url.Action("Rollenverwaltung", "Benutzer")" title="Rollenverwaltung">Rollenverwaltung</a></li>
-            <li><a href="@Url.Action("Benutzerverwaltung", "Benutzer")" title="Benutzerverwaltung">Benutzerverwaltung</a></li>
-        }
-    </ul>
+    @if (Session["UserRole"] != null && Convert.ToInt32(Session["UserRole"]) < 2)
+    {
+        <!-- Rolle: Administrator -->
+        <li><a href="@Url.Action("Rollenverwaltung", "Benutzer")" title="Rollenverwaltung">Rollenverwaltung</a></li>
+        <li><a href="@Url.Action("Benutzerverwaltung", "Benutzer")" title="Benutzerverwaltung">Benutzerverwaltung</a></li>
+    }
+</ul>
 
-    <p>
-        Unser <a href="@Url.Action("UserGuideDownload", "Home")" title="User-Guide herunterladen">User-Guide</a> hilft Ihnen beim Kennenlernen und Verwenden der Funktionen.
-    </p>
-}
+<p>
+    Unser <a href="@Url.Action("UserGuideDownload", "Home")" title="User-Guide herunterladen">User-Guide</a> hilft Ihnen beim Kennenlernen und Verwenden der Funktionen.
+</p>

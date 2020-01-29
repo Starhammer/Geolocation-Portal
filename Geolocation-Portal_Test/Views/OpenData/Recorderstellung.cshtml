@@ -82,6 +82,11 @@
                 </div>
             </div>
 
+            <br />
+            <h6 class="text-info">Hinweis:</h6>
+            <p id="role_desc"></p>
+            <br />
+
             <div class="form-group row">
                 <div class="col-3">
                     @Html.LabelFor(model => model.record_active)
@@ -92,12 +97,6 @@
                 </div>
             </div>
 
-            <br />
-            <h6 class="text-info">Hinweis:</h6>
-            <p id="role_desc"></p>
-            
-            <br />
-
             <!-- Default checked -->
             <div class="custom-control custom-radio">
                 <input type="radio" class="custom-control-input" id="radioNormal" name="dataTyp" value="normal" checked>
@@ -105,7 +104,7 @@
             </div>
 
             <br />
-            
+
             <!-- Default unchecked -->
             <div class="custom-control custom-radio">
                 <input type="radio" class="custom-control-input" id="radioGeoFile" name="dataTyp" value="geoData">
@@ -113,7 +112,7 @@
             </div>
 
             <br />
-            
+
             <div class="custom-control custom-radio">
                 <input type="radio" class="custom-control-input" id="radioDiagram" name="dataTyp" value="diaData">
                 <label class="custom-control-label" for="radioDiagram">Dieser Datensatz beinhaltet visualisierende Daten</label>
@@ -124,8 +123,8 @@
             <label>Dateien und Quellen:</label>
             <h6 class="text-info">Hinweis:</h6>
             <p>
-            Wählen Sie nun einige Dateien aus, welche Sie zu diesem Datensatz veröffentlichen möchten. Denken Sie daran, 
-                dass es sich inhaltlich nur um eine Datei handeln sollte. Sie können Ihre Datei aber mit unterschiedlichen 
+                Wählen Sie nun einige Dateien aus, welche Sie zu diesem Datensatz veröffentlichen möchten. Denken Sie daran,
+                dass es sich inhaltlich nur um eine Datei handeln sollte. Sie können Ihre Datei aber mit unterschiedlichen
                 Dateiendungen hochladen, um den Besuchern ihre Datei besser zur Verfügung zu stellen.
             </p>
 
@@ -145,6 +144,8 @@
                     <tbody id="uploadTable_body"></tbody>
                 </table>
             </div>
+
+            <br /><br />
             <button type="submit" class="btn btn-primary">Datensatz hochladen</button>
         </form>
     </div>
@@ -165,8 +166,13 @@
         var stringArray = @Html.Raw(Json.Encode(ViewData["role_description_list"]));
         $("#role_desc").html(stringArray[SelectedValue-1]);
     });
+    
+    $("#licence_dropDownList").trigger("change");
+    $("#role_dropDownList").trigger("change");
 
-
+    /**
+     * 
+     */
     var validateFileUpload = function () {
         document.getElementById("uploadTable").style.visibility = "visible";
 
@@ -194,7 +200,4 @@
         }
     }
     document.getElementById("files").onchange = validateFileUpload;
-
-    $("#licence_dropDownList").trigger("change");
-    $("#role_dropDownList").trigger("change");
 </script>
