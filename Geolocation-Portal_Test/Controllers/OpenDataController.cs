@@ -663,13 +663,27 @@ namespace Geolocation_Portal_Test.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult RecordComment([Bind(Include = "title,text,person_name,bewertung,record_id")] comment comment)
         {
+            // parameter verification cop to avoid errors.
+            if (comment == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            // Add the new comment to the database.
             myDatabaseEntities.comment.Add(comment);
 
-            double avgRating = myDatabaseEntities.comment.Where(c => c.record_id == comment.record_id).Average(c => c.bewertung);
+            // Save comment to calculate the average.
+            myDatabaseEntities.SaveChanges();
 
-            myDatabaseEntities.record.Find(comment.record_id).rating = (int)Math.Round(avgRating);
+            // Average calculation if comments already exist for the data set.
+            double avgRating = myDatabaseEntities.comment.Where(c => c.record_id == comment.record_id).Average(c => c.bewertung);
+            avgRating = Math.Round(avgRating);
+
+            // Add a new average value to the data set so that it does not always have to be calculated (performance).
+            myDatabaseEntities.record.Find(comment.record_id).rating = (int)avgRating;
 
             myDatabaseEntities.SaveChangesAsync();
+
             return RedirectToAction("Recorddetails", new { id = comment.record_id });
         }
 

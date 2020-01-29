@@ -16,7 +16,31 @@ body {
     padding: 0;
     font-size: 1rem;
     line-height: 1.8em;
-    font-family: "Calibri";
+    font-family: Tahoma, Verdana, 'Segoe', sans-serif;
+}
+
+h1 {
+    font-size: 1.8rem;
+}
+
+h2 {
+    font-size: 1.7rem;
+}
+
+h3 {
+    font-size: 1.6rem;
+}
+
+h4 {
+    font-size: 1.5rem;
+}
+
+h5 {
+    font-size: 1.4rem;
+}
+
+h6 {
+    font-size: 1.3rem;
 }
 
 a:hover {
@@ -562,11 +586,81 @@ input[type="checkbox"] {
     width: 100%;
 }
 
+.clearfix {
+    clear: both;
+}
+
+.success-box {
+    margin: 50px 0;
+    padding: 10px 10px;
+    border: 1px solid #eee;
+    background: #f9f9f9;
+}
+
+.success-box > div {
+    vertical-align: top;
+    display: inline-block;
+    color: #888;
+}
+
+/* Rating Star Widgets Style */
+.rating-stars ul {
+    list-style-type: none;
+    padding: 0;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    text-align: left;
+}
+
+.rating-stars ul > li.star {
+    display: inline-block;
+}
+
+/* Idle State of the stars */
+.rating-stars ul > li.star > i.fa {
+    font-size: 2.5em; /* Change the size of the stars */
+    color: #ccc; /* Color on idle state */
+}
+
+/* Hover state of the stars */
+.rating-stars ul > li.star.hover > i.fa {
+    color: #FFCC36;
+}
+
+/* Selected state of the stars */
+.rating-stars ul > li.star.selected > i.fa {
+    color: #FF912C;
+}
+
+.accessible-record-view {
+    column-count: 1 !important;
+}
+
+.accessible-record-view > div {
+    max-width: 100% !important;
+    width: 100% !important;
+}
+
+.accessible-record-view .record-overview-header,
+.accessible-record-view .record-overview-body,
+.accessible-record-view .record-overview-footer {
+    max-height: 100%;
+    height: 100%;
+    min-height: 100%;
+}
+
+.accessible-record-view .card-header {
+    font-size: 18px;
+}
+
+.accessible-record-view .card-subtitle {
+    font-size: 16px;
+}
+
 /* Extra small devices (portrait phones, less than 576px)
 No media query for `xs` since this is the default in Bootstrap */
-
-@media (min-width: 360px) {
-    .form-inline {
+    @media (min-width: 360px) {
+        .form-inline {
         font-size: 38px;
     }
 
@@ -605,6 +699,38 @@ No media query for `xs` since this is the default in Bootstrap */
     .navbar-nav li {
         background-color: transparent;
         margin: 5px;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    h2 {
+        font-size: 2.4rem;
+    }
+
+    h3 {
+        font-size: 2.3rem;
+    }
+
+    h4 {
+        font-size: 2.2rem;
+    }
+
+    h5 {
+        font-size: 2.1rem;
+    }
+
+    h6 {
+        font-size: 2rem;
+    }
+
+    .accessible-record-view .card-header {
+        font-size: inherit;
+    }
+
+    .accessible-record-view .card-subtitle {
+        font-size: inherit;
     }
 }
 
