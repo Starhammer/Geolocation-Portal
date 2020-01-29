@@ -133,7 +133,7 @@
                         <div class="d-flex justify-content-between">
                             <span>
                                 <i class="fa fa-calendar"></i>
-                                @Html.DisplayFor(modelItem => item.dataset_modified_date.ToString().Split(new char[] { ' ' })[0])
+                                @Html.DisplayFor(modelItem => item.dataset_modified_date.ToString("dd/MM/yyyy").Split(new char[] { ' ' })[0])
                             </span>
                             <span><i class="fa fa-download"></i> @item.file.Sum(f => f.download_count)</span>
                             @Html.Partial("_rating", item.rating)
