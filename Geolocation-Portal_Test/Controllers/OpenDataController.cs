@@ -648,7 +648,10 @@ namespace Geolocation_Portal_Test.Controllers
             }
 
             record record = myDatabaseEntities.record.Find(id);
+
+            myDatabaseEntities.comment.RemoveRange(record.comment);
             myDatabaseEntities.record.Remove(record);
+
             myDatabaseEntities.SaveChanges();
 
             return RedirectToAction("Index");
