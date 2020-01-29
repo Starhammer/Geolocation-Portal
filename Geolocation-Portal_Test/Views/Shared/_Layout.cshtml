@@ -162,9 +162,15 @@
 
                 // Change the font size of the page.
                 if (isFontLarge == true) {
-                    var newFontSize = "1.6rem";
+                    var newFontSize = "1.5rem";
+
+                    $('#record-overview').addClass('accessible-record-view');
                 } else {
                     var newFontSize = "1rem";
+
+                    if ($('#record-overview').hasClass('accessible-record-view')) {
+                        $('#record-overview').removeClass('accessible-record-view');
+                    }
                 }
 
                 // Weitere Möglichkeit => Aktuelle Schriftgröße holen und dann multiplizieren...
