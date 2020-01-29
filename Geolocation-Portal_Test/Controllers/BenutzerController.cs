@@ -17,7 +17,7 @@ namespace Geolocation_Portal_Test.Controllers
         /// Object of the database tables. Each database table is defined as a model below the entities.
         /// The entity object allows you to select tupels from the database and return a model of each tupel.
         /// </summary>
-        private Entities myDatabaseEntities = new Entities();
+        private Entities DatabaseEntities = new Entities();
 
         /// <summary>
         /// This action result returns the anmelden view. The user can log in with his account via the login mask.
@@ -47,7 +47,7 @@ namespace Geolocation_Portal_Test.Controllers
             {
                 string password = CreateMD5(objUser.password);
 
-                var obj = myDatabaseEntities.user.Where(useraccount => string.Equals(useraccount.username, objUser.username) && string.Equals(useraccount.password, password)).FirstOrDefault();
+                var obj = DatabaseEntities.user.Where(useraccount => string.Equals(useraccount.username, objUser.username) && string.Equals(useraccount.password, password)).FirstOrDefault();
                     
                 if (obj != null)
                 {
@@ -101,7 +101,7 @@ namespace Geolocation_Portal_Test.Controllers
                 return RedirectToAction("Anmelden");
             }
 
-            role role = myDatabaseEntities.role.Find(Convert.ToInt32(Session["UserRole"]));
+            role role = DatabaseEntities.role.Find(Convert.ToInt32(Session["UserRole"]));
             if (role == null)
             {
                 return HttpNotFound();
@@ -140,7 +140,7 @@ namespace Geolocation_Portal_Test.Controllers
             }
 
             int userID = Convert.ToInt32(Session["UserID"], new CultureInfo("de-DE"));
-            user loggedInUser = myDatabaseEntities.user.Find(userID);
+            user loggedInUser = DatabaseEntities.user.Find(userID);
 
             ViewBag.id = loggedInUser.Id;
             ViewBag.role_id = loggedInUser.role_id;
@@ -172,7 +172,7 @@ namespace Geolocation_Portal_Test.Controllers
                 return RedirectToAction("Anmelden");
             }
 
-            return View(myDatabaseEntities.user.ToList());
+            return View(DatabaseEntities.user.ToList());
         }
 
         /// <summary>
@@ -193,10 +193,10 @@ namespace Geolocation_Portal_Test.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            user user = myDatabaseEntities.user.Find(id);
+            user user = DatabaseEntities.user.Find(id);
 
-            ViewBag.role_id = new SelectList(myDatabaseEntities.role, "Id", "name");
-            //ViewBag.department_id = new SelectList(db.department, "Id", "name"); ToDo: If department id table in db exists uncomment row.
+            ViewBag.role_id = new SelectList(DatabaseEntities.role, "Id", "name");
+            //ViewBag.department_id = new SelectList(DatabaseEntities.department, "Id", "name"); ToDo: If department id table in DatabaseEntities exists uncomment row.
 
             if (user == null)
             {
@@ -218,8 +218,8 @@ namespace Geolocation_Portal_Test.Controllers
                 return RedirectToAction("Anmelden");
             }
 
-            ViewBag.role_id = new SelectList(myDatabaseEntities.role, "Id", "name");
-            // ViewBag.department_id = new SelectList(db.department, "Id", "name"); ToDo: If department id table in db exists uncomment row.
+            ViewBag.role_id = new SelectList(DatabaseEntities.role, "Id", "name");
+            // ViewBag.department_id = new SelectList(DatabaseEntities.department, "Id", "name"); ToDo: If department id table in DatabaseEntities exists uncomment row.
 
             return View();
         }
@@ -244,7 +244,7 @@ namespace Geolocation_Portal_Test.Controllers
                 user.last_password_change = DateTime.Now;
                 user.password = CreateMD5(user.password);
 
-                var user_search_data = from userdata in myDatabaseEntities.user
+                var user_search_data = from userdata in DatabaseEntities.user
                            where userdata.username == user.username
                            select userdata;
 
@@ -252,8 +252,8 @@ namespace Geolocation_Portal_Test.Controllers
 
                 if (user_search.Count() == 0)
                 {
-                    myDatabaseEntities.user.Add(user);
-                    myDatabaseEntities.SaveChanges();
+                    DatabaseEntities.user.Add(user);
+                    DatabaseEntities.SaveChanges();
                     return RedirectToAction("Benutzerverwaltung");
                 }
                 else
@@ -284,10 +284,10 @@ namespace Geolocation_Portal_Test.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            user user = myDatabaseEntities.user.Find(id);
+            user user = DatabaseEntities.user.Find(id);
 
-            ViewBag.role_id = new SelectList(myDatabaseEntities.role, "Id", "name");
-            //ViewBag.department_id = new SelectList(db.department, "Id", "name"); ToDo: If department id table in db exists uncomment row.
+            ViewBag.role_id = new SelectList(DatabaseEntities.role, "Id", "name");
+            //ViewBag.department_id = new SelectList(DatabaseEntities.department, "Id", "name"); ToDo: If department id table in DatabaseEntities exists uncomment row.
 
             if (user == null)
             {
@@ -317,8 +317,8 @@ namespace Geolocation_Portal_Test.Controllers
             {
                 user.password = CreateMD5(user.password);
 
-                myDatabaseEntities.Entry(user).State = EntityState.Modified;
-                myDatabaseEntities.SaveChanges();
+                DatabaseEntities.Entry(user).State = EntityState.Modified;
+                DatabaseEntities.SaveChanges();
                 return RedirectToAction("Benutzerverwaltung");
             }
 
@@ -343,10 +343,10 @@ namespace Geolocation_Portal_Test.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             
-            user user = myDatabaseEntities.user.Find(id);
+            user user = DatabaseEntities.user.Find(id);
 
-            ViewBag.role_id = new SelectList(myDatabaseEntities.role, "Id", "name");
-            //ViewBag.department_id = new SelectList(db.department, "Id", "name"); ToDo: If department id table in db exists uncomment row.
+            ViewBag.role_id = new SelectList(DatabaseEntities.role, "Id", "name");
+            //ViewBag.department_id = new SelectList(DatabaseEntities.department, "Id", "name"); ToDo: If department id table in DatabaseEntities exists uncomment row.
 
             if (user == null)
             {
@@ -371,9 +371,9 @@ namespace Geolocation_Portal_Test.Controllers
                 return RedirectToAction("Anmelden");
             }
 
-            user user = myDatabaseEntities.user.Find(id);
-            myDatabaseEntities.user.Remove(user);
-            myDatabaseEntities.SaveChanges();
+            user user = DatabaseEntities.user.Find(id);
+            DatabaseEntities.user.Remove(user);
+            DatabaseEntities.SaveChanges();
 
             return RedirectToAction("Benutzerverwaltung");
         }
@@ -390,7 +390,7 @@ namespace Geolocation_Portal_Test.Controllers
                 return RedirectToAction("Anmelden");
             }
 
-            return View(myDatabaseEntities.role.ToList());
+            return View(DatabaseEntities.role.ToList());
         }
 
         /// <summary>
@@ -410,7 +410,7 @@ namespace Geolocation_Portal_Test.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            role role = myDatabaseEntities.role.Find(id);
+            role role = DatabaseEntities.role.Find(id);
 
             if (role == null)
             {
@@ -451,7 +451,7 @@ namespace Geolocation_Portal_Test.Controllers
             if (ModelState.IsValid)
             {
                 // A role may only exist once in the database.
-                var role_search_data = from roledata in myDatabaseEntities.role
+                var role_search_data = from roledata in DatabaseEntities.role
                                        where roledata.name == role.name
                                        select roledata;
 
@@ -459,8 +459,8 @@ namespace Geolocation_Portal_Test.Controllers
 
                 if (role_search.Count() == 0)
                 {
-                    myDatabaseEntities.role.Add(role);
-                    myDatabaseEntities.SaveChanges();
+                    DatabaseEntities.role.Add(role);
+                    DatabaseEntities.SaveChanges();
                     return RedirectToAction("Rollenverwaltung");
                 }
                 else
@@ -490,7 +490,7 @@ namespace Geolocation_Portal_Test.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            role role = myDatabaseEntities.role.Find(id);
+            role role = DatabaseEntities.role.Find(id);
 
             if (role == null)
             {
@@ -518,7 +518,7 @@ namespace Geolocation_Portal_Test.Controllers
             if (ModelState.IsValid)
             {
                 // A role may only exist once in the database.
-                var role_search_data = from roledata in myDatabaseEntities.role
+                var role_search_data = from roledata in DatabaseEntities.role
                                        where roledata.name == role.name
                                        select roledata;
 
@@ -526,8 +526,8 @@ namespace Geolocation_Portal_Test.Controllers
 
                 if (role_search.Count() == 0)
                 {
-                    myDatabaseEntities.Entry(role).State = EntityState.Modified;
-                    myDatabaseEntities.SaveChanges();
+                    DatabaseEntities.Entry(role).State = EntityState.Modified;
+                    DatabaseEntities.SaveChanges();
                     return RedirectToAction("Rollenverwaltung");
                 }
             }
@@ -553,7 +553,7 @@ namespace Geolocation_Portal_Test.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            role role = myDatabaseEntities.role.Find(id);
+            role role = DatabaseEntities.role.Find(id);
 
             if (role == null)
             {
@@ -578,9 +578,9 @@ namespace Geolocation_Portal_Test.Controllers
                 return RedirectToAction("Anmelden");
             }
 
-            role role = myDatabaseEntities.role.Find(id);
-            myDatabaseEntities.role.Remove(role);
-            myDatabaseEntities.SaveChanges();
+            role role = DatabaseEntities.role.Find(id);
+            DatabaseEntities.role.Remove(role);
+            DatabaseEntities.SaveChanges();
             return RedirectToAction("Rollenverwaltung");
         }
 
@@ -592,7 +592,7 @@ namespace Geolocation_Portal_Test.Controllers
         {
             if (disposing)
             {
-                myDatabaseEntities.Dispose();
+                DatabaseEntities.Dispose();
             }
 
             base.Dispose(disposing);

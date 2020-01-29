@@ -18,7 +18,7 @@ namespace Geolocation_Portal_Test.Controllers
         /// Object of the database tables. Each database table is defined as a model below the entities.
         /// The entity object allows you to select tupels from the database and return a model of each tupel.
         /// </summary>
-        private Entities myDatabaseEntities = new Entities();
+        private Entities DatabaseEntities = new Entities();
 
         /// <summary>
         /// Determines which records should be returned.
@@ -63,11 +63,11 @@ namespace Geolocation_Portal_Test.Controllers
             }
 
             // Check all required database tables for their contents to avoid errors.
-            if (checkDatabaseContent(myDatabaseEntities.record) &&
-                checkDatabaseContent(myDatabaseEntities.category))
+            if (checkDatabaseContent(DatabaseEntities.record) &&
+                checkDatabaseContent(DatabaseEntities.category))
             {
                 // Load the categories to display the filter function. The category filter is implemented using icons defined in the database.
-                ViewBag.category = (List<category>)myDatabaseEntities.category.ToList();
+                ViewBag.category = (List<category>)DatabaseEntities.category.ToList();
                 // Allows the user to reset the record restriction.
                 ViewBag.resetRestriction = true;
 
@@ -93,14 +93,14 @@ namespace Geolocation_Portal_Test.Controllers
                         {
                             case (restriction_enum.all_records):
                                 // Read out all data records from the database.
-                                records = from f in myDatabaseEntities.record
+                                records = from f in DatabaseEntities.record
                                           where f.role_id >= loggedInUserRole
                                           select f;
                                 ViewBag.resetRestriction = false;   // If all data records are already displayed, the reset function should not be displayed.
                                 break;
                             case (restriction_enum.all_active_records):
                                 // Read out all "active" data records from the database.
-                                records = from f in myDatabaseEntities.record
+                                records = from f in DatabaseEntities.record
                                           where f.role_id >= loggedInUserRole &&
                                           f.record_active == true
                                           select f;
@@ -108,7 +108,7 @@ namespace Geolocation_Portal_Test.Controllers
                                 break;
                             case (restriction_enum.geo_records):
                                 // Read out all "geo" data records from the database.
-                                records = from f in myDatabaseEntities.record
+                                records = from f in DatabaseEntities.record
                                           where f.role_id >= loggedInUserRole &&
                                           f.record_active == true &&
                                           f.geo_data == true
@@ -116,7 +116,7 @@ namespace Geolocation_Portal_Test.Controllers
                                 break;
                             case (restriction_enum.dia_records):
                                 // Read out all "diagram" data records from the database.
-                                records = from f in myDatabaseEntities.record
+                                records = from f in DatabaseEntities.record
                                           where f.role_id >= loggedInUserRole &&
                                           f.record_active == true &&
                                           f.dia_data == true
@@ -124,7 +124,7 @@ namespace Geolocation_Portal_Test.Controllers
                                 break;
                             case (restriction_enum.sort_alpha_asc):
                                 // Sort all records from the database.
-                                records = from f in myDatabaseEntities.record
+                                records = from f in DatabaseEntities.record
                                           where f.role_id >= loggedInUserRole &&
                                           f.record_active == true
                                           orderby f.title
@@ -133,7 +133,7 @@ namespace Geolocation_Portal_Test.Controllers
                                 break;
                             case (restriction_enum.sort_alpha_desc):
                                 // Read out all "diagram" data records from the database.
-                                records = from f in myDatabaseEntities.record
+                                records = from f in DatabaseEntities.record
                                           where f.role_id >= loggedInUserRole &&
                                           f.record_active == true
                                           orderby f.title descending
@@ -142,7 +142,7 @@ namespace Geolocation_Portal_Test.Controllers
                                 break;
                             case (restriction_enum.sort_date_asc):
                                 // Read out all "diagram" data records from the database.
-                                records = from f in myDatabaseEntities.record
+                                records = from f in DatabaseEntities.record
                                           where f.role_id >= loggedInUserRole &&
                                           f.record_active == true
                                           orderby f.dataset_modified_date
@@ -151,7 +151,7 @@ namespace Geolocation_Portal_Test.Controllers
                                 break;
                             case (restriction_enum.sort_date_desc):
                                 // Read out all "diagram" data records from the database.
-                                records = from f in myDatabaseEntities.record
+                                records = from f in DatabaseEntities.record
                                           where f.role_id >= loggedInUserRole &&
                                           f.record_active == true
                                           orderby f.dataset_modified_date descending
@@ -166,7 +166,7 @@ namespace Geolocation_Portal_Test.Controllers
                     else
                     {
                         // Read out all data records from the database with a certain search term Compliance.
-                        records = from f in myDatabaseEntities.record
+                        records = from f in DatabaseEntities.record
                                   where f.role_id >= loggedInUserRole &&
                                   f.record_active == true &&
                                   (f.title.Contains(searchTerm) || f.description.Contains(searchTerm))
@@ -189,13 +189,13 @@ namespace Geolocation_Portal_Test.Controllers
                 else
                 {
                     // Read out all data records from the database with a certain category affiliation.
-                    category category = myDatabaseEntities.category.Find(categoryID);
+                    category category = DatabaseEntities.category.Find(categoryID);
                     if (category == null)
                     {
                         return HttpNotFound();
                     }
 
-                    records = from f in myDatabaseEntities.record
+                    records = from f in DatabaseEntities.record
                               where f.role_id >= loggedInUserRole &&
                               f.record_active == true &&
                               f.category_id == categoryID
@@ -258,7 +258,7 @@ namespace Geolocation_Portal_Test.Controllers
             }
 
             // Read out all data records from the database.
-            IEnumerable<record> records = from f in myDatabaseEntities.record
+            IEnumerable<record> records = from f in DatabaseEntities.record
                                    select f;
 
             return View(records.ToList());
@@ -277,13 +277,13 @@ namespace Geolocation_Portal_Test.Controllers
                 return RedirectToAction("Anmelden", "Benutzer");
             }
 
-            ViewBag.category_id = new SelectList(myDatabaseEntities.category, "Id", "name");
-            ViewBag.publisher_id = new SelectList(myDatabaseEntities.publisher, "Id", "name");
-            ViewBag.licence_id = new SelectList(myDatabaseEntities.licence, "Id", "name");
-            ViewBag.role_id = new SelectList(myDatabaseEntities.role, "Id", "name", 4);
-            ViewBag.location_id = new SelectList(myDatabaseEntities.location, "Id", "name");
+            ViewBag.category_id = new SelectList(DatabaseEntities.category, "Id", "name");
+            ViewBag.publisher_id = new SelectList(DatabaseEntities.publisher, "Id", "name");
+            ViewBag.licence_id = new SelectList(DatabaseEntities.licence, "Id", "name");
+            ViewBag.role_id = new SelectList(DatabaseEntities.role, "Id", "name", 4);
+            ViewBag.location_id = new SelectList(DatabaseEntities.location, "Id", "name");
 
-            var licenceItems = new SelectList(myDatabaseEntities.licence, "Id", "description");
+            var licenceItems = new SelectList(DatabaseEntities.licence, "Id", "description");
 
             List<string> licence_descriptions = new List<string>();
             
@@ -294,7 +294,7 @@ namespace Geolocation_Portal_Test.Controllers
 
             ViewData["licence_description_list"] = licence_descriptions.ToArray();
 
-            var roleItems = new SelectList(myDatabaseEntities.role, "Id", "description");
+            var roleItems = new SelectList(DatabaseEntities.role, "Id", "description");
 
             List<string> role_descriptions = new List<string>();
 
@@ -347,21 +347,21 @@ namespace Geolocation_Portal_Test.Controllers
                 record.dataset_upload = DateTime.Now;
                 record.dataset_modified_date = DateTime.Now;
 
-                myDatabaseEntities.record.Add(record);
-                myDatabaseEntities.SaveChanges();
+                DatabaseEntities.record.Add(record);
+                DatabaseEntities.SaveChanges();
 
                 if (files != null) saveFiles(files, record.Id);
                 
                 return RedirectToAction("Index");
             }
 
-            ViewBag.category_id = new SelectList(myDatabaseEntities.category, "Id", "name", record.category_id);
-            ViewBag.publisher_id = new SelectList(myDatabaseEntities.publisher, "Id", "name", record.publisher_id);
-            ViewBag.licence_id = new SelectList(myDatabaseEntities.licence, "Id", "name", record.licence_id);
-            ViewBag.role_id = new SelectList(myDatabaseEntities.role, "Id", "name");
-            ViewBag.location_id = new SelectList(myDatabaseEntities.location, "Id", "name");
+            ViewBag.category_id = new SelectList(DatabaseEntities.category, "Id", "name", record.category_id);
+            ViewBag.publisher_id = new SelectList(DatabaseEntities.publisher, "Id", "name", record.publisher_id);
+            ViewBag.licence_id = new SelectList(DatabaseEntities.licence, "Id", "name", record.licence_id);
+            ViewBag.role_id = new SelectList(DatabaseEntities.role, "Id", "name");
+            ViewBag.location_id = new SelectList(DatabaseEntities.location, "Id", "name");
 
-            var licenceItems = new SelectList(myDatabaseEntities.licence, "Id", "description");
+            var licenceItems = new SelectList(DatabaseEntities.licence, "Id", "description");
 
             List<string> licence_descriptions = new List<string>();
 
@@ -372,7 +372,7 @@ namespace Geolocation_Portal_Test.Controllers
 
             ViewData["licence_description_list"] = licence_descriptions.ToArray();
 
-            var roleItems = new SelectList(myDatabaseEntities.role, "Id", "description");
+            var roleItems = new SelectList(DatabaseEntities.role, "Id", "description");
 
             List<string> role_descriptions = new List<string>();
 
@@ -404,19 +404,19 @@ namespace Geolocation_Portal_Test.Controllers
                 return RedirectToAction("Anmelden", "Benutzer");
             }
 
-            record record = myDatabaseEntities.record.Find(id);
+            record record = DatabaseEntities.record.Find(id);
             if (record == null)
             {
                 return HttpNotFound();
             }
 
-            ViewBag.category_id = new SelectList(myDatabaseEntities.category, "Id", "name", record.category_id);
-            ViewBag.publisher_id = new SelectList(myDatabaseEntities.publisher, "Id", "name", record.publisher_id);
-            ViewBag.licence_id = new SelectList(myDatabaseEntities.licence, "Id", "name", record.licence_id);
-            ViewBag.role_id = new SelectList(myDatabaseEntities.role, "Id", "name", record.role_id);
-            ViewBag.location_id = new SelectList(myDatabaseEntities.location, "Id", "name", record.location_id);
+            ViewBag.category_id = new SelectList(DatabaseEntities.category, "Id", "name", record.category_id);
+            ViewBag.publisher_id = new SelectList(DatabaseEntities.publisher, "Id", "name", record.publisher_id);
+            ViewBag.licence_id = new SelectList(DatabaseEntities.licence, "Id", "name", record.licence_id);
+            ViewBag.role_id = new SelectList(DatabaseEntities.role, "Id", "name", record.role_id);
+            ViewBag.location_id = new SelectList(DatabaseEntities.location, "Id", "name", record.location_id);
 
-            var licenceItems = new SelectList(myDatabaseEntities.licence, "Id", "description");
+            var licenceItems = new SelectList(DatabaseEntities.licence, "Id", "description");
 
             List<string> licence_descriptions = new List<string>();
 
@@ -427,7 +427,7 @@ namespace Geolocation_Portal_Test.Controllers
 
             ViewData["licence_description_list"] = licence_descriptions.ToArray();
 
-            var roleItems = new SelectList(myDatabaseEntities.role, "Id", "description");
+            var roleItems = new SelectList(DatabaseEntities.role, "Id", "description");
 
             List<string> role_descriptions = new List<string>();
 
@@ -459,7 +459,7 @@ namespace Geolocation_Portal_Test.Controllers
 
             if (ModelState.IsValid)
             {
-                myDatabaseEntities.Entry(record).State = EntityState.Modified;
+                DatabaseEntities.Entry(record).State = EntityState.Modified;
 
                 var datType = Request["dataTyp"];
 
@@ -477,18 +477,18 @@ namespace Geolocation_Portal_Test.Controllers
 
                 if (files != null) saveFiles(files, record.Id);
 
-                myDatabaseEntities.SaveChanges();
+                DatabaseEntities.SaveChanges();
                 return RedirectToAction("Index");
             }
             
 
-            ViewBag.category_id = new SelectList(myDatabaseEntities.category, "Id", "name");
-            ViewBag.publisher_id = new SelectList(myDatabaseEntities.publisher, "Id", "name");
-            ViewBag.licence_id = new SelectList(myDatabaseEntities.licence, "Id", "name");
-            ViewBag.role_id = new SelectList(myDatabaseEntities.role, "Id", "name");
-            ViewBag.location_id = new SelectList(myDatabaseEntities.location, "Id", "name");
+            ViewBag.category_id = new SelectList(DatabaseEntities.category, "Id", "name");
+            ViewBag.publisher_id = new SelectList(DatabaseEntities.publisher, "Id", "name");
+            ViewBag.licence_id = new SelectList(DatabaseEntities.licence, "Id", "name");
+            ViewBag.role_id = new SelectList(DatabaseEntities.role, "Id", "name");
+            ViewBag.location_id = new SelectList(DatabaseEntities.location, "Id", "name");
 
-            var licenceItems = new SelectList(myDatabaseEntities.licence, "Id", "description");
+            var licenceItems = new SelectList(DatabaseEntities.licence, "Id", "description");
 
             List<string> licence_descriptions = new List<string>();
 
@@ -499,7 +499,7 @@ namespace Geolocation_Portal_Test.Controllers
 
             ViewData["licence_description_list"] = licence_descriptions.ToArray();
 
-            var roleItems = new SelectList(myDatabaseEntities.role, "Id", "description");
+            var roleItems = new SelectList(DatabaseEntities.role, "Id", "description");
 
             List<string> role_descriptions = new List<string>();
 
@@ -527,7 +527,7 @@ namespace Geolocation_Portal_Test.Controllers
             }
 
             // Datensatz Sichtbarkeit auslesen
-            int record_visibility_role = (int)myDatabaseEntities.record.Find(id).role_id;
+            int record_visibility_role = (int)DatabaseEntities.record.Find(id).role_id;
             int logged_in_user = 4;
             bool logged_in = false;
             if (checkSession(3))
@@ -540,9 +540,9 @@ namespace Geolocation_Portal_Test.Controllers
             // Datensatz Sichtbarkeit = 4 (Öffentlichkeit) oder Benutzer angemeldet und Rolle berechtigt Datensatz zu sehen
             if (record_visibility_role > 3 || logged_in == true && record_visibility_role <= logged_in_user)
             {
-                record record = myDatabaseEntities.record.Find(id);
-                record.licence = myDatabaseEntities.licence.Find(record.licence_id);
-                record.publisher = myDatabaseEntities.publisher.Find(record.publisher_id);
+                record record = DatabaseEntities.record.Find(id);
+                record.licence = DatabaseEntities.licence.Find(record.licence_id);
+                record.publisher = DatabaseEntities.publisher.Find(record.publisher_id);
 
                 int downloadcount = 0;
                 int file_size_conversion_count = 0; // 0 = Bytes
@@ -623,7 +623,7 @@ namespace Geolocation_Portal_Test.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            record record = myDatabaseEntities.record.Find(id);
+            record record = DatabaseEntities.record.Find(id);
 
             if (record == null)
             {
@@ -647,12 +647,12 @@ namespace Geolocation_Portal_Test.Controllers
                 return RedirectToAction("Anmelden", "Benutzer");
             }
 
-            record record = myDatabaseEntities.record.Find(id);
+            record record = DatabaseEntities.record.Find(id);
 
-            myDatabaseEntities.comment.RemoveRange(record.comment);
-            myDatabaseEntities.record.Remove(record);
+            DatabaseEntities.comment.RemoveRange(record.comment);
+            DatabaseEntities.record.Remove(record);
 
-            myDatabaseEntities.SaveChanges();
+            DatabaseEntities.SaveChanges();
 
             return RedirectToAction("Index");
         }
@@ -673,19 +673,19 @@ namespace Geolocation_Portal_Test.Controllers
             }
 
             // Add the new comment to the database.
-            myDatabaseEntities.comment.Add(comment);
+            DatabaseEntities.comment.Add(comment);
 
             // Save comment to calculate the average.
-            myDatabaseEntities.SaveChanges();
+            DatabaseEntities.SaveChanges();
 
             // Average calculation if comments already exist for the data set.
-            double avgRating = myDatabaseEntities.comment.Where(c => c.record_id == comment.record_id).Average(c => c.bewertung);
+            double avgRating = DatabaseEntities.comment.Where(c => c.record_id == comment.record_id).Average(c => c.bewertung);
             avgRating = Math.Round(avgRating);
 
             // Add a new average value to the data set so that it does not always have to be calculated (performance).
-            myDatabaseEntities.record.Find(comment.record_id).rating = (int)avgRating;
+            DatabaseEntities.record.Find(comment.record_id).rating = (int)avgRating;
 
-            myDatabaseEntities.SaveChangesAsync();
+            DatabaseEntities.SaveChangesAsync();
 
             return RedirectToAction("Recorddetails", new { id = comment.record_id });
         }
@@ -697,7 +697,7 @@ namespace Geolocation_Portal_Test.Controllers
         /// <returns>Returns a view to the browser.</returns>
         public ActionResult Kategorieverwaltung()
         {
-            return View(myDatabaseEntities.category.ToList());
+            return View(DatabaseEntities.category.ToList());
         }
 
         /// <summary>
@@ -723,8 +723,8 @@ namespace Geolocation_Portal_Test.Controllers
         {
             if (ModelState.IsValid)
             {
-                myDatabaseEntities.category.Add(category);
-                myDatabaseEntities.SaveChanges();
+                DatabaseEntities.category.Add(category);
+                DatabaseEntities.SaveChanges();
                 return RedirectToAction("Kategorieverwaltung");
             }
 
@@ -744,7 +744,7 @@ namespace Geolocation_Portal_Test.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            category category = myDatabaseEntities.category.Find(id);
+            category category = DatabaseEntities.category.Find(id);
             if (category == null)
             {
                 return HttpNotFound();
@@ -765,7 +765,7 @@ namespace Geolocation_Portal_Test.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            category category = myDatabaseEntities.category.Find(id);
+            category category = DatabaseEntities.category.Find(id);
             if (category == null)
             {
                 return HttpNotFound();
@@ -785,8 +785,8 @@ namespace Geolocation_Portal_Test.Controllers
         {
             if (ModelState.IsValid)
             {
-                myDatabaseEntities.Entry(category).State = EntityState.Modified;
-                myDatabaseEntities.SaveChanges();
+                DatabaseEntities.Entry(category).State = EntityState.Modified;
+                DatabaseEntities.SaveChanges();
                 return RedirectToAction("Kategorieverwaltung");
             }
             return View(category);
@@ -803,7 +803,7 @@ namespace Geolocation_Portal_Test.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            category category = myDatabaseEntities.category.Find(id);
+            category category = DatabaseEntities.category.Find(id);
             if (category == null)
             {
                 return HttpNotFound();
@@ -820,9 +820,9 @@ namespace Geolocation_Portal_Test.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Kategorieentfernungconfirmed(int id)
         {
-            category category = myDatabaseEntities.category.Find(id);
-            myDatabaseEntities.category.Remove(category);
-            myDatabaseEntities.SaveChanges();
+            category category = DatabaseEntities.category.Find(id);
+            DatabaseEntities.category.Remove(category);
+            DatabaseEntities.SaveChanges();
             return RedirectToAction("Kategorieverwaltung");
         }
 
@@ -849,7 +849,7 @@ namespace Geolocation_Portal_Test.Controllers
 
                     file.SaveAs(filePath);
                     
-                    myDatabaseEntities.file.Add(new Models.file
+                    DatabaseEntities.file.Add(new Models.file
                     {
                         record_id = recordID,
                         name = file.FileName,
@@ -865,7 +865,7 @@ namespace Geolocation_Portal_Test.Controllers
                 }
             }
 
-            myDatabaseEntities.SaveChanges();
+            DatabaseEntities.SaveChanges();
         }
 
         /// <summary>
@@ -894,10 +894,10 @@ namespace Geolocation_Portal_Test.Controllers
             string path = Server.MapPath("~/App_Data/uploads/"+ recordId + "/"+ fileName);
             string mime = MimeMapping.GetMimeMapping(path);
             
-            file file = myDatabaseEntities.file.Where(f => f.name == fileName && f.record_id == recordId).First();
+            file file = DatabaseEntities.file.Where(f => f.name == fileName && f.record_id == recordId).First();
             if (file != null) { 
                 file.download_count++;
-                myDatabaseEntities.SaveChanges();
+                DatabaseEntities.SaveChanges();
             }
 
             return File(path, mime, file.name);
@@ -915,7 +915,7 @@ namespace Geolocation_Portal_Test.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            file file = myDatabaseEntities.file.Find(id);
+            file file = DatabaseEntities.file.Find(id);
 
             if (file == null)
             {
@@ -927,8 +927,8 @@ namespace Geolocation_Portal_Test.Controllers
 
             int record_id = file.record_id;
 
-            myDatabaseEntities.file.Remove(file);
-            myDatabaseEntities.SaveChanges();
+            DatabaseEntities.file.Remove(file);
+            DatabaseEntities.SaveChanges();
 
             return Redirect(Request.UrlReferrer.ToString());
         }

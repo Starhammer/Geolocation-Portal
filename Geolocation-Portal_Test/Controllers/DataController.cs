@@ -21,13 +21,13 @@ namespace Geolocation_Portal_Test.Controllers
     public class DataController : ApiController
     {
 
-        private Entities db = new Entities();
+        private Entities DatabaseEntities = new Entities();
 
         // GET: api/data/5
         [ResponseType(typeof(licence))]
         public async Task<IHttpActionResult> GetGeoData(int id)
         {
-            record record = await db.record.FindAsync(id);
+            record record = await DatabaseEntities.record.FindAsync(id);
             if (record == null || record.geo_data == false)
             {
                 return BadRequest();

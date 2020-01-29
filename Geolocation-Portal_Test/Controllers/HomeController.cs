@@ -17,7 +17,7 @@ namespace Geolocation_Portal_Test.Controllers
         /// Object of the database tables. Each database table is defined as a model below the entities.
         /// The entity object allows you to select tupels from the database and return a model of each tupel.
         /// </summary>
-        private Entities myDatabaseEntities = new Entities();
+        private Entities DatabaseEntities = new Entities();
 
         /// <summary>
         /// This action result returns the index view.
@@ -38,7 +38,7 @@ namespace Geolocation_Portal_Test.Controllers
         {
             if (Session["UserRole"] != null)
             {
-                role role = myDatabaseEntities.role.Find(Convert.ToInt32(Session["UserRole"], new CultureInfo("de-DE")));
+                role role = DatabaseEntities.role.Find(Convert.ToInt32(Session["UserRole"], new CultureInfo("de-DE")));
                 if (role == null)
                 {
                     return HttpNotFound();
