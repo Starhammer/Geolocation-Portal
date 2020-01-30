@@ -564,11 +564,6 @@ textarea {
     content: ''!important;
 }
 
-input[type="checkbox"] {
-    width: 30px;
-    height: 30px;
-}
-
 .text-info {
     color: #f1b200 !important;
     font-weight: bold;
@@ -800,7 +795,7 @@ No media query for `xs` since this is the default in Bootstrap */
     }
 
     #oval-thought p {
-        font-size: 22px;
+        font-size: 18px;
     }
 
     .map-container {

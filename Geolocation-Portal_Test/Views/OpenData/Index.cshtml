@@ -17,11 +17,11 @@
         {
             <a class="nolink" href="@Url.Action("Recorderstellung", "OpenData")" title="Datensatz hinzufügen"><i class="fa fa-plus"></i></a>
 
-            <a id="showAllRecords_button" class="nolink hideLink" href="@Url.Action("Index", "OpenData", new { restriction_string = "all_records" })" title="Alle Datensätze anzeigen">
+            <a id="showAllRecords_button" class="nolink hideLink" href="@Url.Action("Index", "OpenData", new { restriction_string = "all_records" })" title="Inaktive Datensätze anzeigen">
                 <i class="fa fa-eye"></i>
             </a>
 
-            <a id="showActivatedRecords_button" class="nolink hideLink" href="@Url.Action("Index", "OpenData", new { restriction_string = "all_active_records" })" title="Alle aktiven Datensätze anzeigen">
+            <a id="showActivatedRecords_button" class="nolink hideLink" href="@Url.Action("Index", "OpenData", new { restriction_string = "all_active_records" })" title="Inaktive Datensätze ausblenden">
                 <i class="fa fa-eye-slash"></i>
             </a>
         }
