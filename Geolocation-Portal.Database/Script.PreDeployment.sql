@@ -18,3 +18,8 @@ EXEC sp_MSForEachTable "DELETE FROM ?"
 -- enable all constraints
 exec sp_MSForEachTable "ALTER TABLE ? WITH CHECK CHECK CONSTRAINT all"
 
+-- reseed identity
+EXEC sp_MSforeachtable 'DBCC CHECKIDENT("?", RESEED, 0)',
+                       @whereand = 'AND o.id NOT IN (
+                                                     ISNULL(OBJECT_ID(''[dbo].[__RefactorLog]''),0) 
+                                                     )'
