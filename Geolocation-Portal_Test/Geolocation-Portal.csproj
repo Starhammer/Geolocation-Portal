@@ -346,9 +346,12 @@
     <Content Include="icons\Category\Verwaltung.png" />
     <Content Include="icons\Category\Wahlen.png" />
     <Content Include="icons\docx-Icon.png" />
-    <Content Include="icons\geojson-icon.png" />
+    <Content Include="icons\exe-Icon.png" />
+    <Content Include="icons\geojson-Icon.png" />
     <Content Include="icons\Map-Icon.png" />
+    <Content Include="icons\png-Icon.png" />
     <Content Include="icons\ppp-icon.png" />
+    <Content Include="icons\pptx-Icon.png" />
     <Content Include="icons\Star-Black-Icon.png" />
     <Content Include="icons\Star-Icon.png" />
     <Content Include="icons\txt-icon.png" />
