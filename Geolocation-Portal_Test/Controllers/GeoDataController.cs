@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -16,28 +17,14 @@ namespace Geolocation_Portal_Test.Controllers
         /// <returns>Returns a view to the browser.</returns>
         public ActionResult Index(int? id)
         {
-            if (id != null)
+            // parameter verification cop to avoid errors.
+            if (id == null)
             {
-                // ToDo: Session in Json Variable speichern.
-                //Json recordList = Session["MapRecordShoppingCart"];
-
-                //Session["MapRecordShoppingCart"] = "";
-
-                if (Session["MapRecordShoppingCart"] != null)
-                {
-                    // Session Variable an View übergeben.
-                    int[] recordIDs = { 4003, 5004, 7002 };
-
-                    ViewBag.FileId = recordIDs;
-                }
-                else
-                {
-                    int[] recordIDs = { Convert.ToInt32(id, new CultureInfo("de-DE")) };
-
-                    ViewBag.FileId = recordIDs;
-                }
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            
+
+            ViewBag.FileId = id;
+
             return View();
         }
     }

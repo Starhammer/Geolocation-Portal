@@ -40,32 +40,6 @@
 
     var myFeatureLayer = L.mapbox.featureLayer().loadURL("/api/data/@ViewBag.fileID").addTo(map);
 
-    // ToDo: Dieser Code ist zum Testen. Er soll mehrere geojson Dateien zur Karte hinzufügen. 
-    // Wenn der Code funktionierten soll muss Zeile 41 auf leer ("") gesetzt und im Controller Zeile 24 aktiviert werden.
-    @{
-        var first = true;
-        // Example to load more than one geojson file: http://plnkr.co/edit/EmZcskJSsDMUZz3FfHco?p=preview
-        foreach(var fileID in ViewBag.FileId)
-        {
-            if (first)
-            {
-                first = false;
-                <text>
-                myFeatureLayer = L.mapbox.featureLayer().loadURL("/api/data/@fileID").addTo(map);
-                </text>
-            }
-            else
-            {
-                <text>
-                L.geoJson( {
-                    style: style,
-                    onEachFeature: onEachFeature
-                }).loadURL("/api/data/@fileID").addTo(map);
-                </text>
-            }
-        }
-    }
-
     // Find and store a variable reference to the list of filters.
     var filters = document.getElementById('filters');
 

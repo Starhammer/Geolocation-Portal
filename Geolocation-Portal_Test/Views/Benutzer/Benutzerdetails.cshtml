@@ -8,6 +8,10 @@
 <hr />
 
 <div class="form-horizontal">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
 
@@ -107,4 +111,5 @@
                 <a href="@Url.Action("Benutzerverwaltung", "Benutzer")" class="btn btn-primary">Zurück zur Benutzerverwaltung</a>
             </div>
         </div>
-    </div>
+    }
+</div>

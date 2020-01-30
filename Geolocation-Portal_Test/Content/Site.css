@@ -657,10 +657,18 @@ input[type="checkbox"] {
     font-size: 16px;
 }
 
+.form-actions {
+    margin-top: 25px;
+}
+
+.flexible-height {
+    
+}
+
 /* Extra small devices (portrait phones, less than 576px)
 No media query for `xs` since this is the default in Bootstrap */
-    @media (min-width: 360px) {
-        .form-inline {
+@media (min-width: 360px) {
+    .form-inline {
         font-size: 38px;
     }
 

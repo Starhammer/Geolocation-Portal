@@ -4,125 +4,125 @@
     ViewBag.Title = "Recordentfernung";
 }
 
-<h2>Recordentfernung</h2>
+<h1>Entfernen eines Datensatzes</h1>
+<hr />
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>record</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.dataset_upload)
-        </dt>
+<div class="form-horizontal">
 
-        <dd>
-            @Html.DisplayFor(model => model.dataset_upload)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.dataset_modified_date)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.dataset_modified_date)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.rating)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.rating)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.role_id)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.role_id)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.record_active)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.record_active)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.geo_data)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.geo_data)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.dia_data)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.dia_data)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.category.name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.category.name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.location.name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.location.name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.publisher.name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.publisher.name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.licence.name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.licence.name)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.dataset_upload, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.dataset_upload, new { htmlAttributes = new { disabled = "disabled", @readonly = "readonly", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.dataset_upload, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.dataset_modified_date, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9" style="width: 100%;">
+                @Html.EditorFor(model => model.dataset_modified_date, new { htmlAttributes = new { disabled = "disabled", @readonly = "readonly", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.dataset_modified_date, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.title, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9" style="width: 100%;">
+                @Html.EditorFor(model => model.title, new { htmlAttributes = new { disabled = "disabled", @readonly = "readonly", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9" style="width: 100%;">
+                @Html.EditorFor(model => model.description, new { htmlAttributes = new { disabled = "disabled", @readonly = "readonly", @class = "form-control " } })
+                @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.rating, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9" style="width: 100%;">
+                @Html.EditorFor(model => model.rating, new { htmlAttributes = new { disabled = "disabled", @readonly = "readonly", @class = "form-control flexible-height" } })
+                @Html.ValidationMessageFor(model => model.rating, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.role_id, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9" style="width: 100%;">
+                @Html.EditorFor(model => model.role_id, new { htmlAttributes = new { disabled = "disabled", @readonly = "readonly", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.role_id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.record_active, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9" style="width: 100%;">
+                @Html.EditorFor(model => model.record_active, new { htmlAttributes = new { disabled = "disabled", @readonly = "readonly", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.record_active, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.geo_data, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9" style="width: 100%;">
+                @Html.EditorFor(model => model.geo_data, new { htmlAttributes = new { disabled = "disabled", @readonly = "readonly", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.geo_data, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.dia_data, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9" style="width: 100%;">
+                @Html.EditorFor(model => model.dia_data, new { htmlAttributes = new { disabled = "disabled", @readonly = "readonly", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.dia_data, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.category.name, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9" style="width: 100%;">
+                @Html.EditorFor(model => model.category.name, new { htmlAttributes = new { disabled = "disabled", @readonly = "readonly", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.category.name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.location.name, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9" style="width: 100%;">
+                @Html.EditorFor(model => model.location.name, new { htmlAttributes = new { disabled = "disabled", @readonly = "readonly", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.location.name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.publisher.name, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9" style="width: 100%;">
+                @Html.EditorFor(model => model.publisher.name, new { htmlAttributes = new { disabled = "disabled", @readonly = "readonly", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.publisher.name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.licence.name, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9" style="width: 100%;">
+                @Html.EditorFor(model => model.licence.name, new { htmlAttributes = new { disabled = "disabled", @readonly = "readonly", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.licence.name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-danger" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Löschen" class="btn btn-primary" />
+            <a href="@Url.Action("Index", "OpenData")" class="btn btn-primary">Zurück zur Datensatzübersicht</a>
         </div>
     }
 </div>

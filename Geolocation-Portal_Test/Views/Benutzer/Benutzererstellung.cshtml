@@ -7,12 +7,10 @@
 <h1>Erstellen eines Benutzers</h1>
 <hr />
 
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
+<div class="form-horizontal">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
         <div class="form-group row">
             @Html.LabelFor(model => model.role_id, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -33,7 +31,7 @@
         <div class="form-group row">
             @Html.LabelFor(model => model.first_name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.first_name, new { htmlAttributes = new { @class = "form-control", required="required", pattern="[A-Za-z0-9]{1,20}" } })
+                @Html.EditorFor(model => model.first_name, new { htmlAttributes = new { @class = "form-control", required = "required", pattern = "[A-Za-z0-9]{1,20}" } })
                 @Html.ValidationMessageFor(model => model.first_name, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -41,7 +39,7 @@
         <div class="form-group row">
             @Html.LabelFor(model => model.last_name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.last_name, new { htmlAttributes = new { @class = "form-control", required="required", pattern="[A-Za-z0-9]{1,20}" } })
+                @Html.EditorFor(model => model.last_name, new { htmlAttributes = new { @class = "form-control", required = "required", pattern = "[A-Za-z0-9]{1,20}" } })
                 @Html.ValidationMessageFor(model => model.last_name, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -49,7 +47,7 @@
         <div class="form-group row">
             @Html.LabelFor(model => model.username, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control", required="required", pattern="[A-Za-z0-9]{1,20}" } })
+                @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control", required = "required", pattern = "[A-Za-z0-9]{1,20}" } })
                 @Html.ValidationMessageFor(model => model.username, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -57,7 +55,7 @@
         <div class="form-group row">
             @Html.LabelFor(model => model.password, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control", required="required", pattern="[A-Za-z0-9]{1,20}" } })
+                @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control", required = "required", pattern = "[A-Za-z0-9]{1,20}" } })
                 @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -81,6 +79,6 @@
     </div>
 }
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
