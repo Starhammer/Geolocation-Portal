@@ -9,7 +9,7 @@
 
 <div id="toolBar">
     <div>
-        <a class="nolink" href="~/GeoData/index" id="" title="Gesammelte Geo-Datensätze auf einer Karte anzeigen"><i class="fa fa-map-marker"></i><sub><span id="geoDataShoppingCartCount">2</span></sub></a>
+        <a class="nolink" href="~/GeoData/index/0" id="" title="Gesammelte Geo-Datensätze auf einer Karte anzeigen"><i class="fa fa-map-marker"></i><sub><span id="geoDataShoppingCartCount">2</span></sub></a>
         <a class="nolink" href="#" id="search_button" title="Suchen"><i class="fa fa-search"></i></a>
         <a class="nolink" href="#" id="sort_settings_button" title="Sortieren"><i class="fa fa-sort-amount-asc"></i></a>
         <a class="nolink" href="#" id="filter_button" title="Filtern"><i class="fa fa-filter"></i></a>
@@ -193,7 +193,8 @@
             </div>
         </div>
     }
-</div> 
+</div>
+
 <script type="text/javascript">
 
     /**
@@ -330,12 +331,11 @@
             // Check if session variable exists.
             if (localStorage["MapRecordShoppingCart"] == null) {
                 console.log("MapRecordShoppingCart was null and is now empty");
-                localStorage["MapRecordShoppingCart"] = '{ "id":"1", "id":"2" }';
+                localStorage["MapRecordShoppingCart"] = '{"files":[]}';
             }
 
             // Parse session variable value to string.
             var jsonRecordList = JSON.parse(localStorage["MapRecordShoppingCart"]);
-            console.log(jsonRecordList.id);
             var recordExists = false;
 
             for (var key in jsonRecordList) {
@@ -352,15 +352,20 @@
 
             // Add new id to the shopping cart.
             if (recordExists == false) {
-                jsonString = '"id":"' + recordID + '"';
-                jsonRecordList.push(jsonString);
-                localStorage["MapRecordShoppingCart"] = JSON.parse(jsonRecordList);
+                jsonRecordList['files'].push({"id":recordID});
+                jsonStr = JSON.stringify(jsonRecordList);
+
+                console.log(jsonStr);
+
+                localStorage["MapRecordShoppingCart"] = jsonStr;
             } else {
                 delete jsonRecordList[recordID];
             }
 
             // Add to shopping-cart
-            $('geoDataShoppingCartCount').html(jsonRecordList.length);
+            var i = Object.keys(jsonRecordList.files).length;
+            $('#geoDataShoppingCartCount').html(i);
+            console.log("Json Array length: " + i);
 
         } else {
             console.error("id of record is null");
