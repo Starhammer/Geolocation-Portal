@@ -26,10 +26,8 @@ namespace Geolocation_Portal_Test.Models
     
         public int Id { get; set; }
         [DisplayName("Upload Datum")]
-        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime dataset_upload { get; set; }
         [DisplayName("Änderungsdatum")]
-        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime dataset_modified_date { get; set; }
 
         [Required(ErrorMessage = "Bitte geben Sie einen Titel an.")]
