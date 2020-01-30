@@ -346,11 +346,13 @@
     <Content Include="icons\Category\Verwaltung.png" />
     <Content Include="icons\Category\Wahlen.png" />
     <Content Include="icons\docx-Icon.png" />
+    <Content Include="icons\geojson-icon.png" />
     <Content Include="icons\Map-Icon.png" />
     <Content Include="icons\ppp-icon.png" />
     <Content Include="icons\Star-Black-Icon.png" />
     <Content Include="icons\Star-Icon.png" />
     <Content Include="icons\txt-icon.png" />
+    <Content Include="icons\xslx-Icon.png" />
     <Content Include="Models\DatabaseModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>DatabaseModel.Context.cs</LastGenOutput>
