@@ -650,6 +650,10 @@ namespace Geolocation_Portal_Test.Controllers
             record record = DatabaseEntities.record.Find(id);
 
             DatabaseEntities.comment.RemoveRange(record.comment);
+
+            Directory.Delete(Server.MapPath("~/App_Data/uploads/" +id),true);
+
+            DatabaseEntities.file.RemoveRange(record.file);
             DatabaseEntities.record.Remove(record);
 
             DatabaseEntities.SaveChanges();
@@ -921,13 +925,9 @@ namespace Geolocation_Portal_Test.Controllers
             {
                 return HttpNotFound();
             }
-
-            string path = Server.MapPath("~/App_Data/uploads/" + file.record_id + "/" + file.name);
-            System.IO.File.Delete(path);
-
-            int record_id = file.record_id;
-
+                        
             DatabaseEntities.file.Remove(file);
+            deleteFile(file);
             DatabaseEntities.SaveChanges();
 
             return Redirect(Request.UrlReferrer.ToString());
@@ -957,6 +957,16 @@ namespace Geolocation_Portal_Test.Controllers
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Deletes file on Server. Does not delete DB-entry of file.
+        /// </summary>
+        /// <param name="file">File to be deleted</param>
+        private void deleteFile(file file)
+        {
+            string path = Server.MapPath("~/App_Data/uploads/" + file.record_id + "/" + file.name);
+            System.IO.File.Delete(path);
         }
     }
 }
