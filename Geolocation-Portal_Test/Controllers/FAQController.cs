@@ -8,7 +8,10 @@ namespace Geolocation_Portal_Test.Controllers
 {
     public class FAQController : Controller
     {
-        // GET: FAQ
+        /// <summary>
+        /// This action result returns the index view.
+        /// </summary>
+        /// <returns>Returns a view to the browser.</returns>
         public ActionResult Index()
         {
             return View();

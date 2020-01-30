@@ -8,7 +8,11 @@ namespace Geolocation_Portal_Test.Controllers
 {
     public class DiagramDataController : Controller
     {
-        // GET: Diagramm
+        /// <summary>
+        /// This action result returns the index view.
+        /// </summary>
+        /// <param name="id">A data set ID to generate a diagram from it.</param>
+        /// <returns>Returns a view to the browser.</returns>
         public ActionResult Index(int? id)
         {
             if (id != null)
@@ -19,17 +23,19 @@ namespace Geolocation_Portal_Test.Controllers
             return View();
         }
 
-        /**
-         * Zeigt einen Datensatz als Diagramm an.
-         */
+        /// <summary>
+        /// Displays a data set as a diagram.
+        /// </summary>
+        /// <returns>Returns a view to the browser.</returns>
         public ActionResult Diagramm()
         {
             return View();
         }
 
-        /**
-         * Erstellt aus einer Datei ein Diagramm.
-         */
+        /// <summary>
+        /// Creates a diagram from a file.
+        /// </summary>
+        /// <returns>Returns a view to the browser.</returns>
         public ActionResult createDiagram()
         {
             return View();

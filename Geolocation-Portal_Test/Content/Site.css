@@ -225,6 +225,10 @@ blockquote p {
     color: black;
 }
 
+.color-blue {
+    color: #007bff;
+}
+
 .padding-left-10 {
     padding-left: 10px;
 }

@@ -92,9 +92,12 @@ namespace Geolocation_Portal_Test.Controllers
             return Content("Thanks for contacting us! We'll be in contact with you soon!");
         }
 
-        /**
-         * https://forums.asp.net/t/2115115.aspx?How+to+setup+a+contact+us+form+
-         */
+        /// <summary>
+        /// Not implementet now, but see https://forums.asp.net/t/2115115.aspx?How+to+setup+a+contact+us+form+ for more infos.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="senderemail"></param>
+        /// <param name="message"></param>
         public void SendContactEmail(string user, string senderemail, string message)
         {
             // Your hard-coded email values (where the email will be sent from), this could be

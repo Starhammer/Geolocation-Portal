@@ -20,10 +20,17 @@ namespace Geolocation_Portal_Test.Controllers
 {
     public class DataController : ApiController
     {
-
+        /// <summary>
+        /// Object of the database tables. Each database table is defined as a model below the entities.
+        /// The entity object allows you to select tupels from the database and return a model of each tupel.
+        /// </summary>
         private Entities DatabaseEntities = new Entities();
 
-        // GET: api/data/5
+        /// <summary>
+        /// Determines the path of the geographical file assigned to a specific record. 
+        /// </summary>
+        /// <param name="id">The record Id to determine the geographical file.</param>
+        /// <returns>Returns a json object.</returns>
         [ResponseType(typeof(licence))]
         public async Task<IHttpActionResult> GetGeoData(int id)
         {
@@ -45,8 +52,8 @@ namespace Geolocation_Portal_Test.Controllers
                     return NotFound();
                 }
             }
-            return NotFound();
 
+            return NotFound();
         }
     }
 }

@@ -9,7 +9,7 @@
 
 <div id="toolBar">
     <div>
-        <a class="nolink" href="~/GeoData/index/0" id="" title="Gesammelte Geo-Datensätze auf einer Karte anzeigen"><i class="fa fa-map-marker"></i><sub><span id="geoDataShoppingCartCount">2</span></sub></a>
+        <a class="nolink" href="~/GeoData/index/0" id="" title="Gesammelte Geo-Datensätze auf einer Karte anzeigen"><i class="fa fa-map-marker"></i><sub><span id="geoDataShoppingCartCount"></span></sub></a>
         <a class="nolink" href="#" id="search_button" title="Suchen"><i class="fa fa-search"></i></a>
         <a class="nolink" href="#" id="sort_settings_button" title="Sortieren"><i class="fa fa-sort-amount-asc"></i></a>
         <a class="nolink" href="#" id="filter_button" title="Filtern"><i class="fa fa-filter"></i></a>
@@ -171,7 +171,7 @@
                                 <a class="nolink float-right ml-2" href="~/GeoData/index/@item.Id" title="Vorschau auf der Karte"><i class="fa fa-map"></i></a>
 
                                 <a class="nolink float-right ml-2" href="javascript:void(0);" onclick="addMapRecordToShoppingCart(@item.Id)" title="Zum Kartenwarenkorb hinzufügen">
-                                    <i class="fa fa-map-marker"></i>
+                                    <i class="fa fa-map-marker" id="@item.Id"></i>
                                 </a>
                             </span>
                         }
@@ -201,6 +201,18 @@
      * Contains all jQuery functions, because they refer to an ID. If the document is not fully loaded, the ID cannot be found and an error occurs.
      */
     jQuery(document).ready(function () {
+        // Display the count of geodata in the geodata shopping cart.
+        if (localStorage["MapRecordShoppingCart"] != null) {
+            var jsonRecordList = JSON.parse(localStorage["MapRecordShoppingCart"]);
+            var i = Object.keys(jsonRecordList.recordIDs).length;
+            $('#geoDataShoppingCartCount').html(i);
+
+            for (var key in jsonRecordList.recordIDs) {
+                var recordAddToCartIconID = "#" + jsonRecordList.recordIDs[key];
+                $(recordAddToCartIconID).addClass("color-blue");
+            }
+        }
+
         // Displays either the "Show all records" or "Show all active records" icon.
         if (localStorage["showAllRecords"] != null && JSON.parse(localStorage["showAllRecords"]) == true) {
             if ($("#showActivatedRecords_button").hasClass("hideLink")) {
@@ -321,9 +333,10 @@
 
     /**
      * Add a Record ID to a map shopping cart to display multiple geographical data on the map at once.
+     * param recordID = The id to add or remove
      */
     function addMapRecordToShoppingCart(recordID) {
-        console.log("addMapRecordToShoppingCart Method called");
+        console.log("addMapRecordToShoppingCart Method start------------------------------------------");
 
         if (recordID != null) {
             console.log("Record ID = " + recordID);
@@ -331,44 +344,53 @@
             // Check if session variable exists.
             if (localStorage["MapRecordShoppingCart"] == null) {
                 console.log("MapRecordShoppingCart was null and is now empty");
-                localStorage["MapRecordShoppingCart"] = '{"files":[]}';
+                localStorage["MapRecordShoppingCart"] = '{"recordIDs":[]}';
             }
 
             // Parse session variable value to string.
             var jsonRecordList = JSON.parse(localStorage["MapRecordShoppingCart"]);
-            var recordExists = false;
 
-            for (var key in jsonRecordList) {
-                if (jsonRecordList.hasOwnProperty(key)) {
-                    console.log(key + " -> " + jsonRecordList[key]);
+            console.log("loop over all keys in json array");
+            var isRecordKeyFound = -1;
 
-                    var id = jsonRecordList[key];
-                    if (id == recordID) {
-                        recordExists = true;
-                        break;
-                    }
+            for (var key in jsonRecordList.recordIDs) {
+                console.log(key + " -> " + jsonRecordList.recordIDs[key]);
+
+                var id = jsonRecordList.recordIDs[key] ;
+                console.log("The id in the json object is: " + id);
+                if (id == recordID) {
+                    console.log("recordID always exist");
+                    isRecordKeyFound = key;
+                    break;
                 }
             }
-
+            
+            var recordAddToCartIconID = "#" + recordID;
             // Add new id to the shopping cart.
-            if (recordExists == false) {
-                jsonRecordList['files'].push({"id":recordID});
-                jsonStr = JSON.stringify(jsonRecordList);
-
-                console.log(jsonStr);
-
-                localStorage["MapRecordShoppingCart"] = jsonStr;
+            if (isRecordKeyFound < 0) {
+                jsonRecordList.recordIDs.push(recordID);
+                $(recordAddToCartIconID).addClass("color-blue");
             } else {
-                delete jsonRecordList[recordID];
+                jsonRecordList.recordIDs.splice(isRecordKeyFound, 1);
+                $(recordAddToCartIconID).removeClass("color-blue");
+                console.log("record deleted");
             }
 
+            jsonStr = JSON.stringify(jsonRecordList);
+
+            console.log(jsonStr);
+
+            localStorage["MapRecordShoppingCart"] = jsonStr;
+
             // Add to shopping-cart
-            var i = Object.keys(jsonRecordList.files).length;
+            var i = Object.keys(jsonRecordList.recordIDs).length;
             $('#geoDataShoppingCartCount').html(i);
             console.log("Json Array length: " + i);
 
         } else {
             console.error("id of record is null");
         }
+
+        console.log("addMapRecordToShoppingCart Method  end------------------------------------------");
     }
 </script>
