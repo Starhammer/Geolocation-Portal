@@ -20,11 +20,11 @@ namespace Geolocation_Portal_Test
             // Web-API-Routen
             config.MapHttpAttributeRoutes();
 
-            /*config.Routes.MapHttpRoute(
+            config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
+                routeTemplate: "geo/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
-            );*/
+            );
 
             ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
             builder.EntitySet<record>("records");
