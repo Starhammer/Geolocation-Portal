@@ -101,14 +101,14 @@
                 <div class="card-header record-overview-header">
                     <img class="icon" width="20" height="20" src="~/icons/Category/@Html.DisplayFor(modelItem => item.category.icon)" />
                     <a class="nolink font-weight-bold" href="@Url.Action("Recorddetails", "OpenData", new { id = item.Id })" title="Details anzeigen">
-                        @if (@Html.DisplayFor(modelItem => item.title).ToString().Length > 26)
+                        @if (item.title.ToString().Length > 26)
                         {
                             // On the overview page, the descriptions should be no longer than 20 characters.
                             // To retain umlauts after the ToString() method, the string must be encoded.
                             string record_title = item.title.ToString();
                             byte[] utf8_bytes = System.Text.Encoding.UTF8.GetBytes(record_title);
                             var title_substring = System.Text.Encoding.UTF8.GetString(utf8_bytes);
-                            title_substring = title_substring.ToString().Substring(0, 25);
+                            title_substring = title_substring.ToString().Substring(0, 26);
 
                             @title_substring
                             <span>...</span>
@@ -140,14 +140,14 @@
                         </div>
                     </div>
                     <p class="card-text">
-                        @if (@Html.DisplayFor(modelItem => item.description).ToString().Length > 100)
+                        @if (item.description.ToString().Length > 150)
                         {
                             // On the overview page, the descriptions should be no longer than 100 characters.
                             // To retain umlauts after the ToString() method, the string must be encoded.
                             string record_description = item.description.ToString();
                             byte[] utf8_bytes = System.Text.Encoding.UTF8.GetBytes(record_description);
                             var description_substring = System.Text.Encoding.UTF8.GetString(utf8_bytes);
-                            description_substring = description_substring.ToString().Substring(0, 99);
+                            description_substring = description_substring.ToString().Substring(0, 150);
 
                         @description_substring
                         <span>...</span>
