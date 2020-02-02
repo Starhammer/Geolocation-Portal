@@ -37,7 +37,13 @@
 
     map.scrollWheelZoom.disable();
 
-    var myFeatureLayer = L.mapbox.featureLayer().loadURL("/geo/data/@ViewBag.fileID").addTo(map);
+    var localStorageMapRecordShoppingCart = JSON.parse(localStorage["MapRecordShoppingCart"]);
+
+    if (localStorageMapRecordShoppingCart != null && localStorageMapRecordShoppingCart.length > 0) {
+        var myFeatureLayer = L.mapbox.featureLayer().loadURL("/geo/data/" + localStorageMapRecordShoppingCart).addTo(map);
+    } else {
+        var myFeatureLayer = L.mapbox.featureLayer().loadURL("/geo/data/@ViewBag.fileID").addTo(map);
+    }
 
     // Find and store a variable reference to the list of filters.
     var filters = document.getElementById('filters');

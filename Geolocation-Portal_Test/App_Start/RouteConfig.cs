@@ -9,6 +9,62 @@ namespace Geolocation_Portal_Test
 {
     public class RouteConfig
     {
+        public Controllers.BenutzerController BenutzerController
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public Controllers.HomeController HomeController
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public Controllers.OpenDataController OpenDataController
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public Controllers.FAQController FAQController
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public Controllers.GeoDataController GeoDataController
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public Controllers.DiagramDataController DiagramDataController
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public Controllers.DataController DataController
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");

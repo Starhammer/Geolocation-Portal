@@ -35,5 +35,149 @@ namespace Geolocation_Portal_Test.Models
         public virtual DbSet<role> role { get; set; }
         public virtual DbSet<searchtag> searchtag { get; set; }
         public virtual DbSet<user> user { get; set; }
+
+        public file file1
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public category category1
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public record record1
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public licence licence1
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public role role1
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public publisher publisher1
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public location location1
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public user user1
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public searchtag searchtag1
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public comment comment1
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public Controllers.API.filesController filesController
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public Controllers.API.categoriesController categoriesController
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public Controllers.API.locationsController locationsController
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public Controllers.API.commentsController commentsController
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public Controllers.API.usersController usersController
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public Controllers.API.publishersController publishersController
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public Controllers.API.licencesController licencesController
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public Controllers.API.recordsController recordsController
+        {
+            get => default;
+            set
+            {
+            }
+        }
     }
 }

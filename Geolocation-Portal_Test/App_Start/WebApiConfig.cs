@@ -11,11 +11,18 @@ namespace Geolocation_Portal_Test
 {
     public static class WebApiConfig
     {
+        public static MvcApplication MvcApplication
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
         public static void Register(HttpConfiguration config)
         {
             // Web-API-Konfiguration und -Dienste
-            config.Formatters.JsonFormatter.SupportedMediaTypes
-    .Add(new MediaTypeHeaderValue("text/html"));
+            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
 
             // Web-API-Routen
             config.MapHttpAttributeRoutes();
@@ -37,6 +44,7 @@ namespace Geolocation_Portal_Test
             builder.EntitySet<user>("users");
             builder.EntitySet<role>("role");
             builder.EntitySet<searchtag>("searchtags");
+
             config.Routes.MapODataServiceRoute("odata", "api", builder.GetEdmModel());
         }
     }

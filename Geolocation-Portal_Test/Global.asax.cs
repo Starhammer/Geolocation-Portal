@@ -11,6 +11,38 @@ namespace Geolocation_Portal_Test
 {
     public class MvcApplication : System.Web.HttpApplication
     {
+        public BundleConfig BundleConfig
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public FilterConfig FilterConfig
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public Models.Entities Entities
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public RouteConfig RouteConfig
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();

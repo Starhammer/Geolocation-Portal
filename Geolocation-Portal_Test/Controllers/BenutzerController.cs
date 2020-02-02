@@ -19,6 +19,14 @@ namespace Geolocation_Portal_Test.Controllers
         /// </summary>
         private Entities DatabaseEntities = new Entities();
 
+        public LoginModel LoginModel
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
         /// <summary>
         /// This action result returns the anmelden view. The user can log in with his account via the login mask.
         /// </summary>

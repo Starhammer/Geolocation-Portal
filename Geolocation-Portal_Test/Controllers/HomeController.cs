@@ -19,6 +19,14 @@ namespace Geolocation_Portal_Test.Controllers
         /// </summary>
         private Entities DatabaseEntities = new Entities();
 
+        public ContactModel ContactModel
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
         /// <summary>
         /// This action result returns the index view.
         /// </summary>
