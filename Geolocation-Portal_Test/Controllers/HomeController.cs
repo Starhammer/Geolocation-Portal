@@ -156,6 +156,15 @@ namespace Geolocation_Portal_Test.Controllers
         }
 
         /// <summary>
+        /// This action result returns the dashboard view.
+        /// </summary>
+        /// <returns>Returns a view to the browser.</returns>
+        public ActionResult Dashboard()
+        {
+            return View();
+        }
+
+        /// <summary>
         /// Enables you to download the User Guide.
         /// </summary>
         /// <returns>Return of the User Guide file.</returns>

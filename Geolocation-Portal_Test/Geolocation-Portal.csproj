@@ -316,6 +316,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\Images\dashboard.jpg" />
     <Content Include="Content\Images\logo-mosbach.png" />
     <Content Include="Content\Images\SocialMedia\facebook.png" />
     <Content Include="Content\Images\SocialMedia\instagram.png" />
