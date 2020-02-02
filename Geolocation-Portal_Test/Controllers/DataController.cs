@@ -65,6 +65,7 @@ namespace Geolocation_Portal_Test.Controllers
         /// </summary>
         /// <param name="id">An array of record ids</param>
         /// <returns>Returns a json object.</returns>
+        [ResponseType(typeof(licence))]
         public async Task<IHttpActionResult> GetGeoData(int[] id)
         {
             JArray geoJsonFiles = new JArray();

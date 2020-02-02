@@ -39,8 +39,24 @@
 
     var localStorageMapRecordShoppingCart = JSON.parse(localStorage["MapRecordShoppingCart"]);
 
-    if (localStorageMapRecordShoppingCart != null && localStorageMapRecordShoppingCart.length > 0) {
-        var myFeatureLayer = L.mapbox.featureLayer().loadURL("/geo/data/" + localStorageMapRecordShoppingCart).addTo(map);
+    if (@ViewBag.fileID == 0 && localStorageMapRecordShoppingCart != null) {
+
+        console.log("multiply files logic started");
+
+        var apiURL = "/geo/data/";
+
+        for (var key in localStorageMapRecordShoppingCart.recordIDs) {
+            console.log(key + " -> " + localStorageMapRecordShoppingCart.recordIDs[key]);
+
+            var id = localStorageMapRecordShoppingCart.recordIDs[key];
+            apiURL += id + ",";
+        }
+
+        apiURL = apiURL.substring(0, apiURL.length - 1);
+
+        console.log(apiURL);
+
+        var myFeatureLayer = L.mapbox.featureLayer().loadURL(apiURL).addTo(map);
     } else {
         var myFeatureLayer = L.mapbox.featureLayer().loadURL("/geo/data/@ViewBag.fileID").addTo(map);
     }

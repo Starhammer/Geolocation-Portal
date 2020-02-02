@@ -566,6 +566,7 @@
     <Content Include="Views\OpenData\Kategorieentfernung.cshtml" />
     <Content Include="Views\DiagramData\Index.cshtml" />
     <Content Include="Views\OpenData\Kategorieverwaltung.cshtml" />
+    <Content Include="Views\Home\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Testfiles\" />
