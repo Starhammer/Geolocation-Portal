@@ -227,7 +227,7 @@
         /**
          * When the page is loaded for the first time, the required local memory variables must be created.
          */
-        jQuery(window).on("load", function () {
+        $(window).on("load", function () {
             if (localStorage["showAllRecords"] == null) {
                 localStorage["showAllRecords"] = false;
             }
@@ -236,7 +236,7 @@
         /**
          * When the user clicks on the "ShowAllRecords" button, the local memory variable must be changed.
          */
-        jQuery("#showAllRecords_button").click(function () {
+        $("#showAllRecords_button").on('click touchstart', function () {
             if (JSON.parse(localStorage["showAllRecords"]) != null) {
                 localStorage["showAllRecords"] = true;
             }
@@ -245,7 +245,7 @@
         /**
          * When the user clicks on the "ShowActivatedRecords" button, the local memory variable must be changed.
          */
-        jQuery("#showActivatedRecords_button").click(function () {
+        $("#showActivatedRecords_button").on('click touchstart', function () {
             if (JSON.parse(localStorage["showAllRecords"]) != null) {
                 localStorage["showAllRecords"] = false;
             }
@@ -254,20 +254,20 @@
         /**
          * When the user clicks on the Filter button, the filter settings are displayed or hidden. When hiding, all sub-settings must also be hidden.
          */
-        jQuery("#filter_button").click(function() {
+        $("#filter_button").on('click touchstart', function() {
             if ($("#filter_settings_category_button").hasClass("myactive")) {
-                jQuery("#filter_settings_categories").slideToggle("slow");
+                $("#filter_settings_categories").slideToggle("slow");
             }
 
             if ($("#filter_settings_upload_date_button").hasClass("myactive")) {
-                jQuery("#filter_settings_upload_date").slideToggle("slow");
+                $("#filter_settings_upload_date").slideToggle("slow");
             }
 
             if ($("#filter_settings_file_type_button").hasClass("myactive")) {
-                jQuery("#filter_settings_file_type").slideToggle("slow");
+                $("#filter_settings_file_type").slideToggle("slow");
             }
 
-            jQuery("#filter_settings").slideToggle("slow");
+            $("#filter_settings").slideToggle("slow");
 
             changeActiveState("#filter_button");
         });
@@ -275,8 +275,8 @@
         /**
          * When the user clicks on Category Filtering in the filter settings, the category filter settings are shown or hidden.
          */
-        jQuery("#filter_settings_category_button").click(function() {
-            jQuery("#filter_settings_categories").slideToggle("slow");
+        $("#filter_settings_category_button").on('click touchstart', function() {
+            $("#filter_settings_categories").slideToggle("slow");
 
             changeActiveState("#filter_settings_category_button");
         });
@@ -284,8 +284,8 @@
         /**
          * When the user clicks on Upload Date Filtering in the filter settings, the upload date filter settings are shown or hidden.
          */
-        jQuery("#filter_settings_upload_date_button").click(function () {
-            jQuery("#filter_settings_upload_date").slideToggle("slow");
+        $("#filter_settings_upload_date_button").on('click touchstart', function () {
+            $("#filter_settings_upload_date").slideToggle("slow");
 
             changeActiveState("#filter_settings_upload_date_button");
         });
@@ -293,8 +293,8 @@
         /**
          * When the user clicks on File Type Filtering in the filter settings, the file type filter settings are shown or hidden.
          */
-        jQuery("#filter_settings_file_type_button").click(function () {
-            jQuery("#filter_settings_file_type").slideToggle("slow");
+        $("#filter_settings_file_type_button").on('click touchstart', function () {
+            $("#filter_settings_file_type").slideToggle("slow");
 
             changeActiveState("#filter_settings_file_type_button");
         });
@@ -302,8 +302,8 @@
         /**
          * When the user clicks on Sort in the toolbar settings, the sort settings are shown or hidden.
          */
-        jQuery("#sort_settings_button").click(function () {
-            jQuery("#sort_settings").slideToggle("slow");
+        $("#sort_settings_button").on('click touchstart', function () {
+            $("#sort_settings").slideToggle("slow");
 
             changeActiveState("#sort_settings_button");
         })
@@ -311,8 +311,8 @@
         /**
          * When the user clicks on Search in the toolbar settings, the search settings are shown or hidden.
          */
-        jQuery("#search_button").click(function () {
-            jQuery("#search").slideToggle("slow");
+        $("#search_button").on('click touchstart', function () {
+            $("#search").slideToggle("slow");
 
             changeActiveState("#search_button");
         });
