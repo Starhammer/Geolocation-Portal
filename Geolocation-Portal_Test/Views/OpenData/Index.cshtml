@@ -10,9 +10,9 @@
 <div id="toolBar">
     <div>
         <a class="nolink" href="~/GeoData/index/0" id="" title="Gesammelte Geo-Datensätze auf einer Karte anzeigen"><i class="fa fa-map-marker"></i><sub><span id="geoDataShoppingCartCount"></span></sub></a>
-        <a class="nolink" href="javascript:void(0)" id="search_button" title="Suchen"><i class="fa fa-search"></i></a>
-        <a class="nolink" href="javascript:void(0)" id="sort_settings_button" title="Sortieren"><i class="fa fa-sort-amount-asc"></i></a>
-        <a class="nolink" href="javascript:void(0)" id="filter_button" title="Filtern"><i class="fa fa-filter"></i></a>
+        <a class="nolink" href="javascript:void(0);" id="search_button" title="Suchen"><i class="fa fa-search"></i></a>
+        <a class="nolink" href="javascript:void(0);" id="sort_settings_button" title="Sortieren"><i class="fa fa-sort-amount-asc"></i></a>
+        <a class="nolink" href="javascript:void(0);" id="filter_button" title="Filtern"><i class="fa fa-filter"></i></a>
         @if (Session["UserRole"] != null && Convert.ToInt32(Session["UserRole"]) < 3)
         {
             <a class="nolink" href="@Url.Action("Recorderstellung", "OpenData")" title="Datensatz hinzufügen"><i class="fa fa-plus"></i></a>
@@ -99,7 +99,7 @@
         <div class="card bg-light mb-3" style="max-width: 40rem;">
             <div class="card-block">
                 <div class="card-header record-overview-header">
-                    <img class="icon" width="20" height="20" src="~/icons/Category/@Html.DisplayFor(modelItem => item.category.icon)" />
+                    <img class="icon" width="20" height="20" src="~/icons/Category/@Html.DisplayFor(modelItem => item.category.icon)" title="@Html.DisplayFor(modelItem => item.category.name)" />
                     <a class="nolink font-weight-bold" href="@Url.Action("Recorddetails", "OpenData", new { id = item.Id })" title="Details anzeigen">
                         @if (item.title.ToString().Length > 26)
                         {
@@ -236,7 +236,9 @@
         /**
          * When the user clicks on the "ShowAllRecords" button, the local memory variable must be changed.
          */
-        $("#showAllRecords_button").on('click touchstart', function () {
+        $("#showAllRecords_button").on('click touchstart', function (e) {
+            e.stopPropagation(); // stops 'ghost clicks' (double clicking)
+
             if (JSON.parse(localStorage["showAllRecords"]) != null) {
                 localStorage["showAllRecords"] = true;
             }
