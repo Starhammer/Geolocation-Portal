@@ -10,9 +10,9 @@
 <div id="toolBar">
     <div>
         <a class="nolink" href="~/GeoData/index/0" id="" title="Gesammelte Geo-Datensätze auf einer Karte anzeigen"><i class="fa fa-map-marker"></i><sub><span id="geoDataShoppingCartCount"></span></sub></a>
-        <a class="nolink" href="#" id="search_button" title="Suchen"><i class="fa fa-search"></i></a>
-        <a class="nolink" href="#" id="sort_settings_button" title="Sortieren"><i class="fa fa-sort-amount-asc"></i></a>
-        <a class="nolink" href="#" id="filter_button" title="Filtern"><i class="fa fa-filter"></i></a>
+        <a class="nolink" href="javascript:void(0)" id="search_button" title="Suchen"><i class="fa fa-search"></i></a>
+        <a class="nolink" href="javascript:void(0)" id="sort_settings_button" title="Sortieren"><i class="fa fa-sort-amount-asc"></i></a>
+        <a class="nolink" href="javascript:void(0)" id="filter_button" title="Filtern"><i class="fa fa-filter"></i></a>
         @if (Session["UserRole"] != null && Convert.ToInt32(Session["UserRole"]) < 3)
         {
             <a class="nolink" href="@Url.Action("Recorderstellung", "OpenData")" title="Datensatz hinzufügen"><i class="fa fa-plus"></i></a>
@@ -140,14 +140,14 @@
                         </div>
                     </div>
                     <p class="card-text">
-                        @if (item.description.ToString().Length > 150)
+                        @if (item.description.ToString().Length > 120)
                         {
                             // On the overview page, the descriptions should be no longer than 100 characters.
                             // To retain umlauts after the ToString() method, the string must be encoded.
                             string record_description = item.description.ToString();
                             byte[] utf8_bytes = System.Text.Encoding.UTF8.GetBytes(record_description);
                             var description_substring = System.Text.Encoding.UTF8.GetString(utf8_bytes);
-                            description_substring = description_substring.ToString().Substring(0, 150);
+                            description_substring = description_substring.ToString().Substring(0, 120);
 
                         @description_substring
                         <span>...</span>

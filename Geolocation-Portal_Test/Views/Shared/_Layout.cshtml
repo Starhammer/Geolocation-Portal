@@ -12,7 +12,7 @@
     @Scripts.Render("~/bundles/jquery")
     @RenderSection("Styles", false) <!-- Dient zum Nachladen von Stylesheets bei bestimmten Seiten z. B. GeoData > Index -->
 </head>
-    <body id="MyBody" onload="checkPageSettings()">
+    <body id="top" onload="checkPageSettings()">
         <header id="MyHeader">
             <nav class="navbar navbar-expand-lg primary-color">
                 <a class="nolink navbar-brand" href="@Url.Action("Index", "Home")">
@@ -266,6 +266,7 @@
 
         @Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/bundles/zenscroll")
         @RenderSection("scripts", required: false)
 
     </body>
