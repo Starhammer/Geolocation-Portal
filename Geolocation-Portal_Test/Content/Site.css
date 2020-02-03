@@ -98,6 +98,8 @@ header {
 #video-container {
     margin-top: 20px;
     margin-bottom: 50px;
+    max-width: 1200px;
+    margin: auto;
 }
 
 #welcomevideo {
@@ -333,6 +335,7 @@ main > article {
 .container {
     position: relative;
     width: 100%;
+    max-width: 100% !important;
     padding-right: 5px;
     padding-left: 5px;
     margin-right: auto;
@@ -484,7 +487,7 @@ footer {
 #socialmedia,
 #footer-nav,
 #copyright {
-    background-color: #d7efff;
+    background-color: #12304a;
     padding-bottom: 10px;
     color: white;
 }
@@ -679,6 +682,11 @@ No media query for `xs` since this is the default in Bootstrap */
         font-size: 30px;
         padding: 0.25rem 0.75rem;
     }
+
+    .container {
+        width: 100%;
+        max-width: 100% !important;
+    }
 }
 
 /* Small devices (landscape phones, 576px and up) */
@@ -743,6 +751,11 @@ No media query for `xs` since this is the default in Bootstrap */
     .accessible-record-view .card-subtitle {
         font-size: inherit;
     }
+
+    .container {
+        width: 100%;
+        max-width: 100% !important;
+    }
 }
 
 /* Medium devices (tablets, 768px and up) */
@@ -750,6 +763,11 @@ No media query for `xs` since this is the default in Bootstrap */
 
     .card-columns {
         column-count: 2;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 100% !important;
     }
 }
 
@@ -806,12 +824,18 @@ No media query for `xs` since this is the default in Bootstrap */
         display: flex;
         flex-direction: row;
     }
+
+    .container {
+        width: 100%;
+        max-width: 100% !important;
+    }
 }
 
 /* Extra large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
-    header nav {
-        max-width: 1920px;
+    header nav,
+    .container {
+        max-width: 1920px !important;
         margin: auto;
     }
 }
