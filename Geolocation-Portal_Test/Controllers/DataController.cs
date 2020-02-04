@@ -29,37 +29,6 @@ namespace Geolocation_Portal_Test.Controllers
         private Entities DatabaseEntities = new Entities();
 
         /// <summary>
-        /// Determines the geographical file assigned to a specific record. 
-        /// </summary>
-        /// <param name="id">The record Id to determine the geographical file.</param>
-        /// <returns>Returns a json object.</returns>
-        /*public async Task<IHttpActionResult> GetGeoData(int id)
-        {
-            record record = await DatabaseEntities.record.FindAsync(id);
-
-            if (record == null || record.geo_data == false)
-            {
-                return BadRequest();
-            }
-
-            foreach (file file in record.file)
-            {
-                if (file.name.Contains(".geojson"))
-                {
-                    string allText = System.IO.File.ReadAllText(HttpContext.Current.Server.MapPath("~/App_Data/uploads/" + id + "/" + file.name));
-                    object jsonObject = JsonConvert.DeserializeObject(allText);
-                    return Ok(jsonObject);
-                }
-                else
-                {
-                    return NotFound();
-                }
-            }
-
-            return NotFound();
-        }*/
-
-        /// <summary>
         /// Determines the geographical file assigned to a lot of specific record. 
         /// </summary>
         /// <param name="id">An array of record ids</param>
@@ -68,7 +37,11 @@ namespace Geolocation_Portal_Test.Controllers
         {
             int[] ids = id.Split(',').Select(int.Parse).ToArray();
 
-            JArray geoJsonFiles = new JArray();
+            string firstElement = @"{ 'type': 'FeatureCollection', 'features': [] }";
+
+            JObject geojson = JObject.Parse(firstElement);
+
+            JArray geoJsonFiles = (JArray)geojson["features"];
 
             foreach (int record_id in ids)
             {
@@ -99,7 +72,7 @@ namespace Geolocation_Portal_Test.Controllers
                 }
             }
 
-            object geoJsonFilesObject = JsonConvert.DeserializeObject(geoJsonFiles.ToString());
+            object geoJsonFilesObject = JsonConvert.DeserializeObject(geojson.ToString());
 
             return Ok(geoJsonFilesObject);
         }
