@@ -122,7 +122,7 @@
                                     <td>@file.download_count</td>
                                     <td>
                                         <a href="@Url.Action("Download", "OpenData", new { fileName = file.name, recordId = Model.Id })" title="Herunterladen">
-                                            <img class="float-left mr-2" width="25" height="25" src="~/icons/@Html.DisplayFor(modelItem => file.file_icon)-icon.png" />
+                                            <i class="fa fa-download" style="font-size: 1.5rem;"></i>
                                         </a>
 
                                         @{
@@ -133,7 +133,7 @@
                                                 if (filetype[filetype.Count() - 1] == "geojson")
                                                 {
                                                     int geofileId = file.Id;
-                                                    <a href="~/GeoData/Index/@geofileId.ToString()" title="Vorschau"><i class="fa fa-map"></i></a>
+                                                    <a href="~/GeoData/Index/@geofileId.ToString()" title="Vorschau"><i class="fa fa-map" style="font-size: 1.5rem;"></i></a>
                                                 }
                                             }
                                             else if (Model.dia_data)
@@ -141,7 +141,7 @@
                                                 if (filetype[filetype.Count() - 1] == "xml")
                                                 {
                                                     int diafileId = file.Id;
-                                                    <a href="~/DiagramData/Index/@diafileId.ToString()" title="Vorschau"><i class="fa fa-pie-chart"></i></a>
+                                                    <a href="~/DiagramData/Index/@diafileId.ToString()" title="Vorschau"><i class="fa fa-pie-chart" style="font-size: 1.5rem;"></i></a>
                                                 }
                                             }
                                         }

@@ -491,8 +491,8 @@
     <Content Include="App_Data\uploads\3\parking.geojson" />
     <Content Include="App_Data\uploads\4\commercial.geojson" />
     <Content Include="App_Data\uploads\1\bildungseinrichtungen.geojson" />
-    <Content Include="App_Data\User-Guide.pdf" />
     <Content Include="ClassDiagram2.cd" />
+    <Content Include="App_Data\User Guide.pdf" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\LIVE.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />

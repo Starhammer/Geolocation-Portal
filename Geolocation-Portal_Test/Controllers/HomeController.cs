@@ -170,10 +170,10 @@ namespace Geolocation_Portal_Test.Controllers
         /// <returns>Return of the User Guide file.</returns>
         public ActionResult UserGuideDownload()
         {
-            string path = Server.MapPath("~/App_Data/User-Guide.pdf");
+            string path = Server.MapPath("~/App_Data/User Guide.pdf");
             string mime = MimeMapping.GetMimeMapping(path);
 
-            return File(path, mime, "User-Guide.pdf");
+            return File(path, mime, "User Guide.pdf");
         }
     }
 }

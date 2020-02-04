@@ -96,7 +96,7 @@
 <div id="record-overview" class="card-columns">
     @foreach (var item in Model)
     {
-        <div class="card bg-light mb-3" style="max-width: 40rem;">
+        <div class="card bg-light mb-3">
             <div class="card-block">
                 <div class="card-header record-overview-header">
                     <img class="icon" width="20" height="20" src="~/icons/Category/@Html.DisplayFor(modelItem => item.category.icon)" title="@Html.DisplayFor(modelItem => item.category.name)" />
@@ -168,9 +168,9 @@
                         if (item.geo_data == true)
                         {
                             <span>
-                                <a class="nolink float-right ml-2" href="~/GeoData/index/@item.Id" title="Vorschau auf der Karte"><i class="fa fa-map"></i></a>
+                                <a class="float-right ml-2" href="~/GeoData/index/@item.Id" title="Vorschau auf der Karte"><i class="fa fa-map"></i></a>
 
-                                <a class="nolink float-right ml-2" style="cursor: pointer;" href="javascript:void(0);" onclick="addMapRecordToShoppingCart(@item.Id)" title="Zum Kartenwarenkorb hinzufügen">
+                                <a class="float-right ml-2" style="cursor: pointer;" href="javascript:void(0);" onclick="addMapRecordToShoppingCart(@item.Id)" title="Zum Kartenwarenkorb hinzufügen">
                                     <i class="fa fa-map-marker" id="@item.Id"></i>
                                 </a>
                             </span>
@@ -178,13 +178,13 @@
                         else if (item.dia_data == true)
                         {
                             <span>
-                                <a class="nolink float-right ml-2" href="~/DiagramData/index/@item.Id" title="Vorschau als Diagramm"><i class="fa fa-pie-chart"></i></a>
+                                <a class="float-right ml-2" href="~/DiagramData/index/@item.Id" title="Vorschau als Diagramm"><i class="fa fa-pie-chart"></i></a>
                             </span>
                         }
 
                         <span>
                             <a href="@Url.Action("Download", "OpenData", new { fileName = file.name, recordId = item.Id })">
-                                <img class="float-left mr-2" width="25" height="25" src="~/icons/@Html.DisplayFor(modelItem => file.file_icon)-icon.png" />
+                                <i class="fa fa-file"></i><span style="font-size: 0.6rem; margin-left: 2px;">@Html.DisplayFor(modelItem => file.file_icon)</span>
                             </a>
                         </span>
 
