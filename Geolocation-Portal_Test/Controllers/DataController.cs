@@ -33,17 +33,16 @@ namespace Geolocation_Portal_Test.Controllers
         /// </summary>
         /// <param name="id">The record Id to determine the geographical file.</param>
         /// <returns>Returns a json object.</returns>
-        [ResponseType(typeof(licence))]
-        public async Task<IHttpActionResult> GetGeoData(int id)
+        /*public async Task<IHttpActionResult> GetGeoData(int id)
         {
             record record = await DatabaseEntities.record.FindAsync(id);
-            
+
             if (record == null || record.geo_data == false)
             {
                 return BadRequest();
             }
 
-            foreach(file file in record.file)
+            foreach (file file in record.file)
             {
                 if (file.name.Contains(".geojson"))
                 {
@@ -58,19 +57,20 @@ namespace Geolocation_Portal_Test.Controllers
             }
 
             return NotFound();
-        }
+        }*/
 
         /// <summary>
         /// Determines the geographical file assigned to a lot of specific record. 
         /// </summary>
         /// <param name="id">An array of record ids</param>
         /// <returns>Returns a json object.</returns>
-        [ResponseType(typeof(licence))]
-        public async Task<IHttpActionResult> GetGeoData(int[] id)
+        public async Task<IHttpActionResult> GetGeoData(string id)
         {
+            int[] ids = id.Split(',').Select(int.Parse).ToArray();
+
             JArray geoJsonFiles = new JArray();
 
-            foreach (int record_id in id)
+            foreach (int record_id in ids)
             {
                 record record = await DatabaseEntities.record.FindAsync(record_id);
 
