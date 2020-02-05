@@ -475,6 +475,7 @@
     <Content Include="Models\DatabaseModel.edmx.diagram">
       <DependentUpon>DatabaseModel.edmx</DependentUpon>
     </Content>
+    <Content Include="App_Data\API_Dokumentation.pdf" />
     <None Include="App_Data\data.xsd">
       <SubType>Designer</SubType>
     </None>
