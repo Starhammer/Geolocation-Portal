@@ -201,6 +201,11 @@
      * Contains all jQuery functions, because they refer to an ID. If the document is not fully loaded, the ID cannot be found and an error occurs.
      */
     jQuery(document).ready(function () {
+        // Is required for the display of one geographical file by the DataController logic.
+        if (localStorage["MapRecordShoppingCart"] == null) {
+            localStorage["MapRecordShoppingCart"] = '{"recordIDs":[]}';
+        }
+
         // Display the count of geodata in the geodata shopping cart.
         if (localStorage["MapRecordShoppingCart"] != null) {
             var jsonRecordList = JSON.parse(localStorage["MapRecordShoppingCart"]);
