@@ -530,7 +530,7 @@ namespace Geolocation_Portal_Test.Controllers
             int record_visibility_role = (int)DatabaseEntities.record.Find(id).role_id;
             int logged_in_user = 4;
             bool logged_in = false;
-            if (checkSession(3))
+            if (checkSession(record_visibility_role))
             {
                 logged_in_user = Convert.ToInt32(Session["UserRole"], new CultureInfo("de-DE"));
                 logged_in = true;
@@ -538,7 +538,7 @@ namespace Geolocation_Portal_Test.Controllers
 
             // Rollenkonzept:
             // Datensatz Sichtbarkeit = 4 (Öffentlichkeit) oder Benutzer angemeldet und Rolle berechtigt Datensatz zu sehen
-            if (record_visibility_role > 3 || logged_in == true && record_visibility_role <= logged_in_user)
+            if (record_visibility_role > 3 || logged_in == true && record_visibility_role >= logged_in_user)
             {
                 record record = DatabaseEntities.record.Find(id);
                 record.licence = DatabaseEntities.licence.Find(record.licence_id);
